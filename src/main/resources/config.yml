@@ -1,0 +1,36 @@
+#############################################################
+#         _                              ___                #
+#   /\/\ (_) __ _ _ __ _ __ ___   __ _  / __\___  _ __ ___  #
+#  /    \| |/ _` | '__| '_ ` _ \ / _` |/ /  / _ \| '__/ _ \ #
+# / /\/\ \ | (_| | |  | | | | | | (_| / /__| (_) | | |  __/ #
+# \/    \/_|\__,_|_|  |_| |_| |_|\__,_\____/\___/|_|  \___| #
+#                                                           #
+#  /!\ Sections marked with [ R ] need server restart /!\   #
+#############################################################
+
+# -----------------------------------------------------------
+#  Command Configuration [ R ]
+# -----------------------------------------------------------
+
+commands:
+  miarmacore:
+    description: "Muestra la información de MiarmaCore"
+    permission: "miarmacore.command"
+    arguments:
+      reload: "recargar"
+  register:
+    name: "registroweb"
+    description: "Regístrate en la web"
+    permission: "miarmacore.register"
+    arguments:
+      password: "contraseña"
+
+language:
+  prefix: "&#006533MiarmaCore &8»&r"
+  commands:
+    miarmacore:
+      reload:
+        success: "[P] MiarmaCore ha sido recargado correctamente"
+        error: "[P] Ha ocurrido un error al recargar MiarmaCore"
+  errors:
+    langs: "Error creando los archivos de lenguaje"
