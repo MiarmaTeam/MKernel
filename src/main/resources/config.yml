@@ -32,5 +32,12 @@ language:
       reload:
         success: "[P] MiarmaCore ha sido recargado correctamente"
         error: "[P] Ha ocurrido un error al recargar MiarmaCore"
+  messages:
+    register:
+      success: "[P] Te has registrado correctamente en la web"
+      error: "[P] Ha ocurrido un error al registrarte en la web"
   errors:
     langs: "Error creando los archivos de lenguaje"
+    onlyPlayerCommand: "Este comando sólo lo puede ejecutar un jugador"
+
+file-version: 1

@@ -24,7 +24,7 @@ public class ConfigWrapper {
 	
 	public void onEnable() {
 		try {
-            this.config = YamlDocument.create(new File(MiarmaCore.getPlugin().getDataFolder(), "config.yml"), MiarmaCore.getPlugin().getResource("config.yml"),
+            this.config = YamlDocument.create(new File(MiarmaCore.plugin.getDataFolder(), "config.yml"), MiarmaCore.plugin.getResource("config.yml"),
                     GeneralSettings.DEFAULT, LoaderSettings.builder().setAutoUpdate(true).build(), DumperSettings.DEFAULT, UpdaterSettings.builder().setVersioning(new BasicVersioning("file-version")).build());
         } catch (IOException e) {
             e.printStackTrace();

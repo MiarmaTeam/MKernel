@@ -1,6 +1,6 @@
 package dev.gallardo.miarmacore.util;
 
-import dev.gallardo.simpletools.SimpleTools;
+import dev.gallardo.miarmacore.MiarmaCore;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 
@@ -11,10 +11,10 @@ import java.util.Scanner;
 import java.util.function.Consumer;
 
 public class UpdateChecker {
-    private SimpleTools plugin;
+    private MiarmaCore plugin;
     private int resourceId;
 
-    public UpdateChecker(SimpleTools plugin, int resourceId) {
+    public UpdateChecker(MiarmaCore plugin, int resourceId) {
         this.plugin = plugin;
         this.resourceId = resourceId;
     }

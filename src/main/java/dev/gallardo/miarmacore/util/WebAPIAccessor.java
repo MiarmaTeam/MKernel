@@ -27,13 +27,13 @@ public class WebAPIAccessor {
             os.flush();
             BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
             while ((output = br.readLine()) != null) {
-                MiarmaCore.getPlugin().getLogger().log(Level.INFO, output);
+                MiarmaCore.plugin.getLogger().log(Level.INFO, output);
             }
             conn.disconnect();
             return true;
         }
         catch (Exception e) {
-            MiarmaCore.getPlugin().getLogger().log(Level.SEVERE, e.getMessage());
+            MiarmaCore.plugin.getLogger().log(Level.SEVERE, e.getMessage());
             return false;
         }
     }

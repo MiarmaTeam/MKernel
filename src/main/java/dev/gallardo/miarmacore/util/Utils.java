@@ -1,6 +1,8 @@
 package dev.gallardo.miarmacore.util;
 
 import dev.gallardo.miarmacore.MiarmaCore;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -73,14 +75,20 @@ public class Utils {
         }
     }
 	
-	public static void createLangs() {
+	public static void createLangs(String fileName) {
 		try {
-			File langs = new File(MiarmaCore.getPlugin().getDataFolder(), "langs.yml");
+			File langs = new File(MiarmaCore.plugin.getDataFolder(), fileName);
 			langs.createNewFile();
-			copyResourceToFile("langs.yml", new File(MiarmaCore.getPlugin().getDataFolder(), "langs.yml").getAbsolutePath());
+			copyResourceToFile(fileName, new File(MiarmaCore.plugin.getDataFolder(), fileName).getAbsolutePath());
 		} catch (IOException e) {
-			MiarmaCore.getPlugin().getLogger().severe(cfg.getString("language.errors.langs"));
+			MiarmaCore.plugin.getLogger().severe(cfg.getString("language.errors.langs"));
 		}
 	}
+
+    public static void sendMessage(String message, CommandSender sender, boolean prefix) {
+        if(prefix)
+            message = message.replace("[P]",cfg.getString("language.prefix"));
+        sender.sendMessage(Utils.colorCodeParser(message));
+    }
 
 }

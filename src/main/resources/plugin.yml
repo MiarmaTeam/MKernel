@@ -2,3 +2,21 @@ name: MiarmaCore
 version: '1.0.0'
 main: dev.gallardo.miarmacore.MiarmaCore
 api-version: '1.21'
+permissions:
+    miarmacore.reload:
+        description: Permite usar el comando /miarmacore reload
+        default: op
+    miarmacore.register:
+        description: Permite registrarse en la web
+        default: op
+    miarmacore.player:
+        description: Comandos para jugadores
+        default: true
+        children:
+            miarmacore.register: true
+    miarmacore.*:
+        description: Permite usar todos los comandos de MiarmaCore
+        default: op
+        children:
+            miarmacore.reload: true
+            miarmacore.register: true
