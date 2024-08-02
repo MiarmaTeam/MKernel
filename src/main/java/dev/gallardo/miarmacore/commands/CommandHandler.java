@@ -24,7 +24,7 @@ public class CommandHandler {
         .withShortDescription(cfg.getString("commands.miarmacore.description"))
         .executes((sender, args) -> {
             Utils.sendMessage(
-        "Desarrollado por &#006533&lGallardo7761&r para &#006533&lMiarmaCraft&r",
+        "Desarrollado por &#2ca268&lGallardo7761&r para &#2ca268&lMiarmaCraft&r",
                 sender,
           true
             );
