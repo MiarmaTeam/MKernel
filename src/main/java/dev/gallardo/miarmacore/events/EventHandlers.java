@@ -13,10 +13,7 @@ public class EventHandlers {
 
     public static void registerEvents() {
         Bukkit.getPluginManager().registerEvents(new Listener() {
-            @EventHandler
-            public void onPlayerChat(AsyncPlayerChatEvent event) {
-                event.getPlayer().sendMessage("A");
-            }
+
         }, MiarmaCore.plugin);
     }
 

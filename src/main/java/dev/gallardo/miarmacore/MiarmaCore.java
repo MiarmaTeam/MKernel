@@ -1,8 +1,5 @@
 package dev.gallardo.miarmacore;
 
-import com.willfp.ecoskills.api.EcoSkillsAPI;
-import com.willfp.ecoskills.skills.Skill;
-import com.willfp.ecoskills.skills.SkillKt;
 import dev.gallardo.miarmacore.commands.CommandHandler;
 import dev.gallardo.miarmacore.events.EventHandlers;
 import dev.gallardo.miarmacore.util.ConfigWrapper;
