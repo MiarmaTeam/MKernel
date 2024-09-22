@@ -12,18 +12,39 @@
 #  Command Configuration [ R ]
 # -----------------------------------------------------------
 
+arguments:
+  reload: "recargar"
+  password: "contraseña"
+  player: "jugador"
+
 commands:
   miarmacore:
     description: "Muestra la información de MiarmaCore"
     permission: "miarmacore.command"
-    arguments:
-      reload: "recargar"
   register:
     name: "registroweb"
     description: "Regístrate en la web"
     permission: "miarmacore.register"
-    arguments:
-      password: "contraseña"
+  tpa:
+    name: "tpa"
+    description: "Envía una petición de teletransporte"
+    permission: "miarmacore.tpa"
+    usage: "/tpa <jugador>"
+  tpahere:
+    name: "tpahere"
+    description: "Envía una petición de teletransporte a un jugador"
+    permission: "miarmacore.tpahere"
+    usage: "/tpahere <jugador>"
+  tpaccept:
+    name: "tpaccept"
+    description: "Acepta una petición de teletransporte"
+    permission: "miarmacore.tpaccept"
+    usage: "/tpaccept <jugador>"
+  tpdeny:
+    name: "tpdeny"
+    description: "Rechaza una petición de teletransporte"
+    permission: "miarmacore.tpdeny"
+    usage: "/tpdeny <jugador>"
 
 language:
   prefix: "&#2ca268&lMiarmaCore &8»&r"
@@ -32,12 +53,28 @@ language:
       reload:
         success: "[P] MiarmaCore ha sido recargado correctamente"
         error: "[P] Ha ocurrido un error al recargar MiarmaCore"
-  messages:
     register:
       success: "[P] Te has registrado correctamente en la web"
       error: "[P] Ha ocurrido un error al registrarte en la web"
-  errors:
-    langs: "Error creando los archivos de lenguaje"
-    onlyPlayerCommand: "Este comando sólo lo puede ejecutar un jugador"
+    tpa:
+      tpaFromPlayer: "[P] &7El jugador &a%sender% &7te ha enviado una petición de teletransporte [%sender% -> Tú]"
+      tpaToPlayer: "[P] &7Has enviado una petición de teletransporte a &a%target% [Tú -> %target%]"
+    tpahere:
+      tpaFromPlayer: "[P] &7El jugador &a%sender% &7te ha enviado una petición de teletransporte [Tú -> %sender%]"
+      tpaToPlayer: "[P] &7Has enviado una petición de teletransporte a &a%target% [%target% -> Tú]"
+    tpaccept:
+      success: "[P] &7Has aceptado la petición de teletransporte"
+      successToSender: "[P] &7El jugador &a%target% &7ha aceptado tu petición de teletransporte"
+      error: "[P] &cNo tienes ninguna petición de teletransporte"
+    tpdeny:
+      success: "[P] &7Has rechazado la petición de teletransporte"
+      successToSender: "[P] &7El jugador &a%target% &7ha rechazado tu petición de teletransporte"
+      error: "[P] &cNo tienes ninguna petición de teletransporte"
 
-file-version: 1
+  errors:
+    langs: "&cError creando los archivos de lenguaje"
+    onlyPlayerCommand: "&cEste comando sólo lo puede ejecutar un jugador"
+    playerNotFound: "&cEl jugador no se ha encontrado o no está conectado"
+    cantTeleportToYourself: "&cNo puedes teletransportarte a ti mismo"
+
+file-version: 2

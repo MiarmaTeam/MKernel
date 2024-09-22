@@ -1,5 +1,5 @@
 name: MiarmaCore
-version: '1.0.0'
+version: '1.1.0'
 main: dev.gallardo.miarmacore.MiarmaCore
 api-version: '1.21'
 permissions:
@@ -9,11 +9,27 @@ permissions:
     miarmacore.register:
         description: Permite registrarse en la web
         default: op
+    miarmacore.tpa:
+        description: Permite usar el comando /tpa
+        default: true
+    miarmacore.tpahere:
+        description: Permite usar el comando /tpahere
+        default: true
+    miarmacore.tpaccept:
+        description: Permite usar el comando /tpaccept
+        default: true
+    miarmacore.tpdeny:
+        description: Permite usar el comando /tpdeny
+        default: true
     miarmacore.player:
         description: Comandos para jugadores
         default: true
         children:
             miarmacore.register: true
+            miarmacore.tpa: true
+            miarmacore.tpahere: true
+            miarmacore.tpaccept: true
+            miarmacore.tpdeny: true
     miarmacore.*:
         description: Permite usar todos los comandos de MiarmaCore
         default: op

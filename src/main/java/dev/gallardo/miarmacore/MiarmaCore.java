@@ -1,7 +1,6 @@
 package dev.gallardo.miarmacore;
 
 import dev.gallardo.miarmacore.commands.CommandHandler;
-import dev.gallardo.miarmacore.events.EventHandlers;
 import dev.gallardo.miarmacore.util.ConfigWrapper;
 import dev.gallardo.miarmacore.util.Utils;
 import dev.jorel.commandapi.CommandAPI;
@@ -25,7 +24,6 @@ public final class MiarmaCore extends JavaPlugin {
         Utils.createLangs("lang.yml");
         CommandAPI.onEnable();
         CommandHandler.onEnable();
-        EventHandlers.onEnable();
         this.getLogger().info("I've been enabled! :)");
     }
 
