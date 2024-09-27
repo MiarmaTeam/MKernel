@@ -85,10 +85,44 @@ public class Utils {
 		}
 	}
 
-    public static void sendMessage(String message, CommandSender sender, boolean prefix) {
+    public static String formatMessageNoColors(String message, boolean prefix){
         if(prefix)
             message = message.replace("[P]",cfg.getString("language.prefix"));
-        sender.sendMessage(Utils.colorCodeParser(message));
+        return message;
+    }
+
+    public static String formatMessageNoColors(String message, boolean prefix, boolean placeholders, List<String> phs, List<String> values){
+        if(prefix)
+            message = message.replace("[P]",cfg.getString("language.prefix"));
+        if(placeholders)
+            message = placeholderParser(message, phs, values);
+        return message;
+    }
+
+    public static String formatMessage(String message, boolean prefix){
+        if(prefix)
+            message = message.replace("[P]",cfg.getString("language.prefix"));
+        return Utils.colorCodeParser(message);
+    }
+
+    public static String formatMessage(String message, boolean prefix, boolean placeholders, List<String> phs, List<String> values){
+        if(placeholders)
+            message = placeholderParser(message, phs, values);
+        return formatMessage(message, prefix);
+    }
+
+    public static void sendMessage(String message, CommandSender sender, boolean prefix) {
+        sender.sendMessage(formatMessage(message, prefix));
+    }
+
+    public static String generateRandomPassword(int size) {
+        String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789~#$&*_+-=.";
+        StringBuilder pass = new StringBuilder();
+        for(int i = 0; i < size; i++) {
+            int random = (int) (Math.random() * chars.length());
+            pass.append(chars.charAt(random));
+        }
+        return pass.toString();
     }
 
 }

@@ -16,9 +16,10 @@ import org.bukkit.entity.Player;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
-
+@SuppressWarnings("all")
 public class CommandHandler {
 
     private static final ConfigWrapper cfg = MiarmaCore.getConf();
@@ -36,7 +37,7 @@ public class CommandHandler {
             .withShortDescription(cfg.getString("commands.miarmacore.description"))
             .executes((sender, args) -> {
                 Utils.sendMessage(
-            "Desarrollado por &#2ca268&lGallardo7761&r para &#2ca268&lMiarmaCraft&r",
+            "[P] Desarrollado por &#2ca268&lGallardo7761&r para &#2ca268&lMiarmaCraft&r",
                     sender,
               true
                 );
@@ -60,17 +61,32 @@ public class CommandHandler {
             .register();
 
         new CommandAPICommand("registroweb")
-            .withArguments(passwordArg)
-            .withFullDescription(cfg.getString("language.galleryDescription"))
+            .withOptionalArguments(passwordArg)
+            .withFullDescription(cfg.getString("commands.register.description"))
             .withPermission("miarmacore.register")
-            .withShortDescription(cfg.getString("language.galleryDescription"))
+            .withShortDescription(cfg.getString("commands.register.description"))
             .executesPlayer((sender,args) -> {
-                String password = Arrays.stream(args.rawArgs()).collect(Collectors.joining(" "));
+                boolean userPassword = args.rawArgs() != null && args.rawArgs().length > 0;
+                String password;
+
                 String username = sender.getName();
+
                 String rol = sender.hasPermission("group.admin") ? "admin" : "user";
+
+                if(userPassword) {
+                    password = Arrays.stream(args.rawArgs()).collect(Collectors.joining(" "));
+                } else {
+                    password = Utils.generateRandomPassword(8);
+                }
+
                 if(WebAPIAccessor.register(username,password,rol)) {
-                    Utils.sendMessage(cfg.getString("language.commands.register.success"),
-                            sender,true);
+                    Utils.sendMessage(
+                        Utils.placeholderParser(
+                            cfg.getString("language.commands.register.success"),
+                            List.of("%user%", "%password%"),
+                            List.of(username, password)
+                        ),
+                        sender,true);
                 } else {
                     Utils.sendMessage(cfg.getString("language.commands.register.error"),
                             sender,true);
@@ -78,50 +94,60 @@ public class CommandHandler {
             })
             .register();
 
-        new CommandAPICommand("tpa")
+        /*new CommandAPICommand("tpa")
             .withArguments(playerArg)
             .withPermission("miarmacore.tpa")
             .withFullDescription(cfg.getString("commands.tpa.description"))
             .withShortDescription(cfg.getString("commands.tpa.description"))
             .withUsage(cfg.getString("commands.tpa.usage"))
-            .executesPlayer((sender,args) -> {
-                if(!(sender instanceof Player)) {
+            .executesPlayer((sender, args) -> {
+                if (!(sender instanceof Player)) {
                     sender.sendMessage(cfg.getString("language.errors.onlyPlayerCommand"));
                     return;
                 }
 
                 Player target = Bukkit.getPlayer(args.getRaw(0));
 
-                if(target == null || !target.isOnline()) {
-                    Utils.sendMessage(cfg.getString("language.errors.playerNotFound"),
-                            sender,true);
+                if (target == null || !target.isOnline()) {
+                    Utils.sendMessage(cfg.getString("language.errors.playerNotFound"), sender, true);
                     return;
                 }
 
-                if(target.equals(sender)) {
-                    Utils.sendMessage(cfg.getString("language.errors.cantTeleportToYourself"),
-                            sender,true);
+                if (target.equals(sender)) {
+                    Utils.sendMessage(cfg.getString("language.errors.cantTeleportToYourself"), sender, true);
                     return;
                 }
 
-                tpaRequests.addRequest(sender, target);
+                boolean requestExists = tpaRequests.getRequests().stream()
+                        .anyMatch(request ->
+                                (request.getFrom().equals(sender) && request.getTo().equals(target)) ||
+                                        (request.getFrom().equals(target) && request.getTo().equals(sender))
+                        );
+
+                if (requestExists) {
+                    Utils.sendMessage(cfg.getString("language.errors.requestAlreadySent"), sender, true);
+                    return;
+                }
+
+                tpaRequests.addRequest(sender, target, TpaType.TPA);
+                MiarmaCore.logger.info(tpaRequests.toString());
 
                 Utils.sendMessage(
-                    Utils.placeholderParser(
-                        cfg.getString("language.commands.tpa.tpaToPlayer"),
-                        List.of("%target%"),
-                        List.of(target.getName())
-                    ),
-                    sender, true
+                        Utils.placeholderParser(
+                                cfg.getString("language.commands.tpa.tpaToPlayer"),
+                                List.of("%target%"),
+                                List.of(target.getName())
+                        ),
+                        sender, true
                 );
 
                 Utils.sendMessage(
-                    Utils.placeholderParser(
-                            cfg.getString("language.commands.tpa.tpaFromPlayer"),
-                            List.of("%sender%"),
-                            List.of(target.getName())
-                    ),
-                    target, true
+                        Utils.placeholderParser(
+                                cfg.getString("language.commands.tpa.tpaFromPlayer"),
+                                List.of("%sender%"),
+                                List.of(sender.getName())
+                        ),
+                        target, true
                 );
             })
             .register();
@@ -132,44 +158,56 @@ public class CommandHandler {
             .withFullDescription(cfg.getString("commands.tpahere.description"))
             .withShortDescription(cfg.getString("commands.tpahere.description"))
             .withUsage(cfg.getString("commands.tpahere.usage"))
-            .executesPlayer((sender,args) -> {
-                if(!(sender instanceof Player)) {
+            .executesPlayer((sender, args) -> {
+                if (!(sender instanceof Player)) {
                     sender.sendMessage(cfg.getString("language.errors.onlyPlayerCommand"));
                     return;
                 }
 
                 Player target = Bukkit.getPlayer(args.getRaw(0));
 
-                if(target == null || !target.isOnline()) {
-                    Utils.sendMessage(cfg.getString("language.errors.playerNotFound"),
-                            sender,true);
+                if (target == null || !target.isOnline()) {
+                    Utils.sendMessage(cfg.getString("language.errors.playerNotFound"), sender, true);
                     return;
                 }
 
-                if(target.equals(sender)) {
-                    Utils.sendMessage(cfg.getString("language.errors.cantTeleportToYourself"),
-                            sender,true);
+                if (target.equals(sender)) {
+                    Utils.sendMessage(cfg.getString("language.errors.cantTeleportToYourself"), sender, true);
                     return;
                 }
 
-                tpaRequests.addRequest(target, sender);
+                // Verificar si ya hay una solicitud activa entre el sender y el target
+                boolean requestExists = tpaRequests.getRequests().stream()
+                        .anyMatch(request ->
+                                (request.getFrom().equals(sender) && request.getTo().equals(target)) ||
+                                        (request.getFrom().equals(target) && request.getTo().equals(sender))
+                        );
+
+                if (requestExists) {
+                    Utils.sendMessage(cfg.getString("language.errors.requestAlreadySent"), sender, true);
+                    return;
+                }
+
+                // Añadir la solicitud si no existe
+                tpaRequests.addRequest(target, sender, TpaType.TPA_HERE);
+                MiarmaCore.logger.info(tpaRequests.toString());
 
                 Utils.sendMessage(
-                    Utils.placeholderParser(
-                        cfg.getString("language.commands.tpahere.tpaToPlayer"),
-                        List.of("%target%"),
-                        List.of(target.getName())
-                    ),
-                    sender, true
+                        Utils.placeholderParser(
+                                cfg.getString("language.commands.tpahere.tpaToPlayer"),
+                                List.of("%target%"),
+                                List.of(target.getName())
+                        ),
+                        sender, true
                 );
 
                 Utils.sendMessage(
-                    Utils.placeholderParser(
-                            cfg.getString("language.commands.tpahere.tpaFromPlayer"),
-                            List.of("%sender%"),
-                            List.of(target.getName())
-                    ),
-                    target, true
+                        Utils.placeholderParser(
+                                cfg.getString("language.commands.tpahere.tpaFromPlayer"),
+                                List.of("%sender%"),
+                                List.of(sender.getName())
+                        ),
+                        target, true
                 );
             })
             .register();
@@ -179,43 +217,46 @@ public class CommandHandler {
             .withPermission("miarmacore.tpaccept")
             .withFullDescription(cfg.getString("commands.tpaccept.description"))
             .withShortDescription(cfg.getString("commands.tpaccept.description"))
-            .executesPlayer((sender,args) -> {
-                if(!(sender instanceof Player)) {
+            .withUsage(cfg.getString("commands.tpaccept.usage"))
+            .executesPlayer((sender, args) -> {
+                MiarmaCore.logger.info(tpaRequests.toString());
+
+                if (!(sender instanceof Player)) {
                     sender.sendMessage(cfg.getString("language.errors.onlyPlayerCommand"));
                     return;
                 }
 
-                Player target = (Player) sender;
-                Player from = Bukkit.getPlayer(args.getRaw(0));
+                Player target = Bukkit.getPlayer(args.getRaw(0));
 
-                if(from == null || !from.isOnline()) {
-                    Utils.sendMessage(cfg.getString("language.errors.playerNotFound"),
-                            sender,true);
+                if (target == null || !target.isOnline()) {
+                    Utils.sendMessage(cfg.getString("language.errors.playerNotFound"), sender, true);
                     return;
                 }
 
-                TpaRequest request = tpaRequests.getRequest(from, target);
+                // Buscar la solicitud de TPA correcta entre el sender y el target
+                Optional<TpaRequest> requestOpt = tpaRequests.getRequests().stream()
+                        .filter(request ->
+                                request.getFrom().equals(target) && request.getTo().equals(sender)
+                        )
+                        .findFirst();
 
-                if(request == null) {
-                    Utils.sendMessage(cfg.getString("language.commands.tpaccept.error"),
-                            sender,true);
+                if (requestOpt.isEmpty()) {
+                    Utils.sendMessage(cfg.getString("language.errors.noRequestFound"), sender, true);
                     return;
                 }
 
-                from.teleport(target);
-                tpaRequests.removeRequest(from, target);
+                TpaRequest request = requestOpt.get();
+                tpaRequests.removeRequest(request); // Eliminar la solicitud después de aceptarla
 
-                Utils.sendMessage(cfg.getString("language.commands.tpaccept.success"),
-                        sender,true);
+                // Teletransportar al target según el tipo de solicitud (TPA o TPA_HERE)
+                if (request.getType() == TpaType.TPA) {
+                    sender.teleport(target.getLocation());
+                } else if (request.getType() == TpaType.TPA_HERE) {
+                    target.teleport(sender.getLocation());
+                }
 
-                Utils.sendMessage(
-                    Utils.placeholderParser(
-                        cfg.getString("language.commands.tpaccept.successToSender"),
-                        List.of("%target%"),
-                        List.of(target.getName())
-                    ), from, true
-                );
-
+                Utils.sendMessage(cfg.getString("language.commands.tpaccept.success"), sender, true);
+                Utils.sendMessage(cfg.getString("language.commands.tpaccept.successToSender"), target, true);
             })
             .register();
 
@@ -224,44 +265,42 @@ public class CommandHandler {
             .withPermission("miarmacore.tpdeny")
             .withFullDescription(cfg.getString("commands.tpdeny.description"))
             .withShortDescription(cfg.getString("commands.tpdeny.description"))
-            .executesPlayer((sender,args) -> {
-                if(!(sender instanceof Player)) {
+            .withUsage(cfg.getString("commands.tpdeny.usage"))
+            .executesPlayer((sender, args) -> {
+                MiarmaCore.logger.info(tpaRequests.toString());
+
+                if (!(sender instanceof Player)) {
                     sender.sendMessage(cfg.getString("language.errors.onlyPlayerCommand"));
                     return;
                 }
 
-                Player target = (Player) sender;
-                Player from = Bukkit.getPlayer(args.getRaw(0));
+                Player target = Bukkit.getPlayer(args.getRaw(0));
 
-                if(from == null || !from.isOnline()) {
-                    Utils.sendMessage(cfg.getString("language.errors.playerNotFound"),
-                            sender,true);
+                if (target == null || !target.isOnline()) {
+                    Utils.sendMessage(cfg.getString("language.errors.playerNotFound"), sender, true);
                     return;
                 }
 
-                TpaRequest request = tpaRequests.getRequest(from, target);
+                // Buscar la solicitud de TPA correcta entre el sender y el target
+                Optional<TpaRequest> requestOpt = tpaRequests.getRequests().stream()
+                        .filter(request ->
+                                request.getFrom().equals(target) && request.getTo().equals(sender)
+                        )
+                        .findFirst();
 
-                if(request == null) {
-                    Utils.sendMessage(cfg.getString("language.commands.tpdeny.error"),
-                            sender,true);
+                if (requestOpt.isEmpty()) {
+                    Utils.sendMessage(cfg.getString("language.errors.noRequestFound"), sender, true);
                     return;
                 }
 
-                tpaRequests.removeRequest(from, target);
+                TpaRequest request = requestOpt.get();
+                tpaRequests.removeRequest(request); // Eliminar la solicitud después de denegarla
 
-                Utils.sendMessage(cfg.getString("language.commands.tpdeny.success"),
-                        sender,true);
-
-                Utils.sendMessage(
-                    Utils.placeholderParser(
-                        cfg.getString("language.commands.tpdeny.successToSender"),
-                        List.of("%target%"),
-                        List.of(target.getName())
-                    ), from, true
-                );
-
+                // Notificar a ambos jugadores
+                Utils.sendMessage(cfg.getString("language.commands.tpdeny.success"), sender, true);
+                Utils.sendMessage(cfg.getString("language.commands.tpdeny.senderDenied"), target, true);
             })
-            .register();
+            .register();*/
 
     }
 

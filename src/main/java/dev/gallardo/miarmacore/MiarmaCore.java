@@ -7,10 +7,13 @@ import dev.jorel.commandapi.CommandAPI;
 import dev.jorel.commandapi.CommandAPIBukkitConfig;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.logging.Logger;
+
 public final class MiarmaCore extends JavaPlugin {
 
     public static MiarmaCore plugin;
     private static final ConfigWrapper config = new ConfigWrapper();
+    public static Logger logger;
 
     public static ConfigWrapper getConf() {
     	return config;
@@ -20,6 +23,7 @@ public final class MiarmaCore extends JavaPlugin {
     public void onEnable() {
         super.onEnable();
         plugin = this;
+        logger = plugin.getLogger();
         config.onEnable();
         Utils.createLangs("lang.yml");
         CommandAPI.onEnable();

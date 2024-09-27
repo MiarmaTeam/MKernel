@@ -11,7 +11,7 @@ import java.util.logging.Level;
 
 public class WebAPIAccessor {
     private static ConfigWrapper config = MiarmaCore.getConf();
-    private static final String API_BASE = config.getString("config.API_BASE");
+    private static final String API_BASE = config.getString("API_BASE");
 
 	public static boolean register(String username, String password, String role) {
         String json = "{\"username\": \"" + username + "\", \"password\": \"" + PasswordPBKDF.encrypt((String)password) + "\" , \"rol\": \"" + role + "\"}";
