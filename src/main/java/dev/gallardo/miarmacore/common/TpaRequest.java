@@ -1,6 +1,5 @@
 package dev.gallardo.miarmacore.common;
 
-import dev.gallardo.miarmacore.commands.TpaType;
 import org.bukkit.entity.Player;
 
 public class TpaRequest {

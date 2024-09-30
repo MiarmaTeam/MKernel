@@ -1,4 +1,4 @@
-package dev.gallardo.miarmacore.commands;
+package dev.gallardo.miarmacore.common;
 
 public enum TpaType {
     TPA, TPA_HERE
