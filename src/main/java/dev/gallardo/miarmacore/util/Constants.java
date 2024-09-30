@@ -23,23 +23,23 @@ public class Constants {
 
     public static String PREFIX = Utils.colorCodeParser(MiarmaCore.CONFIG.getString("language.prefix"));
 
-    public static Argument<?> PLAYERS_ARG = new PlayerArgument(MiarmaCore.CONFIG.getString("language.player"))
+    public static Argument<?> PLAYERS_ARG = new PlayerArgument(MiarmaCore.CONFIG.getString("arguments.player"))
             .replaceSuggestions(ArgumentSuggestions.strings(info -> Bukkit.getOnlinePlayers().stream()
                     .map(x -> x.getName()).toList().toArray(new String[Bukkit.getOnlinePlayers().size()])));
 
-    public static Argument<?> PLAYERS_OPT_ARG = new PlayerArgument(MiarmaCore.CONFIG.getString("language.player"))
+    public static Argument<?> PLAYERS_OPT_ARG = new PlayerArgument(MiarmaCore.CONFIG.getString("arguments.player"))
             .replaceSuggestions(ArgumentSuggestions.strings(info -> Bukkit.getOnlinePlayers().stream()
                     .map(x -> x.getName()).toList().toArray(new String[Bukkit.getOnlinePlayers().size()])));
 
-    public static Argument<?> LEVELS = new IntegerArgument(MiarmaCore.CONFIG.getString("language.levels"));
+    public static Argument<?> LEVELS = new IntegerArgument(MiarmaCore.CONFIG.getString("arguments.levels"));
 
-    public static Argument<?> WORLDS = new StringArgument(MiarmaCore.CONFIG.getString("language.world"))
+    public static Argument<?> WORLDS = new StringArgument(MiarmaCore.CONFIG.getString("arguments.world"))
             .replaceSuggestions(ArgumentSuggestions.strings(info -> Bukkit.getWorlds().stream().map(x -> x.getName())
                     .toList().toArray(new String[Bukkit.getWorlds().size()])));
 
-    public static Argument<?> MESSAGE = new GreedyStringArgument(MiarmaCore.CONFIG.getString("language.message"));
+    public static Argument<?> MESSAGE = new GreedyStringArgument(MiarmaCore.CONFIG.getString("arguments.message"));
 
-    public static Argument<?> ITEMS = new StringArgument(MiarmaCore.CONFIG.getString("language.item"))
+    public static Argument<?> ITEMS = new StringArgument(MiarmaCore.CONFIG.getString("arguments.item"))
             .replaceSuggestions(ArgumentSuggestions.strings(info ->
                     RECIPES.stream()
                             .map(Utils::getKey)
