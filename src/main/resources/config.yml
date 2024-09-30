@@ -182,7 +182,6 @@ commands:
     messages:
       payYouOthers: "[P] &7Has pagado &a%amount% &7niveles de XP a &a%target%"
       payOthersYou: "[P] &7El jugador &a%sender% &7te ha dado &a%amount% &7niveles de XP"
-      notEnoughLevels: "[P] &cNo tienes suficientes niveles para esto"
 
   specialitem:
     name: "specialitem"
@@ -294,6 +293,7 @@ language:
     itemNotFound: "[P] &cNo se ha encontrado el item"
     lobbyDoesNotExist: "[P] ERROR: El lobby definido en el config no existe"
     worldIsBlocked: "[P] &7El mundo &a%world% &7está bloqueado"
+    notEnoughLevels: "[P] &cNo tienes suficientes niveles para esto"
 
 
 # ⚠️ Do not modify this line ⚠️

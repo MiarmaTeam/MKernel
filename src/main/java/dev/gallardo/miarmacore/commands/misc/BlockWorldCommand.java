@@ -16,22 +16,22 @@ public class BlockWorldCommand {
     public static void register() {
         CustomConfigManager worldBlockerConfigManager = new CustomConfigManager(MiarmaCore.PLUGIN,"blockedWorlds.yml");
         List<String> blockedWorlds = worldBlockerConfigManager.getConfig().getStringList("blockedWorlds");
-        new CommandAPICommand(CONFIG.getString("commands.blockworld.name"))
+        new CommandAPICommand(MiarmaCore.CONFIG.getString("commands.blockworld.name"))
             .withArguments(WORLDS)
-            .withAliases(CONFIG.getConfig().getStringList("commands.blockworld.aliases").toArray(new String[0]))
-            .withFullDescription(CONFIG.getString("commands.blockworld.description"))
-            .withPermission(CONFIG.getString("commands.blockworld.permission"))
-            .withShortDescription(CONFIG.getString("commands.blockworld.description"))
+            .withAliases(MiarmaCore.CONFIG.getConfig().getStringList("commands.blockworld.aliases").toArray(new String[0]))
+            .withFullDescription(MiarmaCore.CONFIG.getString("commands.blockworld.description"))
+            .withPermission(MiarmaCore.CONFIG.getString("commands.blockworld.permission"))
+            .withShortDescription(MiarmaCore.CONFIG.getString("commands.blockworld.description"))
             .executesPlayer((sender, args) -> {
                 if (args.count() != 1) {
-                    Utils.sendMessage(CONFIG.getString("language.errors.invalidArgument"), sender, true);
+                    Utils.sendMessage(MiarmaCore.CONFIG.getString("language.errors.invalidArgument"), sender, true);
                 }
 
                 String world = args.getRaw(0);
 
                 if (blockedWorlds.contains(world)) {
                     blockedWorlds.remove(world);
-                    Utils.sendMessage(CONFIG.getString("commands.blockworld.messages.worldHasBeenUnblocked"), sender,
+                    Utils.sendMessage(MiarmaCore.CONFIG.getString("commands.blockworld.messages.worldHasBeenUnblocked"), sender,
                             true, true, List.of("%world%"), List.of(world));
                 } else {
                     blockedWorlds.add(world);
@@ -39,7 +39,7 @@ public class BlockWorldCommand {
                     if(!playersInWorld.isEmpty()) {
                         playersInWorld.forEach(p -> p.teleport(LocationTracker.getPlayerLocation(p)));
                     }
-                    Utils.sendMessage(CONFIG.getString("commands.blockworld.messages.worldHasBeenBlocked"), sender,
+                    Utils.sendMessage(MiarmaCore.CONFIG.getString("commands.blockworld.messages.worldHasBeenBlocked"), sender,
                             true, true, List.of("%world%"), List.of(world));
                 }
 

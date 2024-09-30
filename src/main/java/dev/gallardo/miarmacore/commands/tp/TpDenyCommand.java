@@ -12,19 +12,19 @@ import java.util.Optional;
 
 public class TpDenyCommand {
     public static void register() {
-        new CommandAPICommand(CONFIG.getString("commands.tpdeny.name"))
+        new CommandAPICommand(MiarmaCore.CONFIG.getString("commands.tpdeny.name"))
             .withArguments(PLAYER_ARG)
-            .withPermission(CONFIG.getString("commands.tpdeny.permission"))
-            .withFullDescription(CONFIG.getString("commands.tpdeny.description"))
-            .withShortDescription(CONFIG.getString("commands.tpdeny.description"))
-            .withUsage(CONFIG.getString("commands.tpdeny.usage"))
+            .withPermission(MiarmaCore.CONFIG.getString("commands.tpdeny.permission"))
+            .withFullDescription(MiarmaCore.CONFIG.getString("commands.tpdeny.description"))
+            .withShortDescription(MiarmaCore.CONFIG.getString("commands.tpdeny.description"))
+            .withUsage(MiarmaCore.CONFIG.getString("commands.tpdeny.usage"))
             .executesPlayer((sender, args) -> {
-                LOGGER.info(TPA_REQUESTS.toString());
+                MiarmaCore.LOGGER.info(TPA_REQUESTS.toString());
 
                 Player target = Bukkit.getPlayer(args.getRaw(0));
 
                 if (target == null || !target.isOnline()) {
-                    Utils.sendMessage(CONFIG.getString("language.errors.playerNotFound"), sender, true);
+                    Utils.sendMessage(MiarmaCore.CONFIG.getString("language.errors.playerNotFound"), sender, true);
                     return;
                 }
 
@@ -36,7 +36,7 @@ public class TpDenyCommand {
                         .findFirst();
 
                 if (requestOpt.isEmpty()) {
-                    Utils.sendMessage(CONFIG.getString("language.errors.noRequestFound"), sender, true);
+                    Utils.sendMessage(MiarmaCore.CONFIG.getString("language.errors.noRequestFound"), sender, true);
                     return;
                 }
 
@@ -44,8 +44,8 @@ public class TpDenyCommand {
                 TPA_REQUESTS.removeRequest(request); // Eliminar la solicitud después de denegarla
 
                 // Notificar a ambos jugadores
-                Utils.sendMessage(CONFIG.getString("commands.tpdeny.messages.denied"), sender, true);
-                Utils.sendMessage(CONFIG.getString("commands.tpdeny.messages.deniedToSender"), target, true);
+                Utils.sendMessage(MiarmaCore.CONFIG.getString("commands.tpdeny.messages.denied"), sender, true);
+                Utils.sendMessage(MiarmaCore.CONFIG.getString("commands.tpdeny.messages.deniedToSender"), target, true);
             })
             .register();
     }

@@ -16,7 +16,7 @@ public class RottenFleshCampfireRecipe {
         		rottenRecipeKey, 
         		new ItemStack(Material.BEEF), 
         		Material.ROTTEN_FLESH, 
-        		0, CONFIG.getInt("config.values.rottenFleshCookTime") * 20);
+        		0, MiarmaCore.CONFIG.getInt("config.values.rottenFleshCookTime") * 20);
         rottenRecipe.setCategory(CookingBookCategory.FOOD);
         return rottenRecipe;
     }

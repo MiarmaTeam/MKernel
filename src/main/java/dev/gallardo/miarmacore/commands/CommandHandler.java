@@ -30,6 +30,7 @@ public class CommandHandler {
         BlockWorldCommand.register();
         SpecialItemCommand.register();
         SendCoordsCommand.register();
+        PayXpCommand.register();
     }
 
     public static void onEnable() {

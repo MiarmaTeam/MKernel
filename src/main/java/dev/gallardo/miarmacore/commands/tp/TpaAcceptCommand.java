@@ -13,18 +13,18 @@ import java.util.Optional;
 
 public class TpaAcceptCommand {
     public static void register() {
-        new CommandAPICommand(CONFIG.getString("commands.tpaccept.name"))
+        new CommandAPICommand(MiarmaCore.CONFIG.getString("commands.tpaccept.name"))
             .withArguments(PLAYER_ARG)
             .withPermission("commands.tpaccept.permission")
-            .withFullDescription(CONFIG.getString("commands.tpaccept.description"))
-            .withShortDescription(CONFIG.getString("commands.tpaccept.description"))
-            .withUsage(CONFIG.getString("commands.tpaccept.usage"))
+            .withFullDescription(MiarmaCore.CONFIG.getString("commands.tpaccept.description"))
+            .withShortDescription(MiarmaCore.CONFIG.getString("commands.tpaccept.description"))
+            .withUsage(MiarmaCore.CONFIG.getString("commands.tpaccept.usage"))
             .executesPlayer((sender, args) -> {
-                LOGGER.info(TPA_REQUESTS.toString());
+                MiarmaCore.LOGGER.info(TPA_REQUESTS.toString());
 
                 Player target = Bukkit.getPlayer(args.getRaw(0));
                 if (target == null || !target.isOnline()) {
-                    Utils.sendMessage(CONFIG.getString("language.errors.playerNotFound"), sender, true);
+                    Utils.sendMessage(MiarmaCore.CONFIG.getString("language.errors.playerNotFound"), sender, true);
                     return;
                 }
 
@@ -35,7 +35,7 @@ public class TpaAcceptCommand {
                         .findFirst();
 
                 if (requestOpt.isEmpty()) {
-                    Utils.sendMessage(CONFIG.getString("language.errors.noRequestFound"), sender, true);
+                    Utils.sendMessage(MiarmaCore.CONFIG.getString("language.errors.noRequestFound"), sender, true);
                     return;
                 }
 
@@ -48,8 +48,8 @@ public class TpaAcceptCommand {
                     target.teleport(sender.getLocation());
                 }
 
-                Utils.sendMessage(CONFIG.getString("commands.tpaccept.messages.acceptedToSender"), sender, true);
-                Utils.sendMessage(CONFIG.getString("commands.tpaccept.messages.accepted"), target, true);
+                Utils.sendMessage(MiarmaCore.CONFIG.getString("commands.tpaccept.messages.acceptedToSender"), sender, true);
+                Utils.sendMessage(MiarmaCore.CONFIG.getString("commands.tpaccept.messages.accepted"), target, true);
             })
             .register();
     }

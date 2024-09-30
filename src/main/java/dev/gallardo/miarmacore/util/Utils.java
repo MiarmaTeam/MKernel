@@ -89,19 +89,19 @@ public class Utils {
 			langs.createNewFile();
 			copyResourceToFile(fileName, new File(MiarmaCore.PLUGIN.getDataFolder(), fileName).getAbsolutePath());
 		} catch (IOException e) {
-			MiarmaCore.PLUGIN.getLogger().severe(CONFIG.getString("language.errors.langs"));
+			MiarmaCore.PLUGIN.getLogger().severe(MiarmaCore.CONFIG.getString("language.errors.langs"));
 		}
 	}
 
     public static String formatMessageNoColors(String message, boolean prefix){
         if(prefix)
-            message = message.replace("[P]",CONFIG.getString("language.prefix"));
+            message = message.replace("[P]",MiarmaCore.CONFIG.getString("language.prefix"));
         return message;
     }
 
     public static String formatMessageNoColors(String message, boolean prefix, boolean placeholders, List<String> phs, List<String> values){
         if(prefix)
-            message = message.replace("[P]",CONFIG.getString("language.prefix"));
+            message = message.replace("[P]",MiarmaCore.CONFIG.getString("language.prefix"));
         if(placeholders)
             message = placeholderParser(message, phs, values);
         return message;
@@ -109,7 +109,7 @@ public class Utils {
 
     public static String formatMessage(String message, boolean prefix){
         if(prefix)
-            message = message.replace("[P]",CONFIG.getString("language.prefix"));
+            message = message.replace("[P]",MiarmaCore.CONFIG.getString("language.prefix"));
         return Utils.colorCodeParser(message);
     }
 
@@ -229,14 +229,14 @@ public class Utils {
         String displayName = itemMeta.getDisplayName();
         String configKey = "config.modules." + ChatColor.stripColor(displayName);
 
-        boolean currentValue = CONFIG.getBoolean(configKey);
+        boolean currentValue = MiarmaCore.CONFIG.getBoolean(configKey);
         boolean newValue = !currentValue;
 
-        CONFIG.getConfig().set(configKey, newValue);
-        CONFIG.save();
+        MiarmaCore.CONFIG.getConfig().set(configKey, newValue);
+        MiarmaCore.CONFIG.save();
 
         itemMeta.setLore(List.of(Utils.colorCodeParser(
-                CONFIG.getString("language.inventories.configMenu.valueLore")) + newValue));
+                MiarmaCore.CONFIG.getString("language.inventories.configMenu.valueLore")) + newValue));
         clickedItem.setItemMeta(itemMeta);
 
         if (event.getWhoClicked() instanceof Player) {

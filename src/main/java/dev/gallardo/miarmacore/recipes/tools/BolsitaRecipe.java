@@ -19,9 +19,9 @@ public class BolsitaRecipe {
 
         ItemMeta meta = bolsita.getItemMeta();
         meta.setDisplayName(Utils.colorCodeParser(
-                CONFIG.getString("language.items.bolsita.name")));
+                MiarmaCore.CONFIG.getString("language.items.bolsita.name")));
         meta.setLore(Collections.singletonList(Utils.colorCodeParser(
-                CONFIG.getString("language.items.bolsita.lore"))));
+                MiarmaCore.CONFIG.getString("language.items.bolsita.lore"))));
         bolsita.setItemMeta(meta);
 
         return bolsita;

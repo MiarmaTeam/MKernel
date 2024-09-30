@@ -1,5 +1,6 @@
 package dev.gallardo.miarmacore.common;
 
+import dev.gallardo.miarmacore.MiarmaCore;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -29,7 +30,7 @@ public class CustomConfigManager {
         try {
             config.save(configFile);
         } catch (IOException e) {
-            LOGGER.severe(e.getMessage());
+            MiarmaCore.LOGGER.severe(e.getMessage());
         }
     }
     
@@ -37,7 +38,7 @@ public class CustomConfigManager {
     	try {
     		YamlConfiguration.loadConfiguration(configFile);
     	} catch(Exception e) {
-    		LOGGER.severe(e.getMessage());
+    		MiarmaCore.LOGGER.severe(e.getMessage());
     	}
     }
 

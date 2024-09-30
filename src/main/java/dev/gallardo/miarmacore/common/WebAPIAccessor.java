@@ -13,7 +13,7 @@ import java.util.logging.Level;
 import static dev.gallardo.miarmacore.util.Constants.*;
 
 public class WebAPIAccessor {
-    private static final String API_BASE = CONFIG.getString("API_BASE");
+    private static final String API_BASE = MiarmaCore.CONFIG.getString("API_BASE");
 
 	public static boolean register(String username, String password, String role) {
         String json = "{\"username\": \"" + username + "\", \"password\": \"" + PasswordPBKDFUtil.encrypt(password) + "\" , \"rol\": \"" + role + "\"}";

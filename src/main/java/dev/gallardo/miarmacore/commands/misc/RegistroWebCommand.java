@@ -1,5 +1,6 @@
 package dev.gallardo.miarmacore.commands.misc;
 
+import dev.gallardo.miarmacore.MiarmaCore;
 import dev.gallardo.miarmacore.util.Utils;
 import dev.gallardo.miarmacore.common.WebAPIAccessor;
 import dev.jorel.commandapi.CommandAPICommand;
@@ -13,12 +14,12 @@ import java.util.stream.Collectors;
 
 public class RegistroWebCommand {
     public static void register() {
-        new CommandAPICommand(CONFIG.getString("commands.registerweb.name"))
+        new CommandAPICommand(MiarmaCore.CONFIG.getString("commands.registerweb.name"))
             .withOptionalArguments(PASSWORD_ARG)
-            .withFullDescription(CONFIG.getString("commands.registerweb.description"))
-            .withPermission(CONFIG.getString("commands.registerweb.permission"))
-            .withShortDescription(CONFIG.getString("commands.registerweb.description"))
-            .withUsage(CONFIG.getString("commands.registerweb.usage"))
+            .withFullDescription(MiarmaCore.CONFIG.getString("commands.registerweb.description"))
+            .withPermission(MiarmaCore.CONFIG.getString("commands.registerweb.permission"))
+            .withShortDescription(MiarmaCore.CONFIG.getString("commands.registerweb.description"))
+            .withUsage(MiarmaCore.CONFIG.getString("commands.registerweb.usage"))
             .executesPlayer((sender,args) -> {
                 String username = sender.getName();
                 String password;
@@ -34,13 +35,13 @@ public class RegistroWebCommand {
                 if(WebAPIAccessor.register(username,password,rol)) {
                     Utils.sendMessage(
                             Utils.placeholderParser(
-                                    CONFIG.getString("commands.registerweb.messages.success"),
+                                    MiarmaCore.CONFIG.getString("commands.registerweb.messages.success"),
                                     List.of("%user%", "%password%"),
                                     List.of(username, password)
                             ),
                             sender,true);
                 } else {
-                    Utils.sendMessage(CONFIG.getString("commands.registerweb.messages.error"),
+                    Utils.sendMessage(MiarmaCore.CONFIG.getString("commands.registerweb.messages.error"),
                             sender,true);
                 }
             })

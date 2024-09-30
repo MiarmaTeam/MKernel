@@ -1,5 +1,6 @@
 package dev.gallardo.miarmacore.commands.tp;
 
+import dev.gallardo.miarmacore.MiarmaCore;
 import dev.gallardo.miarmacore.common.minecraft.TpaType;
 import dev.gallardo.miarmacore.util.Utils;
 import dev.jorel.commandapi.CommandAPICommand;
@@ -11,22 +12,22 @@ import java.util.List;
 
 public class TpaCommand {
     public static void register() {
-        new CommandAPICommand(CONFIG.getString("commands.tpa.name"))
+        new CommandAPICommand(MiarmaCore.CONFIG.getString("commands.tpa.name"))
             .withArguments(PLAYER_ARG)
-            .withPermission(CONFIG.getString("commands.tpa.permission"))
-            .withFullDescription(CONFIG.getString("commands.tpa.description"))
-            .withShortDescription(CONFIG.getString("commands.tpa.description"))
-            .withUsage(CONFIG.getString("commands.tpa.usage"))
+            .withPermission(MiarmaCore.CONFIG.getString("commands.tpa.permission"))
+            .withFullDescription(MiarmaCore.CONFIG.getString("commands.tpa.description"))
+            .withShortDescription(MiarmaCore.CONFIG.getString("commands.tpa.description"))
+            .withUsage(MiarmaCore.CONFIG.getString("commands.tpa.usage"))
             .executesPlayer((sender, args) -> {
                 Player target = Bukkit.getPlayer(args.getRaw(0));
 
                 if (target == null || !target.isOnline()) {
-                    Utils.sendMessage(CONFIG.getString("language.errors.playerNotFound"), sender, true);
+                    Utils.sendMessage(MiarmaCore.CONFIG.getString("language.errors.playerNotFound"), sender, true);
                     return;
                 }
 
                 if (target.equals(sender)) {
-                    Utils.sendMessage(CONFIG.getString("language.errors.cantTeleportToYourself"), sender, true);
+                    Utils.sendMessage(MiarmaCore.CONFIG.getString("language.errors.cantTeleportToYourself"), sender, true);
                     return;
                 }
 
@@ -37,16 +38,16 @@ public class TpaCommand {
                         );
 
                 if (requestExists) {
-                    Utils.sendMessage(CONFIG.getString("language.errors.requestAlreadySent"), sender, true);
+                    Utils.sendMessage(MiarmaCore.CONFIG.getString("language.errors.requestAlreadySent"), sender, true);
                     return;
                 }
 
                 TPA_REQUESTS.addRequest(sender, target, TpaType.TPA);
-                LOGGER.info(TPA_REQUESTS.toString());
+                MiarmaCore.LOGGER.info(TPA_REQUESTS.toString());
 
                 Utils.sendMessage(
                         Utils.placeholderParser(
-                                CONFIG.getString("language.commands.tpa.tpaToPlayer"),
+                                MiarmaCore.CONFIG.getString("language.commands.tpa.tpaToPlayer"),
                                 List.of("%target%"),
                                 List.of(target.getName())
                         ),
@@ -55,7 +56,7 @@ public class TpaCommand {
 
                 Utils.sendMessage(
                         Utils.placeholderParser(
-                                CONFIG.getString("language.commands.tpa.tpaFromPlayer"),
+                                MiarmaCore.CONFIG.getString("language.commands.tpa.tpaFromPlayer"),
                                 List.of("%sender%"),
                                 List.of(sender.getName())
                         ),

@@ -20,9 +20,9 @@ public class ZombificationPotionRecipe {
         
         ItemMeta meta = potion.getItemMeta();
         meta.setDisplayName(Utils.colorCodeParser(
-                CONFIG.getString("language.items.zombificationPotion.name")));
+                MiarmaCore.CONFIG.getString("language.items.zombificationPotion.name")));
         meta.setLore(Collections.singletonList(Utils.colorCodeParser(
-                CONFIG.getString("language.items.zombificationPotion.lore"))));
+                MiarmaCore.CONFIG.getString("language.items.zombificationPotion.lore"))));
         meta.addEnchant(Enchantment.MENDING, 1, false);
         meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
         meta.addItemFlags(ItemFlag.HIDE_ADDITIONAL_TOOLTIP);

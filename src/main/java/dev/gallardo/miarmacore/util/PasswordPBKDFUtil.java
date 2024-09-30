@@ -6,6 +6,7 @@ import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
 import java.util.Base64;
+import dev.gallardo.miarmacore.MiarmaCore;
 import static dev.gallardo.miarmacore.util.Constants.*;
 
 public class PasswordPBKDFUtil {
@@ -34,7 +35,7 @@ public class PasswordPBKDFUtil {
             String result = String.format("pbkdf2:sha256:%d$%s$%s", ITERATIONS, SALT, derivedKeyBase64);
             return result;
         } catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
-            LOGGER.severe("Error al encriptar la contraseña: " + e.getMessage());
+            MiarmaCore.LOGGER.severe("Error al encriptar la contraseña: " + e.getMessage());
             return null;
         }
     }

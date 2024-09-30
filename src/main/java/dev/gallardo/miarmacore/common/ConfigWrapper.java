@@ -32,7 +32,7 @@ public class ConfigWrapper {
 					DumperSettings.DEFAULT, UpdaterSettings.builder().setVersioning(new BasicVersioning("file-version"))
 					.build());
         } catch (IOException e) {
-            LOGGER.severe("Error loading config.yml file!");
+            MiarmaCore.LOGGER.severe("Error loading config.yml file!");
         }
 	}
 	
@@ -40,7 +40,7 @@ public class ConfigWrapper {
 		try {
 			config.reload();
 		} catch (IOException e) {
-			LOGGER.severe("Error reloading config.yml file!");
+			MiarmaCore.LOGGER.severe("Error reloading config.yml file!");
 		}
 	}
 	
@@ -48,7 +48,7 @@ public class ConfigWrapper {
 		try {
 			config.save();
 		} catch (IOException e) {
-			LOGGER.severe("Error saving config.yml file!");
+			MiarmaCore.LOGGER.severe("Error saving config.yml file!");
 		}
 	}
 	

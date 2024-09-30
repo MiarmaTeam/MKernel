@@ -29,7 +29,7 @@ public class UpdaterUtil {
                 }
             }
             catch (IOException exception) {
-                LOGGER.info("There was an error finding an update!" + exception.getMessage());
+                MiarmaCore.LOGGER.info("There was an error finding an update!" + exception.getMessage());
             }
         });
     }

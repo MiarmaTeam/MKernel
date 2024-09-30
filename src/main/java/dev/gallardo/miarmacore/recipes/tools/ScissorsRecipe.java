@@ -21,9 +21,9 @@ public class ScissorsRecipe {
 
         ItemMeta meta = scissors.getItemMeta();
         meta.setDisplayName(Utils.colorCodeParser(
-                CONFIG.getString("language.items.scissors.name")));
+                MiarmaCore.CONFIG.getString("language.items.scissors.name")));
         meta.setLore(Collections.singletonList(Utils.colorCodeParser(
-                CONFIG.getString("language.items.scissors.lore"))));
+                MiarmaCore.CONFIG.getString("language.items.scissors.lore"))));
         meta.addEnchant(Enchantment.UNBREAKING, 1, false);
         meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
                 

@@ -12,22 +12,22 @@ import java.util.List;
 
 public class TpaHereCommand {
     public static void register() {
-        new CommandAPICommand(CONFIG.getString("commands.tpahere.name"))
+        new CommandAPICommand(MiarmaCore.CONFIG.getString("commands.tpahere.name"))
             .withArguments(PLAYER_ARG)
-            .withPermission(CONFIG.getString("commands.tpahere.permission"))
-            .withFullDescription(CONFIG.getString("commands.tpahere.description"))
-            .withShortDescription(CONFIG.getString("commands.tpahere.description"))
-            .withUsage(CONFIG.getString("commands.tpahere.usage"))
+            .withPermission(MiarmaCore.CONFIG.getString("commands.tpahere.permission"))
+            .withFullDescription(MiarmaCore.CONFIG.getString("commands.tpahere.description"))
+            .withShortDescription(MiarmaCore.CONFIG.getString("commands.tpahere.description"))
+            .withUsage(MiarmaCore.CONFIG.getString("commands.tpahere.usage"))
             .executesPlayer((sender, args) -> {
                 Player target = Bukkit.getPlayer(args.getRaw(0));
 
                 if (target == null || !target.isOnline()) {
-                    Utils.sendMessage(CONFIG.getString("language.errors.playerNotFound"), sender, true);
+                    Utils.sendMessage(MiarmaCore.CONFIG.getString("language.errors.playerNotFound"), sender, true);
                     return;
                 }
 
                 if (target.equals(sender)) {
-                    Utils.sendMessage(CONFIG.getString("language.errors.cantTeleportToYourself"), sender, true);
+                    Utils.sendMessage(MiarmaCore.CONFIG.getString("language.errors.cantTeleportToYourself"), sender, true);
                     return;
                 }
 
@@ -38,16 +38,16 @@ public class TpaHereCommand {
                         );
 
                 if (requestExists) {
-                    Utils.sendMessage(CONFIG.getString("language.errors.requestAlreadySent"), sender, true);
+                    Utils.sendMessage(MiarmaCore.CONFIG.getString("language.errors.requestAlreadySent"), sender, true);
                     return;
                 }
 
                 TPA_REQUESTS.addRequest(target, sender, TpaType.TPA_HERE);
-                LOGGER.info(TPA_REQUESTS.toString());
+                MiarmaCore.LOGGER.info(TPA_REQUESTS.toString());
 
                 Utils.sendMessage(
                         Utils.placeholderParser(
-                                CONFIG.getString("commands.tpahere.messages.tpaToPlayer"),
+                                MiarmaCore.CONFIG.getString("commands.tpahere.messages.tpaToPlayer"),
                                 List.of("%target%"),
                                 List.of(target.getName())
                         ),
@@ -56,7 +56,7 @@ public class TpaHereCommand {
 
                 Utils.sendMessage(
                         Utils.placeholderParser(
-                                CONFIG.getString("commands.tpahere.messages.tpaFromPlayer"),
+                                MiarmaCore.CONFIG.getString("commands.tpahere.messages.tpaFromPlayer"),
                                 List.of("%sender%"),
                                 List.of(sender.getName())
                         ),

@@ -19,9 +19,9 @@ public class AdminStickRecipe {
        
         ItemMeta meta = stick.getItemMeta();
         meta.setDisplayName(Utils.colorCodeParser(
-                CONFIG.getString("language.items.adminStick.name")));
+                MiarmaCore.CONFIG.getString("language.items.adminStick.name")));
         meta.setLore(Collections.singletonList(Utils.colorCodeParser(
-                CONFIG.getString("language.items.adminStick.lore"))));
+                MiarmaCore.CONFIG.getString("language.items.adminStick.lore"))));
         
         stick.setItemMeta(meta);
         

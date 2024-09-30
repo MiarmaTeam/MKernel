@@ -50,7 +50,7 @@ public class GlobalChest {
         try {
             items.save(itemsFile);
         } catch (IOException e) {
-            LOGGER.severe("Error saving items.yml file!");
+            MiarmaCore.LOGGER.severe("Error saving items.yml file!");
         }
 
     }
@@ -61,7 +61,7 @@ public class GlobalChest {
     }
 
     static {
-        inv = Bukkit.createInventory((InventoryHolder)null, 54,
-                Utils.colorCodeParser(CONFIG.getString("language.inventories.globalChest.title")));
+        inv = Bukkit.createInventory(null, 54,
+                Utils.colorCodeParser(MiarmaCore.CONFIG.getString("language.inventories.globalChest.title")));
     }
 }
