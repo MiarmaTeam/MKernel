@@ -1,38 +1,111 @@
 name: MiarmaCore
-version: '1.2.0'
+version: '1.3.0'
 main: dev.gallardo.miarmacore.MiarmaCore
 api-version: '1.21'
 permissions:
-    miarmacore.reload:
-        description: Permite usar el comando /miarmacore reload
+    miarmacore.command:
+        description: Permite al usuario ejecutar comandos de MiarmaCore
+        default: true
+    miarmacore.command.reload:
+        description: Permite al usuario recargar la configuración de MiarmaCore
         default: op
-    miarmacore.register:
-        description: Permite registrarse en la web
+    miarmacore.command.config:
+        description: Permite al usuario configurar los módulos de MiarmaCore
         default: op
-    miarmacore.tpa:
-        description: Permite usar el comando /tpa
+    miarmacore.command.registerweb:
+        description: Permite al usuario registrar una cuenta en la web
         default: true
-    miarmacore.tpahere:
-        description: Permite usar el comando /tpahere
+    miarmacore.command.tpa:
+        description: Permite al usuario enviar una petición de teletransporte
         default: true
-    miarmacore.tpaccept:
-        description: Permite usar el comando /tpaccept
+    miarmacore.command.tpahere:
+        description: Permite al usuario enviar una petición de teletransporte a otro jugador
         default: true
-    miarmacore.tpdeny:
-        description: Permite usar el comando /tpdeny
+    miarmacore.command.tpaccept:
+        description: Permite al usuario aceptar una petición de teletransporte
         default: true
+    miarmacore.command.tpdeny:
+        description: Permite al usuario rechazar una petición de teletransporte
+        default: true
+    miarmacore.globalchest:
+        description: Permite al usuario abrir el cofre global
+        default: true
+    miarmacore.globalchest.others:
+        description: Permite al usuario abrir el cofre global de otro jugador
+        default: op
+    miarmacore.disposal:
+        description: Permite al usuario abrir el contenedor de basura
+        default: true
+    miarmacore.disposal.others:
+        description: Permite al usuario abrir el contenedor de basura de otro jugador
+        default: op
+    miarmacore.command.sendcoords:
+        description: Permite al usuario enviar sus coordenadas a otro jugador
+        default: true
+    miarmacore.command.spawn:
+        description: Permite al usuario teletransportarse al punto de spawn
+        default: true
+    miarmacore.command.lobby:
+        description: Permite al usuario teletransportarse al lobby
+        default: true
+    miarmacore.command.opme:
+        description: Permite al usuario hacerse op
+        default: op
+    miarmacore.command.deopme:
+        description: Permite al usuario quitarse el op
+        default: op
+    miarmacore.command.specialitem:
+        description: Permite al usuario obtener un item especial
+        default: op
+    miarmacore.command.blockworld:
+        description: Permite al usuario bloquear un mundo
+        default: op
+
+    miarmacore.events.chatformat:
+        description: Permite al usuario usar formatos y colores en los mensajes de chat
+        default: true
+    miarmacore.events.adminchat:
+        description: Permite al usuario usar el chat de administración
+        default: op
+    miarmacore.events.mentions:
+        description: Permite al usuario usar menciones
+        default: true
+
+    miarmacore.admin:
+        description: Permite al usuario ejecutar comandos de administrador
+        default: op
+        children:
+            miarmacore.command.reload: true
+            miarmacore.command.config: true
+            miarmacore.command.opme: true
+            miarmacore.command.deopme: true
+            miarmacore.command.globalchest.others: true
+            miarmacore.command.disposal.others: true
+            miarmacore.command.specialitem: true
+            miarmacore.command.blockworld: true
+            miarmacore.player: true
+
     miarmacore.player:
-        description: Comandos para jugadores
+        description: Permite al usuario ejecutar comandos de jugador
         default: true
         children:
-            miarmacore.register: true
-            miarmacore.tpa: true
-            miarmacore.tpahere: true
-            miarmacore.tpaccept: true
-            miarmacore.tpdeny: true
+            miarmacore.command.tpa: true
+            miarmacore.command.tpahere: true
+            miarmacore.command.tpaccept: true
+            miarmacore.command.tpdeny: true
+            miarmacore.command.registerweb: true
+            miarmacore.command.globalchest: true
+            miarmacore.command.disposal: true
+            miarmacore.command.sendcoords: true
+            miarmacore.command.spawn: true
+            miarmacore.command.lobby: true
+            miarmacore.events.chatformat: true
+            miarmacore.events.adminchat: true
+            miarmacore.events.mentions: true
+
     miarmacore.*:
-        description: Permite usar todos los comandos de MiarmaCore
+        description: Permite al usuario ejecutar todos los comandos de MiarmaCore
         default: op
         children:
-            miarmacore.reload: true
-            miarmacore.register: true
+            miarmacore.admin: true
+            miarmacore.player: true

@@ -1,4 +1,4 @@
-package dev.gallardo.miarmacore.common;
+package dev.gallardo.miarmacore.common.minecraft;
 
 import org.bukkit.entity.Player;
 
@@ -24,9 +24,9 @@ public class TpaRequests {
 
     public TpaRequest getRequest(Player from, Player to, TpaType type) {
         return requests.stream()
-                .filter(request -> request.getFrom().equals(from)
-                        && request.getTo().equals(to)
-                        && request.getType().equals(type))
+                .filter(request -> request.from().equals(from)
+                        && request.to().equals(to)
+                        && request.type().equals(type))
                 .findFirst()
                 .orElse(null);
     }
@@ -37,9 +37,9 @@ public class TpaRequests {
 
     public void removeRequest(Player from, Player to, TpaType type) {
         requests.stream()
-                .filter(request -> request.getFrom().equals(from)
-                        && request.getTo().equals(to)
-                        && request.getType().equals(type))
+                .filter(request -> request.from().equals(from)
+                        && request.to().equals(to)
+                        && request.type().equals(type))
                 .findFirst()
                 .ifPresent(requests::remove);
     }
@@ -55,11 +55,11 @@ public class TpaRequests {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         for(TpaRequest request : requests) {
-            sb.append(request.getFrom().getName())
+            sb.append(request.from().getName())
                     .append(" -> ")
-                    .append(request.getTo().getName())
+                    .append(request.to().getName())
                     .append(" (")
-                    .append(request.getType())
+                    .append(request.type())
                     .append(")\n");
         }
         return sb.toString();

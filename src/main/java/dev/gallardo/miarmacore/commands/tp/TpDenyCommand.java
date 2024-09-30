@@ -1,7 +1,7 @@
 package dev.gallardo.miarmacore.commands.tp;
 
 import dev.gallardo.miarmacore.MiarmaCore;
-import dev.gallardo.miarmacore.common.TpaRequest;
+import dev.gallardo.miarmacore.common.minecraft.TpaRequest;
 import dev.gallardo.miarmacore.util.Utils;
 import dev.jorel.commandapi.CommandAPICommand;
 import org.bukkit.Bukkit;
@@ -12,19 +12,14 @@ import java.util.Optional;
 
 public class TpDenyCommand {
     public static void register() {
-        new CommandAPICommand("tpdeny")
+        new CommandAPICommand(CONFIG.getString("commands.tpdeny.name"))
             .withArguments(PLAYER_ARG)
-            .withPermission("miarmacore.tpdeny")
+            .withPermission(CONFIG.getString("commands.tpdeny.permission"))
             .withFullDescription(CONFIG.getString("commands.tpdeny.description"))
             .withShortDescription(CONFIG.getString("commands.tpdeny.description"))
             .withUsage(CONFIG.getString("commands.tpdeny.usage"))
             .executesPlayer((sender, args) -> {
-                MiarmaCore.logger.info(TPA_REQUESTS.toString());
-
-                if (!(sender instanceof Player)) {
-                    sender.sendMessage(CONFIG.getString("language.errors.onlyPlayerCommand"));
-                    return;
-                }
+                LOGGER.info(TPA_REQUESTS.toString());
 
                 Player target = Bukkit.getPlayer(args.getRaw(0));
 
@@ -36,7 +31,7 @@ public class TpDenyCommand {
                 // Buscar la solicitud de TPA correcta entre el sender y el target
                 Optional<TpaRequest> requestOpt = TPA_REQUESTS.getRequests().stream()
                         .filter(request ->
-                                request.getFrom().equals(target) && request.getTo().equals(sender)
+                                request.from().equals(target) && request.to().equals(sender)
                         )
                         .findFirst();
 
@@ -49,8 +44,8 @@ public class TpDenyCommand {
                 TPA_REQUESTS.removeRequest(request); // Eliminar la solicitud después de denegarla
 
                 // Notificar a ambos jugadores
-                Utils.sendMessage(CONFIG.getString("language.commands.tpdeny.success"), sender, true);
-                Utils.sendMessage(CONFIG.getString("language.commands.tpdeny.senderDenied"), target, true);
+                Utils.sendMessage(CONFIG.getString("commands.tpdeny.messages.denied"), sender, true);
+                Utils.sendMessage(CONFIG.getString("commands.tpdeny.messages.deniedToSender"), target, true);
             })
             .register();
     }

@@ -1,8 +1,16 @@
 package dev.gallardo.miarmacore.util;
 
 import dev.gallardo.miarmacore.MiarmaCore;
+import dev.gallardo.miarmacore.common.minecraft.MinepacksAccessor;
+import net.md_5.bungee.api.ChatColor;
+import org.bukkit.Bukkit;
+import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.inventory.*;
+import org.bukkit.inventory.meta.ItemMeta;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -12,9 +20,9 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static dev.gallardo.miarmacore.util.Constants.*;
+
 public class Utils {
-	private static final ConfigWrapper cfg = MiarmaCore.getConf();
-	
 	public static String placeholderParser(String message, List<String> placeholders, List<String> values) {
         int i = 0;
     	for(String p:placeholders) {
@@ -77,23 +85,23 @@ public class Utils {
 	
 	public static void createLangs(String fileName) {
 		try {
-			File langs = new File(MiarmaCore.plugin.getDataFolder(), fileName);
+			File langs = new File(MiarmaCore.PLUGIN.getDataFolder(), fileName);
 			langs.createNewFile();
-			copyResourceToFile(fileName, new File(MiarmaCore.plugin.getDataFolder(), fileName).getAbsolutePath());
+			copyResourceToFile(fileName, new File(MiarmaCore.PLUGIN.getDataFolder(), fileName).getAbsolutePath());
 		} catch (IOException e) {
-			MiarmaCore.plugin.getLogger().severe(cfg.getString("language.errors.langs"));
+			MiarmaCore.PLUGIN.getLogger().severe(CONFIG.getString("language.errors.langs"));
 		}
 	}
 
     public static String formatMessageNoColors(String message, boolean prefix){
         if(prefix)
-            message = message.replace("[P]",cfg.getString("language.prefix"));
+            message = message.replace("[P]",CONFIG.getString("language.prefix"));
         return message;
     }
 
     public static String formatMessageNoColors(String message, boolean prefix, boolean placeholders, List<String> phs, List<String> values){
         if(prefix)
-            message = message.replace("[P]",cfg.getString("language.prefix"));
+            message = message.replace("[P]",CONFIG.getString("language.prefix"));
         if(placeholders)
             message = placeholderParser(message, phs, values);
         return message;
@@ -101,7 +109,7 @@ public class Utils {
 
     public static String formatMessage(String message, boolean prefix){
         if(prefix)
-            message = message.replace("[P]",cfg.getString("language.prefix"));
+            message = message.replace("[P]",CONFIG.getString("language.prefix"));
         return Utils.colorCodeParser(message);
     }
 
@@ -115,6 +123,11 @@ public class Utils {
         sender.sendMessage(formatMessage(message, prefix));
     }
 
+    public static void sendMessage(String message, CommandSender sender, boolean prefix, boolean placeholders,
+                                   List<String> phs, List<String> values) {
+        sender.sendMessage(formatMessage(message, prefix, placeholders, phs, values));
+    }
+
     public static String generateRandomPassword(int size) {
         String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789~#$&*_+-=.";
         StringBuilder pass = new StringBuilder();
@@ -123,6 +136,120 @@ public class Utils {
             pass.append(chars.charAt(random));
         }
         return pass.toString();
+    }
+
+    public static String getKey(ItemStack item) {
+        List<Recipe> matchingRecipes = Bukkit.getRecipesFor(item);
+        for (Recipe recipe : matchingRecipes) {
+            if (recipe instanceof ShapedRecipe) {
+                return ((ShapedRecipe) recipe).getKey().getKey();
+            }
+        }
+        return null;
+    }
+
+    public static Material getMaterialWithProb() {
+        double n = Math.random();
+        Material res = null;
+        if(n>0.40) {
+            res = Material.BEEF;
+        } else {
+            res = Material.BONE;
+        }
+        return res;
+    }
+
+    public static void refillItem(Player player, Material material, EquipmentSlot hand) {
+        ItemStack[] items = player.getInventory().getStorageContents();
+
+        for (int i = 0; i < 36; ++i) {
+            if (items[i] != null && isValidSlot(i, player) && items[i].getType().equals(material)) {
+                if (hand.equals(EquipmentSlot.HAND)) {
+                    player.getInventory().setItemInMainHand(items[i]);
+                    player.getInventory().setItem(i, (ItemStack) null);
+                    break;
+                }
+
+                if (hand.equals(EquipmentSlot.OFF_HAND)) {
+                    player.getInventory().setItemInOffHand(items[i]);
+                    player.getInventory().setItem(i, (ItemStack) null);
+                    break;
+                }
+            }
+        }
+
+    }
+
+    public static void refillItemFromMinepack(Player player, Material material, EquipmentSlot hand) {
+        Inventory backpack = MinepacksAccessor.getPlayerBackpackInventory(player);
+
+        if (backpack != null) {
+            ItemStack[] contents = backpack.getContents();
+            for (int i = 0; i < contents.length; i++) {
+                ItemStack itemStack = contents[i];
+                if (itemStack != null && isValidSlot(i, player) && itemStack.getType() == material) {
+                    if (hand == EquipmentSlot.HAND) {
+                        player.getInventory().setItemInMainHand(itemStack);
+                    } else if (hand == EquipmentSlot.OFF_HAND) {
+                        player.getInventory().setItemInOffHand(itemStack);
+                    }
+                    contents[i] = (ItemStack) null;
+                    backpack.setContents(contents);
+                    break;
+                }
+            }
+        }
+    }
+
+    public static boolean isValidSlot(int i, Player player) {
+        return i != player.getInventory().getHeldItemSlot() && i != 40;
+    }
+
+    public static int getItemCount(Inventory inventory, Material material) {
+        int count = 0;
+        for (ItemStack item : inventory.getContents()) {
+            if (item != null && item.getType() == material) {
+                count += item.getAmount();
+            }
+        }
+        return count;
+    }
+
+    public static void reloadConfigItem(InventoryClickEvent event) {
+        ItemStack clickedItem = event.getCurrentItem();
+        if (clickedItem == null || clickedItem.getType() != Material.PAPER) {
+            return;
+        }
+
+        ItemMeta itemMeta = clickedItem.getItemMeta();
+        if (itemMeta == null || !itemMeta.hasDisplayName()) {
+            return;
+        }
+
+        String displayName = itemMeta.getDisplayName();
+        String configKey = "config.modules." + ChatColor.stripColor(displayName);
+
+        boolean currentValue = CONFIG.getBoolean(configKey);
+        boolean newValue = !currentValue;
+
+        CONFIG.getConfig().set(configKey, newValue);
+        CONFIG.save();
+
+        itemMeta.setLore(List.of(Utils.colorCodeParser(
+                CONFIG.getString("language.inventories.configMenu.valueLore")) + newValue));
+        clickedItem.setItemMeta(itemMeta);
+
+        if (event.getWhoClicked() instanceof Player) {
+            Player player = (Player) event.getWhoClicked();
+            player.playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, 1, 1);
+        }
+
+        event.setCancelled(true);
+        event.getInventory().setItem(event.getSlot(), clickedItem);
+    }
+
+    public static double distance(Player p1, Player p2) {
+        return p1.getLocation().distance(p2.getLocation());
     }
 
 }

@@ -1,6 +1,7 @@
-package dev.gallardo.miarmacore.util;
+package dev.gallardo.miarmacore.common;
 
 import dev.gallardo.miarmacore.MiarmaCore;
+import dev.gallardo.miarmacore.util.PasswordPBKDFUtil;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -9,12 +10,13 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.logging.Level;
 
+import static dev.gallardo.miarmacore.util.Constants.*;
+
 public class WebAPIAccessor {
-    private static ConfigWrapper config = MiarmaCore.getConf();
-    private static final String API_BASE = config.getString("API_BASE");
+    private static final String API_BASE = CONFIG.getString("API_BASE");
 
 	public static boolean register(String username, String password, String role) {
-        String json = "{\"username\": \"" + username + "\", \"password\": \"" + PasswordPBKDF.encrypt((String)password) + "\" , \"rol\": \"" + role + "\"}";
+        String json = "{\"username\": \"" + username + "\", \"password\": \"" + PasswordPBKDFUtil.encrypt(password) + "\" , \"rol\": \"" + role + "\"}";
         try {
             String output;
             URL url = new URL(API_BASE);
@@ -27,13 +29,13 @@ public class WebAPIAccessor {
             os.flush();
             BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
             while ((output = br.readLine()) != null) {
-                MiarmaCore.plugin.getLogger().log(Level.INFO, output);
+                MiarmaCore.PLUGIN.getLogger().log(Level.INFO, output);
             }
             conn.disconnect();
             return true;
         }
         catch (Exception e) {
-            MiarmaCore.plugin.getLogger().log(Level.SEVERE, e.getMessage());
+            MiarmaCore.PLUGIN.getLogger().log(Level.SEVERE, e.getMessage());
             return false;
         }
     }

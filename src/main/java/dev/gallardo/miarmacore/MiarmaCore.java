@@ -1,33 +1,38 @@
 package dev.gallardo.miarmacore;
 
 import dev.gallardo.miarmacore.commands.CommandHandler;
-import dev.gallardo.miarmacore.util.ConfigWrapper;
+import dev.gallardo.miarmacore.common.minecraft.GlobalChest;
+import dev.gallardo.miarmacore.events.EventListener;
+import dev.gallardo.miarmacore.recipes.RecipeManager;
+import dev.gallardo.miarmacore.tasks.LocationTracker;
 import dev.gallardo.miarmacore.util.Utils;
 import dev.jorel.commandapi.CommandAPI;
 import dev.jorel.commandapi.CommandAPIBukkitConfig;
 import org.bukkit.plugin.java.JavaPlugin;
+import static dev.gallardo.miarmacore.util.Constants.*;
 
-import java.util.logging.Logger;
+public class MiarmaCore extends JavaPlugin {
 
-public final class MiarmaCore extends JavaPlugin {
-
-    public static MiarmaCore plugin;
-    private static final ConfigWrapper config = new ConfigWrapper();
-    public static Logger logger;
-
-    public static ConfigWrapper getConf() {
-    	return config;
-    }
-
+    public static MiarmaCore PLUGIN;
+    
     @Override
     public void onEnable() {
         super.onEnable();
-        plugin = this;
-        logger = plugin.getLogger();
-        config.onEnable();
+        PLUGIN = this;
+        // FILES
+        CONFIG.onEnable();
         Utils.createLangs("lang.yml");
+        // onEnable()'s
         CommandAPI.onEnable();
         CommandHandler.onEnable();
+        RecipeManager.onEnable();
+        EventListener.onEnable();
+        // GLOBAL CHEST
+        GlobalChest.loadConfig();
+        GlobalChest.loadChest();
+        // LOCATION TRACKER
+        LocationTracker.startLocationTrackingTask();
+        // PLUGIN ENABLED :-)
         this.getLogger().info("I've been enabled! :)");
     }
 
@@ -39,6 +44,7 @@ public final class MiarmaCore extends JavaPlugin {
     @Override
     public void onDisable() {
         super.onDisable();
+        GlobalChest.saveChest();
         this.getLogger().info("I've been disabled! :(");
     }
 }

@@ -2,13 +2,13 @@ package dev.gallardo.miarmacore.util;
 
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
-import javax.script.ScriptException;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
 import java.util.Base64;
+import static dev.gallardo.miarmacore.util.Constants.*;
 
-public class PasswordPBKDF {
+public class PasswordPBKDFUtil {
 
     private static final String MASTER_KEY = "RRb5rR-8KkVkMY9weht0ZgWF-Vge7LFYYn77d_EfeRI"; // Clave maestra
     private static final String SALT = "MjN72ikE"; // Salt para la derivación de clave
@@ -34,12 +34,8 @@ public class PasswordPBKDF {
             String result = String.format("pbkdf2:sha256:%d$%s$%s", ITERATIONS, SALT, derivedKeyBase64);
             return result;
         } catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
-            e.printStackTrace();
+            LOGGER.severe("Error al encriptar la contraseña: " + e.getMessage());
             return null;
         }
     }
-    
-    public static void main(String[] args) throws ScriptException {
-		System.out.println(encrypt("mamamama"));
-	}
 }

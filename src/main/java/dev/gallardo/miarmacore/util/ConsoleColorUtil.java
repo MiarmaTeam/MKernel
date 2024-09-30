@@ -1,6 +1,6 @@
 package dev.gallardo.miarmacore.util;
 
-public enum ConsoleColors {
+public enum ConsoleColorUtil {
     // Reset
     RESET("\033[0m"),
 
@@ -34,9 +34,9 @@ public enum ConsoleColors {
     BACKGROUND_CYAN("\033[46m"),     
     BACKGROUND_WHITE("\033[47m");
 
-    private final String code;
+    private String code;
 
-    ConsoleColors(String code) {
+    ConsoleColorUtil(String code) {
         this.code = code;
     }
 

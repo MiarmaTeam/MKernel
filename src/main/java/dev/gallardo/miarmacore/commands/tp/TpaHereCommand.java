@@ -1,7 +1,7 @@
 package dev.gallardo.miarmacore.commands.tp;
 
 import dev.gallardo.miarmacore.MiarmaCore;
-import dev.gallardo.miarmacore.common.TpaType;
+import dev.gallardo.miarmacore.common.minecraft.TpaType;
 import dev.gallardo.miarmacore.util.Utils;
 import dev.jorel.commandapi.CommandAPICommand;
 import org.bukkit.Bukkit;
@@ -12,18 +12,13 @@ import java.util.List;
 
 public class TpaHereCommand {
     public static void register() {
-        new CommandAPICommand("tpahere")
+        new CommandAPICommand(CONFIG.getString("commands.tpahere.name"))
             .withArguments(PLAYER_ARG)
-            .withPermission("miarmacore.tpahere")
+            .withPermission(CONFIG.getString("commands.tpahere.permission"))
             .withFullDescription(CONFIG.getString("commands.tpahere.description"))
             .withShortDescription(CONFIG.getString("commands.tpahere.description"))
             .withUsage(CONFIG.getString("commands.tpahere.usage"))
             .executesPlayer((sender, args) -> {
-                if (!(sender instanceof Player)) {
-                    sender.sendMessage(CONFIG.getString("language.errors.onlyPlayerCommand"));
-                    return;
-                }
-
                 Player target = Bukkit.getPlayer(args.getRaw(0));
 
                 if (target == null || !target.isOnline()) {
@@ -36,11 +31,10 @@ public class TpaHereCommand {
                     return;
                 }
 
-                // Verificar si ya hay una solicitud activa entre el sender y el target
                 boolean requestExists = TPA_REQUESTS.getRequests().stream()
                         .anyMatch(request ->
-                                (request.getFrom().equals(sender) && request.getTo().equals(target)) ||
-                                        (request.getFrom().equals(target) && request.getTo().equals(sender))
+                                (request.from().equals(sender) && request.to().equals(target)) ||
+                                        (request.from().equals(target) && request.to().equals(sender))
                         );
 
                 if (requestExists) {
@@ -48,13 +42,12 @@ public class TpaHereCommand {
                     return;
                 }
 
-                // Añadir la solicitud si no existe
                 TPA_REQUESTS.addRequest(target, sender, TpaType.TPA_HERE);
-                MiarmaCore.logger.info(TPA_REQUESTS.toString());
+                LOGGER.info(TPA_REQUESTS.toString());
 
                 Utils.sendMessage(
                         Utils.placeholderParser(
-                                CONFIG.getString("language.commands.tpahere.tpaToPlayer"),
+                                CONFIG.getString("commands.tpahere.messages.tpaToPlayer"),
                                 List.of("%target%"),
                                 List.of(target.getName())
                         ),
@@ -63,7 +56,7 @@ public class TpaHereCommand {
 
                 Utils.sendMessage(
                         Utils.placeholderParser(
-                                CONFIG.getString("language.commands.tpahere.tpaFromPlayer"),
+                                CONFIG.getString("commands.tpahere.messages.tpaFromPlayer"),
                                 List.of("%sender%"),
                                 List.of(sender.getName())
                         ),

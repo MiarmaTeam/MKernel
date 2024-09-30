@@ -1,4 +1,4 @@
-package dev.gallardo.miarmacore.util;
+package dev.gallardo.miarmacore.common;
 
 import dev.dejvokep.boostedyaml.YamlDocument;
 import dev.dejvokep.boostedyaml.dvs.versioning.BasicVersioning;
@@ -12,6 +12,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
+import static dev.gallardo.miarmacore.util.Constants.*;
+
 public class ConfigWrapper {
 	private YamlDocument config;
 	
@@ -24,10 +26,13 @@ public class ConfigWrapper {
 	
 	public void onEnable() {
 		try {
-            this.config = YamlDocument.create(new File(MiarmaCore.plugin.getDataFolder(), "config.yml"), MiarmaCore.plugin.getResource("config.yml"),
-                    GeneralSettings.DEFAULT, LoaderSettings.builder().setAutoUpdate(true).build(), DumperSettings.DEFAULT, UpdaterSettings.builder().setVersioning(new BasicVersioning("file-version")).build());
+            this.config = YamlDocument.create(new File(MiarmaCore.PLUGIN.getDataFolder(), "config.yml"),
+                    MiarmaCore.PLUGIN.getResource("config.yml"),
+                    GeneralSettings.DEFAULT, LoaderSettings.builder().setAutoUpdate(true).build(), 
+					DumperSettings.DEFAULT, UpdaterSettings.builder().setVersioning(new BasicVersioning("file-version"))
+					.build());
         } catch (IOException e) {
-            e.printStackTrace();
+            LOGGER.severe("Error loading config.yml file!");
         }
 	}
 	
@@ -35,8 +40,7 @@ public class ConfigWrapper {
 		try {
 			config.reload();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			LOGGER.severe("Error reloading config.yml file!");
 		}
 	}
 	
@@ -44,8 +48,7 @@ public class ConfigWrapper {
 		try {
 			config.save();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			LOGGER.severe("Error saving config.yml file!");
 		}
 	}
 	
