@@ -7,6 +7,8 @@ import org.bukkit.Location;
 
 import static dev.gallardo.miarmacore.MiarmaCore.HOME_CONFIG;
 
+import java.util.List;
+
 public class SetHomeCommand {
     public static void register() {
         new CommandAPICommand(MiarmaCore.CONFIG.getString("commands.sethome.name"))
@@ -23,7 +25,8 @@ public class SetHomeCommand {
                 HOME_CONFIG.getConfig().set(path + ".yaw", loc.getYaw());
                 HOME_CONFIG.getConfig().set(path + ".pitch", loc.getPitch());
                 HOME_CONFIG.saveConfig();
-                Utils.sendMessage(MiarmaCore.CONFIG.getString("commands.sethome.messages.homeSet"), sender, true);
+                Utils.sendMessage(MiarmaCore.CONFIG.getString("commands.sethome.messages.homeSet"), sender, true,
+                        true, List.of("%x%", "%y%", "%z%"), List.of(loc.getX()+"", loc.getY()+"", loc.getZ()+""));
             })
             .register();
     }
