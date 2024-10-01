@@ -6,12 +6,10 @@ import dev.jorel.commandapi.CommandAPICommand;
 import org.bukkit.Location;
 
 import static dev.gallardo.miarmacore.MiarmaCore.HOME_CONFIG;
-import static dev.gallardo.miarmacore.util.Constants.*;
 
 public class SetHomeCommand {
     public static void register() {
         new CommandAPICommand(MiarmaCore.CONFIG.getString("commands.sethome.name"))
-            .withArguments(HOME_ARG)
             .withPermission(MiarmaCore.CONFIG.getString("commands.sethome.permission"))
             .withFullDescription(MiarmaCore.CONFIG.getString("commands.sethome.description"))
             .withShortDescription(MiarmaCore.CONFIG.getString("commands.sethome.description"))
