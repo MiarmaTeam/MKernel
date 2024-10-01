@@ -26,7 +26,7 @@ public class SetHomeCommand {
                 HOME_CONFIG.getConfig().set(path + ".pitch", loc.getPitch());
                 HOME_CONFIG.saveConfig();
                 Utils.sendMessage(MiarmaCore.CONFIG.getString("commands.sethome.messages.homeSet"), sender, true,
-                        true, List.of("%x%", "%y%", "%z%"), List.of(loc.getX()+"", loc.getY()+"", loc.getZ()+""));
+                        true, List.of("%x%", "%y%", "%z%"), List.of((int)loc.getX()+"", (int)loc.getY()+"", (int)loc.getZ()+""));
             })
             .register();
     }
