@@ -23,7 +23,7 @@ public class SetHomeCommand {
                 HOME_CONFIG.getConfig().set(path + ".yaw", loc.getYaw());
                 HOME_CONFIG.getConfig().set(path + ".pitch", loc.getPitch());
                 HOME_CONFIG.saveConfig();
-                Utils.sendMessage(MiarmaCore.CONFIG.getString("commands.messages.sethome.homeSet"), sender, true);
+                Utils.sendMessage(MiarmaCore.CONFIG.getString("commands.sethome.messages.homeSet"), sender, true);
             })
             .register();
     }
