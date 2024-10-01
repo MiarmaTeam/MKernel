@@ -14,8 +14,7 @@ import static dev.gallardo.miarmacore.util.Constants.*;
 
 public class BlockWorldCommand {
     public static void register() {
-        CustomConfigManager worldBlockerConfigManager = new CustomConfigManager(MiarmaCore.PLUGIN,"blockedWorlds.yml");
-        List<String> blockedWorlds = worldBlockerConfigManager.getConfig().getStringList("blockedWorlds");
+        List<String> blockedWorlds = MiarmaCore.BLOCK_WORLD_CONFIG.getConfig().getStringList("blockedWorlds");
         new CommandAPICommand(MiarmaCore.CONFIG.getString("commands.blockworld.name"))
             .withArguments(WORLDS)
             .withAliases(MiarmaCore.CONFIG.getConfig().getStringList("commands.blockworld.aliases").toArray(new String[0]))
@@ -43,8 +42,8 @@ public class BlockWorldCommand {
                             true, true, List.of("%world%"), List.of(world));
                 }
 
-                worldBlockerConfigManager.getConfig().set("blockedWorlds", blockedWorlds);
-                worldBlockerConfigManager.saveConfig();
+                MiarmaCore.BLOCK_WORLD_CONFIG.getConfig().set("blockedWorlds", blockedWorlds);
+                MiarmaCore.BLOCK_WORLD_CONFIG.saveConfig();
             })
             .register();
     }
