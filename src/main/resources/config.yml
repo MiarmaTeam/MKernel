@@ -26,6 +26,7 @@ config:
     rottenFleshCookTime: 60
     zombificationPotionTime: 180
     spawnerBreakerProbability: 30
+    recoverInventoryRequiredLevel: 10
 
   modules:
     joinTitle: true
@@ -254,6 +255,7 @@ commands:
     permission: "miarmacore.command.recinv"
     messages:
       inventoryRecovered: "[P] &7Has recuperado &a%items% &7items"
+      notEnoughLevels: "[P] &cNo tienes suficientes niveles. Necesitas &a%required%"
 
 # -----------------------------------------------------------
 #  Message Configuration

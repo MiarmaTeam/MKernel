@@ -18,10 +18,7 @@ import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.*;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityDeathEvent;
-import org.bukkit.event.entity.PlayerDeathEvent;
-import org.bukkit.event.entity.PotionSplashEvent;
+import org.bukkit.event.entity.*;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.event.player.*;
@@ -74,6 +71,7 @@ public class EventListener {
 				}
 
 				if(MiarmaCore.CONFIG.getBoolean("config.modules.keepInventory")) {
+					event.setKeepInventory(true);
 					Utils.saveInventoryToFile(event.getEntity());
 				}
 			}
@@ -501,6 +499,13 @@ public class EventListener {
 			        }
 			        bookMeta.setPages(newPages);
 			        event.setNewBookMeta(bookMeta);
+				}
+			}
+
+			@EventHandler
+			public void onCreeperExplode(CreeperPowerEvent event) {
+				if(MiarmaCore.CONFIG.getBoolean("config.modules.creeperExplosion")) {
+					event.setCancelled(true);
 				}
 			}
 			

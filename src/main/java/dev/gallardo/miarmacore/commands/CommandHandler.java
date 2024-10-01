@@ -35,6 +35,7 @@ public class CommandHandler {
         PayXpCommand.register();
         HomeCommand.register();
         SetHomeCommand.register();
+        InventoryRecoveryCommand.register();
     }
 
     public static void onEnable() {
