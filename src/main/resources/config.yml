@@ -63,6 +63,7 @@ arguments:
   world: "mundo"
   message: "mensaje"
   item: "item"
+  home: "nombre del hogar"
 
 commands:
   miarmacore:
@@ -230,6 +231,21 @@ commands:
     name: "me"
     description: "Acciones de personaje"
     permission: "miarmacore.command.me"
+
+  sethome:
+    name: "sethome"
+    description: "Establece tu home"
+    permission: "miarmacore.command.sethome"
+    messages:
+      homeSet: "[P] &7Hogar establecido en &a%x% %y% %z%&r"
+
+  home:
+    name: "home"
+    description: "Teletransportate a tu hogar"
+    permission: "miarmacore.command.home"
+    messages:
+      teleported: "[P] &7Has sido teletransportado a tu hogar"
+      homeDoesNotExist: "[P] &cNo tienes ningún hogar establecido"
 
 # -----------------------------------------------------------
 #  Message Configuration

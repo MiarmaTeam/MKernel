@@ -45,4 +45,6 @@ public class Constants {
                             .map(Utils::getKey)
                             .toList().toArray(new String[RECIPES.size()])
             ));
+
+    public static Argument<?> HOME_ARG = new StringArgument(MiarmaCore.CONFIG.getString("arguments.home"));
 }

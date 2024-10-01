@@ -2,6 +2,7 @@ package dev.gallardo.miarmacore;
 
 import dev.gallardo.miarmacore.commands.CommandHandler;
 import dev.gallardo.miarmacore.common.ConfigWrapper;
+import dev.gallardo.miarmacore.common.CustomConfigManager;
 import dev.gallardo.miarmacore.common.minecraft.GlobalChest;
 import dev.gallardo.miarmacore.events.EventListener;
 import dev.gallardo.miarmacore.recipes.RecipeManager;
@@ -20,6 +21,9 @@ public class MiarmaCore extends JavaPlugin {
 
     public static MiarmaCore PLUGIN;
     public static final ConfigWrapper CONFIG = new ConfigWrapper();
+    public static CustomConfigManager HOME_CONFIG;
+    public static CustomConfigManager WORLD_BLOCKER_CONFIG;
+
     public static Logger LOGGER;
 
     @Override
@@ -32,6 +36,8 @@ public class MiarmaCore extends JavaPlugin {
         PLUGIN = this;
         LOGGER = PLUGIN.getLogger();
         CONFIG.onEnable();
+        HOME_CONFIG = new CustomConfigManager(PLUGIN, "homes.yml");
+        WORLD_BLOCKER_CONFIG = new CustomConfigManager(MiarmaCore.PLUGIN,"blockedWorlds.yml");
         Utils.createLangs("lang.yml");
         CommandAPI.onEnable();
         CommandHandler.onEnable();

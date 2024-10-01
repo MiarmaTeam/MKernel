@@ -7,6 +7,7 @@ import dev.jorel.commandapi.CommandAPICommand;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import dev.gallardo.miarmacore.MiarmaCore;
+import static dev.gallardo.miarmacore.MiarmaCore.WORLD_BLOCKER_CONFIG;
 
 import java.util.List;
 
@@ -14,8 +15,7 @@ import static dev.gallardo.miarmacore.util.Constants.*;
 
 public class BlockWorldCommand {
     public static void register() {
-        CustomConfigManager worldBlockerConfigManager = new CustomConfigManager(MiarmaCore.PLUGIN,"blockedWorlds.yml");
-        List<String> blockedWorlds = worldBlockerConfigManager.getConfig().getStringList("blockedWorlds");
+        List<String> blockedWorlds = WORLD_BLOCKER_CONFIG.getConfig().getStringList("blockedWorlds");
         new CommandAPICommand(MiarmaCore.CONFIG.getString("commands.blockworld.name"))
             .withArguments(WORLDS)
             .withAliases(MiarmaCore.CONFIG.getConfig().getStringList("commands.blockworld.aliases").toArray(new String[0]))
@@ -43,8 +43,8 @@ public class BlockWorldCommand {
                             true, true, List.of("%world%"), List.of(world));
                 }
 
-                worldBlockerConfigManager.getConfig().set("blockedWorlds", blockedWorlds);
-                worldBlockerConfigManager.saveConfig();
+                WORLD_BLOCKER_CONFIG.getConfig().set("blockedWorlds", blockedWorlds);
+                WORLD_BLOCKER_CONFIG.saveConfig();
             })
             .register();
     }

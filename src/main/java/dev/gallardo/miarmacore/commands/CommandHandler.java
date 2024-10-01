@@ -31,6 +31,8 @@ public class CommandHandler {
         SpecialItemCommand.register();
         SendCoordsCommand.register();
         PayXpCommand.register();
+        HomeCommand.register();
+        SetHomeCommand.register();
     }
 
     public static void onEnable() {

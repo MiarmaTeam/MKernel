@@ -1,5 +1,5 @@
 name: MiarmaCore
-version: '1.3.0'
+version: '1.3.1'
 main: dev.gallardo.miarmacore.MiarmaCore
 api-version: '1.21'
 permissions:
@@ -60,6 +60,12 @@ permissions:
     miarmacore.command.blockworld:
         description: Permite al usuario bloquear un mundo
         default: op
+    miarmacore.command.home:
+        description: Permite al usuario teletransportarse a su casa
+        default: true
+    miarmacore.command.sethome:
+        description: Permite al usuario establecer su casa
+        default: true
 
     miarmacore.events.chatformat:
         description: Permite al usuario usar formatos y colores en los mensajes de chat
@@ -99,6 +105,8 @@ permissions:
             miarmacore.command.sendcoords: true
             miarmacore.command.spawn: true
             miarmacore.command.lobby: true
+            miarmacore.command.home: true
+            miarmacore.command.sethome: true
             miarmacore.events.chatformat: true
             miarmacore.events.adminchat: true
             miarmacore.events.mentions: true
