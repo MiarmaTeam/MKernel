@@ -72,6 +72,10 @@ public class EventListener {
 								"", 30, 30, 30);
 					}
 				}
+
+				if(MiarmaCore.CONFIG.getBoolean("config.modules.keepInventory")) {
+					Utils.saveInventoryToFile(event.getEntity());
+				}
 			}
 
 			@EventHandler

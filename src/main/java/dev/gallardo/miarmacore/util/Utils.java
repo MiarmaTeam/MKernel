@@ -16,6 +16,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -252,4 +253,29 @@ public class Utils {
         return p1.getLocation().distance(p2.getLocation());
     }
 
+    public static void saveInventoryToFile(Player entity) {
+        ItemStack[] items = entity.getInventory().getContents();
+        ItemStack[] armor = entity.getInventory().getArmorContents();
+
+        MiarmaCore.PLAYER_INVENTORIES_CONFIG.getConfig().set(entity.getName() + ".inventory", items);
+        MiarmaCore.PLAYER_INVENTORIES_CONFIG.getConfig().set(entity.getName() + ".armor", armor);
+        MiarmaCore.PLAYER_INVENTORIES_CONFIG.saveConfig();
+    }
+
+    public static void getInventoryFromFile(Player entity) {
+        ItemStack[] items = (ItemStack[]) MiarmaCore.PLAYER_INVENTORIES_CONFIG.getConfig().get(entity.getName() + ".inventory");
+        ItemStack[] armor = (ItemStack[]) MiarmaCore.PLAYER_INVENTORIES_CONFIG.getConfig().get(entity.getName() + ".armor");
+
+        Arrays.stream(items).forEach(item -> {
+            if (item != null && item.getType() != Material.AIR) {
+                entity.getInventory().addItem(item);
+            }
+        });
+
+        Arrays.stream(armor).forEach(item -> {
+            if (item != null && item.getType() != Material.AIR) {
+                entity.getInventory().addItem(item);
+            }
+        });
+    }
 }

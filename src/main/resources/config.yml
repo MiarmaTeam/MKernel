@@ -39,6 +39,7 @@ config:
     emojis: true
     bookColors: true
     spawnAtLobby: true
+    keepInventory: true
 
   worlds:
     lobby:
@@ -246,6 +247,13 @@ commands:
     messages:
       teleported: "[P] &7Has sido teletransportado a tu hogar"
       homeDoesNotExist: "[P] &cNo tienes ningún hogar establecido"
+
+  recinv:
+    name: "recinv"
+    description: "Recupera tu inventario"
+    permission: "miarmacore.command.recinv"
+    messages:
+      inventoryRecovered: "[P] &7Has recuperado &a%items% &7items"
 
 # -----------------------------------------------------------
 #  Message Configuration

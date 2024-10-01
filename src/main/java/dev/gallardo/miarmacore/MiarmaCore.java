@@ -23,6 +23,7 @@ public class MiarmaCore extends JavaPlugin {
     public static final ConfigWrapper CONFIG = new ConfigWrapper();
     public static CustomConfigManager HOME_CONFIG;
     public static CustomConfigManager WORLD_BLOCKER_CONFIG;
+    public static CustomConfigManager PLAYER_INVENTORIES_CONFIG;
 
     public static Logger LOGGER;
 
@@ -38,6 +39,7 @@ public class MiarmaCore extends JavaPlugin {
         CONFIG.onEnable();
         HOME_CONFIG = new CustomConfigManager(PLUGIN, "homes.yml");
         WORLD_BLOCKER_CONFIG = new CustomConfigManager(MiarmaCore.PLUGIN,"blockedWorlds.yml");
+        PLAYER_INVENTORIES_CONFIG = new CustomConfigManager(MiarmaCore.PLUGIN, "playerInventories.yml");
         Utils.createLangs("lang.yml");
         CommandAPI.onEnable();
         CommandHandler.onEnable();
