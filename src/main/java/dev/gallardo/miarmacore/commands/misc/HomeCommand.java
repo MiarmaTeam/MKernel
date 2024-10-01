@@ -8,7 +8,6 @@ import org.bukkit.Location;
 import org.bukkit.World;
 
 import static dev.gallardo.miarmacore.MiarmaCore.HOME_CONFIG;
-import static dev.gallardo.miarmacore.util.Constants.HOME_ARG;
 
 public class HomeCommand {
     public static void register() {
