@@ -30,6 +30,8 @@ import org.bukkit.inventory.meta.BlockStateMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import static dev.gallardo.miarmacore.util.Constants.*;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -56,7 +58,7 @@ public class EventListener {
 			}
 
 			@EventHandler
-			public void onPlayerDeath(PlayerDeathEvent event) {
+			public void onPlayerDeath(PlayerDeathEvent event) throws IOException {
 				if (MiarmaCore.CONFIG.getBoolean("config.modules.deathTitle")) {
 					Player player = event.getEntity();
 					Collection<? extends Player> players = Bukkit.getServer().getOnlinePlayers();
@@ -70,9 +72,15 @@ public class EventListener {
 					}
 				}
 
-				if(MiarmaCore.CONFIG.getBoolean("config.modules.keepInventory")) {
+				if (MiarmaCore.CONFIG.getBoolean("config.modules.recoverInventory")) {
+					Player player = event.getEntity();
+					Utils.saveInventory(event.getEntity());
+					event.getDrops().clear();
 					event.setKeepInventory(true);
-					Utils.saveInventoryToFile(event.getEntity());
+					player.getInventory().setArmorContents(null);
+					player.getInventory().clear();
+					player.updateInventory();
+
 				}
 			}
 
@@ -502,13 +510,6 @@ public class EventListener {
 				}
 			}
 
-			@EventHandler
-			public void onCreeperExplode(CreeperPowerEvent event) {
-				if(MiarmaCore.CONFIG.getBoolean("config.modules.creeperExplosion")) {
-					event.setCancelled(true);
-				}
-			}
-			
 		}, MiarmaCore.PLUGIN);
 	}
 

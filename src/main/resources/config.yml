@@ -40,7 +40,7 @@ config:
     emojis: true
     bookColors: true
     spawnAtLobby: true
-    keepInventory: true
+    recoverInventory: true
 
   worlds:
     lobby:
@@ -65,7 +65,7 @@ arguments:
   world: "mundo"
   message: "mensaje"
   item: "item"
-  home: "nombre del hogar"
+  inventoryIndex: "índice de inventario"
 
 commands:
   miarmacore:
