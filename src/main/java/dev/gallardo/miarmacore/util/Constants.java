@@ -45,6 +45,4 @@ public class Constants {
                             .map(Utils::getKey)
                             .toList().toArray(new String[RECIPES.size()])
             ));
-
-    public static Argument<Integer> INVENTORY_INDEX = new IntegerArgument(MiarmaCore.CONFIG.getString("arguments.inventoryIndex"));
 }

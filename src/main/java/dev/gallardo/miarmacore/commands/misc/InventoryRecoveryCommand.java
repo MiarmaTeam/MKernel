@@ -7,19 +7,15 @@ import dev.jorel.commandapi.CommandAPICommand;
 import java.io.IOException;
 import java.util.List;
 
-import static dev.gallardo.miarmacore.util.Constants.INVENTORY_INDEX;
-
 public class InventoryRecoveryCommand {
     public static void register() {
         new CommandAPICommand(MiarmaCore.CONFIG.getString("commands.recinv.name"))
-            .withArguments(INVENTORY_INDEX)
             .withPermission(MiarmaCore.CONFIG.getString("commands.recinv.permission"))
             .withShortDescription(MiarmaCore.CONFIG.getString("commands.recinv.description"))
             .withFullDescription(MiarmaCore.CONFIG.getString("commands.recinv.description"))
             .executesPlayer((sender, args) -> {
                 int xpLevels = sender.getLevel();
                 int requiredLevels = MiarmaCore.CONFIG.getInt("config.values.recoverInventoryRequiredLevel");
-                Integer index = Integer.valueOf(args.getRaw(0));
 
                 if (xpLevels < requiredLevels) {
                     Utils.sendMessage(MiarmaCore.CONFIG.getString("commands.recinv.messages.notEnoughLevels"), sender, true,
@@ -28,9 +24,9 @@ public class InventoryRecoveryCommand {
                     return;
                 }
 
-                int items = 0;
+                int items;
                 try {
-                    items = Utils.restoreInventory(sender, index);
+                    items = Utils.restoreInventory(sender);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }

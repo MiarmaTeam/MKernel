@@ -257,7 +257,7 @@ public class Utils {
         return p1.getLocation().distance(p2.getLocation());
     }
 
-    /*public static void saveInventory(Player p) throws IOException{
+    public static void saveInventory(Player p) throws IOException{
         File f = new File(MiarmaCore.PLUGIN.getDataFolder().getAbsolutePath(), "inventories/"
                 + p.getName() + ".yml");
         FileConfiguration c = YamlConfiguration.loadConfiguration(f);
@@ -273,50 +273,8 @@ public class Utils {
         ItemStack[] content = ((List<ItemStack>) c.get("inventory")).toArray(new ItemStack[0]);
         p.getInventory().setContents(content);
         return content.length;
-    }*/
-
-    public static void saveInventory(Player p) throws IOException {
-        File f = new File(MiarmaCore.PLUGIN.getDataFolder().getAbsolutePath(), "inventories/"
-                + p.getName() + ".yml");
-        FileConfiguration c = YamlConfiguration.loadConfiguration(f);
-
-        // Obtener la lista de inventarios guardados
-        List<ItemStack[]> inventories = (List<ItemStack[]>) c.get("inventories");
-        if (inventories == null) {
-            inventories = new ArrayList<>();
-        }
-
-        // Añadir el nuevo inventario
-        inventories.add(p.getInventory().getContents());
-
-        // Si hay más de 5 inventarios, eliminar el más antiguo
-        if (inventories.size() > 5) {
-            inventories.remove(0);
-        }
-
-        c.set("inventories", inventories);
-        c.save(f);
     }
 
-    @SuppressWarnings("unchecked")
-    public static int restoreInventory(Player p, int index) throws IOException {
-        File f = new File(MiarmaCore.PLUGIN.getDataFolder().getAbsolutePath(), "inventories/"
-                + p.getName() + ".yml");
-        FileConfiguration c = YamlConfiguration.loadConfiguration(f);
-
-        // Obtener la lista de inventarios guardados
-        List<ItemStack[]> inventories = (List<ItemStack[]>) c.get("inventories");
-        if (inventories == null || index >= inventories.size() || index < 0) {
-            p.sendMessage("No se ha encontrado el inventario en el índice especificado.");
-            return 0;
-        }
-
-        // Restaurar el inventario del índice especificado
-        ItemStack[] content = inventories.get(index);
-        p.getInventory().setContents(content);
-
-        return content.length;
-    }
     public static void clearInventory(Player p) {
         File f = new File(MiarmaCore.PLUGIN.getDataFolder().getAbsolutePath(), "inventories/"
                 + p.getName() + ".yml");
