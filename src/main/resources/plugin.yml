@@ -67,6 +67,9 @@ permissions:
     miarmacore.command.sethome:
         description: Permite al usuario establecer su casa
         default: true
+    miarmacore.command.recinv:
+        description: Permite recuperar tu inventario
+        default: true
 
     miarmacore.events.chatformat:
         description: Permite al usuario usar formatos y colores en los mensajes de chat
@@ -111,6 +114,7 @@ permissions:
             miarmacore.events.chatformat: true
             miarmacore.events.adminchat: true
             miarmacore.events.mentions: true
+            miarmacore.command.recinv: true
 
     miarmacore.*:
         description: Permite al usuario ejecutar todos los comandos de MiarmaCore
