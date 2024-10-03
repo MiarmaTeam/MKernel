@@ -27,6 +27,7 @@ config:
     zombificationPotionTime: 180
     spawnerBreakerProbability: 30
     recoverInventoryRequiredLevel: 10
+    xpLossOnDeath: 0.7
 
   modules:
     joinTitle: true
@@ -37,7 +38,6 @@ config:
     adminChat: true
     chatFormat: true
     mentions: true
-    emojis: true
     bookColors: true
     spawnAtLobby: true
     recoverInventory: true
@@ -282,9 +282,12 @@ language:
       leave: "&cSe ha ido del servidor!"
       death: "&c%player% ha muerto"
 
-  mentions:
-    format: "&a&l"
-    youWereMentioned: "[P] &e%player% &7te ha mencionado!"
+  events:
+    onMention:
+      format: "&a&l"
+      youWereMentioned: "[P] &e%player% &7te ha mencionado!"
+    onDeath:
+        lostLevels: "[P] &cHas perdido &a%levels% &cniveles de &aXP &cal morir"
 
   items:
     scissors:

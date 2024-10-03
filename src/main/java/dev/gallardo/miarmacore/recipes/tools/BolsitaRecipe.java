@@ -1,5 +1,6 @@
 package dev.gallardo.miarmacore.recipes.tools;
 
+import de.tr7zw.nbtapi.NBTItem;
 import dev.gallardo.miarmacore.MiarmaCore;
 import dev.gallardo.miarmacore.util.Utils;
 import org.bukkit.Material;
@@ -24,7 +25,11 @@ public class BolsitaRecipe {
                 MiarmaCore.CONFIG.getString("language.items.bolsita.lore"))));
         bolsita.setItemMeta(meta);
 
-        return bolsita;
+        NBTItem nbtItem = new NBTItem(bolsita);
+        nbtItem.setString("specialItem", "bolsita");
+
+        RECIPES.add(bolsita);
+        return nbtItem.getItem();
     }
 
     public static ShapelessRecipe get() {

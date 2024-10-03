@@ -28,7 +28,7 @@ public class SpawnerBreakerRecipe {
         spawnerBreaker.setItemMeta(meta);
         
         NBTItem nbtItem = new NBTItem(spawnerBreaker);
-        nbtItem.setString("specialItem", "SPAWNER_BREAKER");
+        nbtItem.setString("specialItem", "spawner_breaker");
         
         RECIPES.add(nbtItem.getItem());
         return nbtItem.getItem();

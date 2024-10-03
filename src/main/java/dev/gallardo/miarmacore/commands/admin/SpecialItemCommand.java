@@ -1,11 +1,10 @@
-package dev.gallardo.miarmacore.commands.misc;
+package dev.gallardo.miarmacore.commands.admin;
 
 import dev.gallardo.miarmacore.MiarmaCore;
 import dev.gallardo.miarmacore.util.Utils;
 import dev.jorel.commandapi.CommandAPICommand;
 import org.bukkit.Bukkit;
 import org.bukkit.NamespacedKey;
-import org.bukkit.entity.Player;
 import org.bukkit.inventory.Recipe;
 
 import java.util.List;

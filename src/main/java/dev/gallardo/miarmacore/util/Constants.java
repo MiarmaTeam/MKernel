@@ -2,6 +2,7 @@ package dev.gallardo.miarmacore.util;
 
 import dev.gallardo.miarmacore.MiarmaCore;
 import dev.gallardo.miarmacore.common.minecraft.TpaRequests;
+import dev.gallardo.miarmacore.recipes.tools.AdminStickRecipe;
 import dev.jorel.commandapi.arguments.*;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -40,9 +41,7 @@ public class Constants {
     public static Argument<?> MESSAGE = new GreedyStringArgument(MiarmaCore.CONFIG.getString("arguments.message"));
 
     public static Argument<?> ITEMS = new StringArgument(MiarmaCore.CONFIG.getString("arguments.item"))
-            .replaceSuggestions(ArgumentSuggestions.strings(info ->
-                    RECIPES.stream()
-                            .map(Utils::getKey)
-                            .toList().toArray(new String[RECIPES.size()])
-            ));
+            .replaceSuggestions(ArgumentSuggestions.strings(info -> RECIPES.stream()
+                    .map(Utils::getKey)
+                    .toList().toArray(new String[RECIPES.size()])));
 }

@@ -26,7 +26,7 @@ public class AdminStickRecipe {
         stick.setItemMeta(meta);
         
         NBTItem nbtItem = new NBTItem(stick);
-        nbtItem.setString("specialItem", "ADMIN_STICK");
+        nbtItem.setString("specialItem", "admin_stick");
 
         RECIPES.add(nbtItem.getItem());
         return nbtItem.getItem();

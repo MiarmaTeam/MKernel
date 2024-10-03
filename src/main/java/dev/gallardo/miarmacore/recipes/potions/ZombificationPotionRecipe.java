@@ -30,7 +30,7 @@ public class ZombificationPotionRecipe {
         potion.setItemMeta(meta);
         
         NBTItem nbtItem = new NBTItem(potion);
-        nbtItem.setString("specialItem", "ZOMBIFICATION_POTION");
+        nbtItem.setString("specialItem", "zombification_potion");
 
         RECIPES.add(nbtItem.getItem());
         return nbtItem.getItem();

@@ -63,50 +63,57 @@ public class MiarmaCoreCommand {
                             Map<String,Object> values = confSec.getStringRouteMappedValues(false);
 
                             int booleans = (int) values.values().stream()
-                                    .map(Object::toString)
-                                    .filter(x->x.equals("true") || x.equals("false"))
+                                    .filter(value -> value instanceof Boolean)
                                     .count();
+
                             int numberOfRows = (booleans / 9) + (booleans % 9 > 0 ? 1 : 0);
 
-                            ChestGui gui = new ChestGui(booleans >= 9 ? numberOfRows : 1,
+                            // Crea el GUI del cofre con el número de filas necesarias
+                            ChestGui gui = new ChestGui(numberOfRows,
                                     Utils.colorCodeParser(
                                             MiarmaCore.CONFIG.getString("language.inventories.configMenu.title")));
 
-                            OutlinePane pane = new OutlinePane(0, 0, booleans, numberOfRows);
+                            OutlinePane pane = new OutlinePane(0, 0, 9, numberOfRows); // 9 slots por fila
 
+                            // Obtener los nombres y descripciones de los ítems
                             List<String> configItemsDisplayNames = values.entrySet().stream()
-                                    .filter(x->x.getValue().toString().equals("true") ||
-                                            x.getValue().toString().equals("false"))
-                                    .map(x->Utils.colorCodeParser(
-                                            MiarmaCore.CONFIG.getString("language.inventories.configMenu.valueName"))
-                                            +x.getKey()).toList();
+                                    .filter(x -> x.getValue() instanceof Boolean)
+                                    .map(x -> Utils.colorCodeParser(MiarmaCore.CONFIG.getString("language.inventories.configMenu.valueName"))
+                                            + x.getKey())
+                                    .toList();
 
-                            List<String> configItemsLores = values.entrySet().stream()
-                                    .filter(x->x.getValue().toString().equals("true") ||
-                                            x.getValue().toString().equals("false"))
-                                    .map(x->Utils.colorCodeParser(
-                                            MiarmaCore.CONFIG.getString("language.inventories.configMenu.valueLore")) + x.getValue().toString()).toList();
+                            List<String> configItemsLores = values.values().stream()
+                                    .filter(o -> o instanceof Boolean)
+                                    .map(o -> Utils.colorCodeParser(MiarmaCore.CONFIG.getString("language.inventories.configMenu.valueLore"))
+                                            + o)
+                                    .toList();
 
                             List<ItemStack> configItems = new ArrayList<>();
 
-                            for(int x = 0; x < booleans; x++) {
-                                ItemStack item = new ItemStack(Material.PAPER,1);
+                            // Crear los ítems del inventario
+                            for (int i = 0; i < booleans; i++) {
+                                ItemStack item = new ItemStack(Material.PAPER, 1);
                                 ItemMeta itemMeta = item.getItemMeta();
-                                itemMeta.setDisplayName(configItemsDisplayNames.get(x));
-                                itemMeta.setLore(List.of(configItemsLores.get(x)));
+                                itemMeta.setDisplayName(configItemsDisplayNames.get(i));
+                                itemMeta.setLore(List.of(configItemsLores.get(i)));
                                 item.setItemMeta(itemMeta);
                                 configItems.add(item);
                             }
 
-                            List<GuiItem> guiItems = configItems.stream().map(x->new GuiItem(x, event -> {
-                                event.setCancelled(true);
-                                Utils.reloadConfigItem(event);
-                            })).toList();
+                            // Añadir los ítems al GUI asignando slots secuenciales
+                            for (int i = 0; i < configItems.size(); i++) {
+                                GuiItem guiItem = new GuiItem(configItems.get(i), event -> {
+                                    event.setCancelled(true);
+                                    Utils.reloadConfigItem(event);  // Recargar la configuración del ítem
+                                });
 
-                            guiItems.forEach(pane::addItem);
-                            gui.addPane(pane);
-                            gui.show(sender);
+                                pane.addItem(guiItem);  // Añade el ítem al siguiente slot disponible en el pane
+                            }
+
+                            gui.addPane(pane);  // Añadir el pane al GUI del cofre
+                            gui.show(sender);  // Mostrar el GUI al jugador
                         })
+
                 )
                 .register();
     }

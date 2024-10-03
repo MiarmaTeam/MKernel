@@ -59,8 +59,11 @@ public class EventListener {
 
 			@EventHandler
 			public void onPlayerDeath(PlayerDeathEvent event) throws IOException {
+				Player player = event.getEntity();
+				int playerLevel = player.getLevel();
+				float playerExp = player.getExp();
+
 				if (MiarmaCore.CONFIG.getBoolean("config.modules.deathTitle")) {
-					Player player = event.getEntity();
 					Collection<? extends Player> players = Bukkit.getServer().getOnlinePlayers();
 					for (Player p : players) {
 						p.playSound(p.getLocation(), Sound.ENTITY_WITHER_DEATH, 1, 1);
@@ -73,13 +76,24 @@ public class EventListener {
 				}
 
 				if (MiarmaCore.CONFIG.getBoolean("config.modules.recoverInventory")) {
-					Player player = event.getEntity();
-					Utils.saveInventory(event.getEntity());
+					Utils.saveInventory(player);
 					event.getDrops().clear();
+					event.setDroppedExp(0);
 					event.setKeepInventory(true);
+
 					player.getInventory().setArmorContents(null);
 					player.getInventory().clear();
 					player.updateInventory();
+
+					float xpLossOnDeath = Float.parseFloat(MiarmaCore.CONFIG.getString("config.values.xpLossOnDeath"));
+					int levelsToLose = Math.round(playerLevel * xpLossOnDeath);
+					int newLevel = Math.max(0, playerLevel - levelsToLose);
+
+					event.setNewLevel(newLevel);
+					event.setNewExp((int) playerExp);
+
+					Utils.sendMessage(MiarmaCore.CONFIG.getString("language.events.onDeath.lostLevels"), player, true,
+							true, List.of("%levels%"), List.of(String.valueOf(levelsToLose)));
 
 				}
 			}
@@ -301,10 +315,10 @@ public class EventListener {
 							}
 						}
 						if (victim != null && containsPlayer){
-							String formattedMention = Utils.colorCodeParser(MiarmaCore.CONFIG.getString("language.mentions.format")+"@"+victim.getName())+ChatColor.RESET;
+							String formattedMention = Utils.colorCodeParser(MiarmaCore.CONFIG.getString("language.events.onMention.format")+"@"+victim.getName())+ChatColor.RESET;
 							event.setMessage(event.getMessage().replace(victim.getName(), formattedMention));
 
-							Utils.sendMessage(MiarmaCore.CONFIG.getString("language.mentions.youWereMentioned"), victim, true,
+							Utils.sendMessage(MiarmaCore.CONFIG.getString("language.events.onMention.youWereMentioned"), victim, true,
 									true, List.of("%player%"), List.of(event.getPlayer().getName()));
 
 							victim.playSound(victim, Sound.BLOCK_NOTE_BLOCK_PLING, 1, 1);

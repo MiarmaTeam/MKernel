@@ -1,5 +1,6 @@
 package dev.gallardo.miarmacore.util;
 
+import de.tr7zw.nbtapi.NBTItem;
 import dev.gallardo.miarmacore.MiarmaCore;
 import dev.gallardo.miarmacore.common.minecraft.MinepacksAccessor;
 import net.md_5.bungee.api.ChatColor;
@@ -144,11 +145,49 @@ public class Utils {
     }
 
     public static String getKey(ItemStack item) {
+        NBTItem nbtItem = new NBTItem(item);
+        if (nbtItem.getString("specialItem") != null) {
+            return nbtItem.getString("specialItem");
+        }
+
         List<Recipe> matchingRecipes = Bukkit.getRecipesFor(item);
         for (Recipe recipe : matchingRecipes) {
             if (recipe instanceof ShapedRecipe) {
                 return ((ShapedRecipe) recipe).getKey().getKey();
             }
+
+            if (recipe instanceof ShapelessRecipe) {
+                return ((ShapelessRecipe) recipe).getKey().getKey();
+            }
+
+            if (recipe instanceof FurnaceRecipe) {
+                return ((FurnaceRecipe) recipe).getKey().getKey();
+            }
+
+            if (recipe instanceof BlastingRecipe) {
+                return ((BlastingRecipe) recipe).getKey().getKey();
+            }
+
+            if (recipe instanceof CampfireRecipe) {
+                return ((CampfireRecipe) recipe).getKey().getKey();
+            }
+
+            if (recipe instanceof SmokingRecipe) {
+                return ((SmokingRecipe) recipe).getKey().getKey();
+            }
+
+            if (recipe instanceof StonecuttingRecipe) {
+                return ((StonecuttingRecipe) recipe).getKey().getKey();
+            }
+
+            if (recipe instanceof SmithingRecipe) {
+                return ((SmithingRecipe) recipe).getKey().getKey();
+            }
+
+            if (recipe instanceof CookingRecipe) {
+                return ((CookingRecipe) recipe).getKey().getKey();
+            }
+
         }
         return null;
     }

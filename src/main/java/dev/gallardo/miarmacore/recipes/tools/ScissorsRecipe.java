@@ -30,7 +30,7 @@ public class ScissorsRecipe {
         scissors.setItemMeta(meta);
         
         NBTItem nbtItem = new NBTItem(scissors);
-        nbtItem.setString("specialItem", "SCISSORS");
+        nbtItem.setString("specialItem", "scissors");
 
         RECIPES.add(nbtItem.getItem());
         return nbtItem.getItem();
