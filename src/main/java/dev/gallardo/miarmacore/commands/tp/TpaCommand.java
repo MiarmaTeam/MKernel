@@ -32,10 +32,7 @@ public class TpaCommand {
                 }
 
                 boolean requestExists = TPA_REQUESTS.getRequests().stream()
-                        .anyMatch(request ->
-                                (request.from().equals(sender) && request.to().equals(target)) ||
-                                        (request.from().equals(target) && request.to().equals(sender))
-                        );
+                        .anyMatch(request -> request.from().equals(sender) && request.to().equals(target));
 
                 if (requestExists) {
                     Utils.sendMessage(MiarmaCore.CONFIG.getString("language.errors.requestAlreadySent"), sender, true);
@@ -47,7 +44,7 @@ public class TpaCommand {
 
                 Utils.sendMessage(
                         Utils.placeholderParser(
-                                MiarmaCore.CONFIG.getString("language.commands.tpa.tpaToPlayer"),
+                                MiarmaCore.CONFIG.getString("commands.tpa.messages.tpaToPlayer"),
                                 List.of("%target%"),
                                 List.of(target.getName())
                         ),
@@ -56,7 +53,7 @@ public class TpaCommand {
 
                 Utils.sendMessage(
                         Utils.placeholderParser(
-                                MiarmaCore.CONFIG.getString("language.commands.tpa.tpaFromPlayer"),
+                                MiarmaCore.CONFIG.getString("commands.tpa.messages.tpaFromPlayer"),
                                 List.of("%sender%"),
                                 List.of(sender.getName())
                         ),

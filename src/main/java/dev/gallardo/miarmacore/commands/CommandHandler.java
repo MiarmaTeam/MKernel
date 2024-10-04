@@ -7,15 +7,19 @@ import dev.gallardo.miarmacore.commands.base.MiarmaCoreCommand;
 import dev.gallardo.miarmacore.commands.misc.*;
 import dev.gallardo.miarmacore.commands.roleplay.DoCommand;
 import dev.gallardo.miarmacore.commands.roleplay.MeCommand;
+import dev.gallardo.miarmacore.commands.tp.TpDenyCommand;
+import dev.gallardo.miarmacore.commands.tp.TpaAcceptCommand;
+import dev.gallardo.miarmacore.commands.tp.TpaCommand;
+import dev.gallardo.miarmacore.commands.tp.TpaHereCommand;
 
 public class CommandHandler {
     private static void registerCommands() {
         MiarmaCoreCommand.register();
         RegistroWebCommand.register();
-        //TpaCommand.register();
-        //TpaAcceptCommand.register();
-        //TpDenyCommand.register();
-        //TpaHereCommand.register();
+        TpaCommand.register();
+        TpaAcceptCommand.register();
+        TpDenyCommand.register();
+        TpaHereCommand.register();
         MeCommand.register();
         DoCommand.register();
         GlobalChestCommand.register();

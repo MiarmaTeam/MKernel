@@ -9,12 +9,13 @@ import dev.jorel.commandapi.CommandAPICommand;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
+import java.util.List;
 import java.util.Optional;
 
 public class TpaAcceptCommand {
     public static void register() {
         new CommandAPICommand(MiarmaCore.CONFIG.getString("commands.tpaccept.name"))
-            .withArguments(PLAYER_ARG)
+            .withArguments(TPA_TARGETS)
             .withPermission("commands.tpaccept.permission")
             .withFullDescription(MiarmaCore.CONFIG.getString("commands.tpaccept.description"))
             .withShortDescription(MiarmaCore.CONFIG.getString("commands.tpaccept.description"))
@@ -28,18 +29,23 @@ public class TpaAcceptCommand {
                     return;
                 }
 
-                Optional<TpaRequest> requestOpt = TPA_REQUESTS.getRequests().stream()
-                        .filter(request ->
-                                request.from().equals(target) && request.to().equals(sender)
-                        )
-                        .findFirst();
+                TpaRequest request = TPA_REQUESTS.getRequests().stream()
+                        .filter(req -> {
+                            if (req.from().equals(sender) && req.to().equals(target)) {
+                                return true;
+                            } else if (req.from().equals(target) && req.to().equals(sender)) {
+                                return true;
+                            }
+                            return false;
+                        })
+                        .findFirst()
+                        .orElse(null);
 
-                if (requestOpt.isEmpty()) {
+                if (request == null) {
                     Utils.sendMessage(MiarmaCore.CONFIG.getString("language.errors.noRequestFound"), sender, true);
                     return;
                 }
 
-                TpaRequest request = requestOpt.get();
                 TPA_REQUESTS.removeRequest(request);
 
                 if (request.type() == TpaType.TPA) {
@@ -48,8 +54,9 @@ public class TpaAcceptCommand {
                     target.teleport(sender.getLocation());
                 }
 
-                Utils.sendMessage(MiarmaCore.CONFIG.getString("commands.tpaccept.messages.acceptedToSender"), sender, true);
-                Utils.sendMessage(MiarmaCore.CONFIG.getString("commands.tpaccept.messages.accepted"), target, true);
+                Utils.sendMessage(MiarmaCore.CONFIG.getString("commands.tpaccept.messages.acceptedToTarget"), target, true,
+                        true, List.of("%sender%"), List.of(sender.getName()));
+                Utils.sendMessage(MiarmaCore.CONFIG.getString("commands.tpaccept.messages.accepted"), sender, true);
             })
             .register();
     }

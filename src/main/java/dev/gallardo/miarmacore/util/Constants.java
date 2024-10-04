@@ -1,6 +1,7 @@
 package dev.gallardo.miarmacore.util;
 
 import dev.gallardo.miarmacore.MiarmaCore;
+import dev.gallardo.miarmacore.common.minecraft.TpaRequest;
 import dev.gallardo.miarmacore.common.minecraft.TpaRequests;
 import dev.gallardo.miarmacore.recipes.tools.AdminStickRecipe;
 import dev.jorel.commandapi.arguments.*;
@@ -44,4 +45,29 @@ public class Constants {
             .replaceSuggestions(ArgumentSuggestions.strings(info -> RECIPES.stream()
                     .map(Utils::getKey)
                     .toList().toArray(new String[RECIPES.size()])));
+
+    //public static final long COOLDOWN = Utils.cooldownToMillis(MiarmaCore.CONFIG.getString("config.values.tpCooldown"));
+
+    public static Argument<?> TPA_TARGETS = new PlayerArgument(MiarmaCore.CONFIG.getString("arguments.player"))
+            .replaceSuggestions(ArgumentSuggestions.strings(info -> {
+                List<TpaRequest> requests = TPA_REQUESTS.getRequests();
+                List<String> players = Bukkit.getServer().getOnlinePlayers().stream()
+                        .map(Player::getName)
+                        .toList();
+                List<String> targets = new ArrayList<>();
+
+                for (String playerName : players) {
+                    Player player = Bukkit.getServer().getPlayer(playerName);
+
+                    boolean hasPendingRequest = requests.stream()
+                            .anyMatch(request -> request.to().equals(player));
+
+                    if (!hasPendingRequest) {
+                        targets.add(playerName);
+                    }
+                }
+
+                return targets.toArray(new String[0]);
+            }));
+
 }

@@ -32,10 +32,7 @@ public class TpaHereCommand {
                 }
 
                 boolean requestExists = TPA_REQUESTS.getRequests().stream()
-                        .anyMatch(request ->
-                                (request.from().equals(sender) && request.to().equals(target)) ||
-                                        (request.from().equals(target) && request.to().equals(sender))
-                        );
+                        .anyMatch(request -> request.from().equals(sender) && request.to().equals(target));
 
                 if (requestExists) {
                     Utils.sendMessage(MiarmaCore.CONFIG.getString("language.errors.requestAlreadySent"), sender, true);

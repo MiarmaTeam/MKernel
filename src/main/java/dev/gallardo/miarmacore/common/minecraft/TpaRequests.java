@@ -1,5 +1,6 @@
 package dev.gallardo.miarmacore.common.minecraft;
 
+
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
@@ -8,6 +9,7 @@ import java.util.List;
 public class TpaRequests {
     private List<TpaRequest> requests = new ArrayList<>();
     private static TpaRequests instance;
+    //private Map<Player, Long> cooldowns = new HashMap<>();
 
     private TpaRequests() {}
 
@@ -19,6 +21,18 @@ public class TpaRequests {
     }
 
     public void addRequest(Player from, Player to, TpaType type) {
+        /*long currentTime = System.currentTimeMillis();
+
+        if(cooldowns.containsKey(from)) {
+            long lastRequest = cooldowns.get(from);
+            if(currentTime - lastRequest < Constants.COOLDOWN) {
+                Utils.sendMessage(MiarmaCore.CONFIG.getString("language.errors.cooldownHasNotExpired"), from, true,
+                        true, List.of("%time%"),
+                        List.of(Utils.millisToCooldown((Constants.COOLDOWN - (currentTime - lastRequest)) / 1000)));
+                return;
+            }
+        }
+        cooldowns.put(from, currentTime);*/
         requests.add(new TpaRequest(from, to, type));
     }
 
