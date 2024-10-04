@@ -27,15 +27,20 @@ public class InventoryRecoveryCommand {
                 int items;
                 try {
                     items = Utils.restoreInventory(sender);
+                    if(items == 0) {
+                        Utils.sendMessage(MiarmaCore.CONFIG.getString("commands.recinv.messages.noItemsToRecover"),
+                                sender, true);
+                        return;
+                    }
+                    Utils.sendMessage(MiarmaCore.CONFIG.getString("commands.recinv.messages.inventoryRecovered"),
+                            sender, true, true, List.of("%items%"),
+                            List.of(String.valueOf(items)));
+                    sender.setLevel(xpLevels - requiredLevels);
+                    Utils.clearInventory(sender);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
-                Utils.sendMessage(MiarmaCore.CONFIG.getString("commands.recinv.messages.inventoryRecovered"),
-                        sender, true, true, List.of("%items%"),
-                        List.of(String.valueOf(items)));
 
-                sender.setLevel(xpLevels - requiredLevels);
-                Utils.clearInventory(sender);
             })
             .register();
     }

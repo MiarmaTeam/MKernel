@@ -257,6 +257,7 @@ commands:
     messages:
       inventoryRecovered: "[P] &7Has recuperado &a%items% &7items"
       notEnoughLevels: "[P] &cNo tienes suficientes niveles. Necesitas &a%required%"
+      noItemsToRecover: "[P] &cNo hay items que recuperar"
 
 # -----------------------------------------------------------
 #  Message Configuration

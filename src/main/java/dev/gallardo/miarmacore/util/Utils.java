@@ -20,6 +20,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -309,16 +310,29 @@ public class Utils {
         File f = new File(MiarmaCore.PLUGIN.getDataFolder().getAbsolutePath(), "inventories/"
                 + p.getName() + ".yml");
         FileConfiguration c = YamlConfiguration.loadConfiguration(f);
-        ItemStack[] content = ((List<ItemStack>) c.get("inventory")).toArray(new ItemStack[0]);
+        ItemStack[] content;
+        if(c.get("inventory") != null) {
+            content = ((List<ItemStack>) c.get("inventory")).toArray(new ItemStack[0]);
+        } else {
+            return 0;
+        }
+
+        boolean allAir = Arrays.stream(content).allMatch(item -> item == null || item.getType() == Material.AIR);
+        if(allAir) {
+            return 0;
+        }
+
         p.getInventory().setContents(content);
-        return content.length;
+        return Arrays.stream(content)
+                .filter(item -> item != null && item.getType() != Material.AIR)
+                .mapToInt(ItemStack::getAmount)
+                .sum();
     }
 
-    public static void clearInventory(Player p) {
+    public static void clearInventory(Player p) throws IOException {
         File f = new File(MiarmaCore.PLUGIN.getDataFolder().getAbsolutePath(), "inventories/"
                 + p.getName() + ".yml");
-        FileConfiguration c = YamlConfiguration.loadConfiguration(f);
-        c.set("inventories", null);
+        Files.delete(f.toPath());
     }
 
     public static long cooldownToMillis(String s) {
