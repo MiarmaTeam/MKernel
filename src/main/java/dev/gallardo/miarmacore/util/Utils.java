@@ -3,6 +3,7 @@ package dev.gallardo.miarmacore.util;
 import de.tr7zw.nbtapi.NBTItem;
 import dev.gallardo.miarmacore.MiarmaCore;
 import dev.gallardo.miarmacore.common.minecraft.MinepacksAccessor;
+import dev.gallardo.miarmacore.common.minecraft.Warp;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -23,6 +24,7 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -362,4 +364,12 @@ public class Utils {
     }
 
 
+    public static List<Warp> getWarps(Player p) {
+        File f = new File(MiarmaCore.PLUGIN.getDataFolder().getAbsolutePath(), "warps/"
+                + p.getName() + ".yml");
+        FileConfiguration c = YamlConfiguration.loadConfiguration(f);
+        return c.getKeys(false).stream()
+                .map(alias -> Warp.fromFile(c, alias))
+                .toList();
+    }
 }

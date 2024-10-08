@@ -6,6 +6,7 @@ import dev.gallardo.miarmacore.common.minecraft.TpaRequests;
 import dev.gallardo.miarmacore.recipes.tools.AdminStickRecipe;
 import dev.jorel.commandapi.arguments.*;
 import org.bukkit.Bukkit;
+import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -41,6 +42,8 @@ public class Constants {
 
     public static Argument<?> MESSAGE = new GreedyStringArgument(MiarmaCore.CONFIG.getString("arguments.message"));
 
+    public static Argument<?> WARP_NAME = new GreedyStringArgument(MiarmaCore.CONFIG.getString("arguments.warpName"));
+
     public static Argument<?> ITEMS = new StringArgument(MiarmaCore.CONFIG.getString("arguments.item"))
             .replaceSuggestions(ArgumentSuggestions.strings(info -> RECIPES.stream()
                     .map(Utils::getKey)
@@ -69,5 +72,9 @@ public class Constants {
 
                 return targets.toArray(new String[0]);
             }));
+
+    public static NamespacedKey VANISH_KEY = new NamespacedKey(MiarmaCore.PLUGIN, "vanish");
+
+    public static int MAX_WARPS = MiarmaCore.CONFIG.getInt("config.values.maxWarps");
 
 }

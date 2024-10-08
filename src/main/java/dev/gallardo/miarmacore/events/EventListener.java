@@ -7,6 +7,7 @@ import dev.gallardo.miarmacore.common.minecraft.DisposalInventory;
 import dev.gallardo.miarmacore.common.minecraft.GlobalChest;
 import dev.gallardo.miarmacore.common.minecraft.MinepacksAccessor;
 import dev.gallardo.miarmacore.tasks.LocationTracker;
+import dev.gallardo.miarmacore.util.Constants;
 import dev.gallardo.miarmacore.util.Utils;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.*;
@@ -27,10 +28,12 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.BlockStateMeta;
+import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import static dev.gallardo.miarmacore.util.Constants.*;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -131,6 +134,20 @@ public class EventListener {
 								Utils.colorCodeParser(MiarmaCore.CONFIG.getString("language.titles.subtitles.join")), 30,
 								30, 30);
 					}
+				}
+
+				player.getPersistentDataContainer().set(VANISH_KEY, PersistentDataType.BOOLEAN, false);
+
+				File f1 = new File(MiarmaCore.PLUGIN.getDataFolder().getAbsolutePath(), "warps/"
+						+ event.getPlayer().getName() + ".yml");
+				File f2 = new File(MiarmaCore.PLUGIN.getDataFolder().getAbsolutePath(), "inventories/"
+						+ event.getPlayer().getName() + ".yml");
+
+				try {
+					f1.createNewFile();
+					f2.createNewFile();
+				} catch (IOException e) {
+					MiarmaCore.LOGGER.severe("Error creating file for " + event.getPlayer().getName());
 				}
 			}
 

@@ -16,13 +16,11 @@ public class TpaAcceptCommand {
     public static void register() {
         new CommandAPICommand(MiarmaCore.CONFIG.getString("commands.tpaccept.name"))
             .withArguments(TPA_TARGETS)
-            .withPermission("commands.tpaccept.permission")
+            .withPermission(MiarmaCore.CONFIG.getString("commands.tpaccept.permission"))
             .withFullDescription(MiarmaCore.CONFIG.getString("commands.tpaccept.description"))
             .withShortDescription(MiarmaCore.CONFIG.getString("commands.tpaccept.description"))
             .withUsage(MiarmaCore.CONFIG.getString("commands.tpaccept.usage"))
             .executesPlayer((sender, args) -> {
-                MiarmaCore.LOGGER.info(TPA_REQUESTS.toString());
-
                 Player target = Bukkit.getPlayer(args.getRaw(0));
                 if (target == null || !target.isOnline()) {
                     Utils.sendMessage(MiarmaCore.CONFIG.getString("language.errors.playerNotFound"), sender, true);

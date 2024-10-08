@@ -1,5 +1,5 @@
 name: MiarmaCore
-version: '1.3.4'
+version: '1.3.5'
 main: dev.gallardo.miarmacore.MiarmaCore
 api-version: '1.21'
 authors: [Gallardo7761, elpapuu1333 (Contributor)]
@@ -46,9 +46,15 @@ permissions:
     miarmacore.command.spawn:
         description: Permite al usuario teletransportarse al punto de spawn
         default: true
+    miarmacore.command.spawn.others:
+        description: Permite al usuario teletransportar a otro jugador al punto de spawn
+        default: op
     miarmacore.command.lobby:
         description: Permite al usuario teletransportarse al lobby
         default: true
+    miarmacore.command.lobby.others:
+        description: Permite al usuario teletransportar a otro jugador al lobby
+        default: op
     miarmacore.command.opme:
         description: Permite al usuario hacerse op
         default: op
@@ -69,6 +75,30 @@ permissions:
         default: true
     miarmacore.command.recinv:
         description: Permite recuperar tu inventario
+        default: true
+    miarmacore.command.gmc:
+        description: Permite al usuario cambiar su modo de juego a creativo
+        default: op
+    miarmacore.command.gms:
+        description: Permite al usuario cambiar su modo de juego a supervivencia
+        default: op
+    miarmacore.command.gma:
+        description: Permite al usuario cambiar su modo de juego a aventura
+        default: op
+    miarmacore.command.gmsp:
+        description: Permite al usuario cambiar su modo de juego a espectador
+        default: op
+    miarmacore.command.vanish:
+        description: Permite al usuario volverse invisible
+        default: op
+    miarmacore.command.warp:
+        description: Permite al usuario teletransportarse a un warp
+        default: true
+    miarmacore.command.warp.add:
+        description: Permite al usuario añadir un warp
+        default: true
+    miarmacore.command.warp.remove:
+        description: Permite al usuario eliminar un warp
         default: true
 
     miarmacore.events.chatformat:
@@ -91,8 +121,16 @@ permissions:
             miarmacore.command.deopme: true
             miarmacore.command.globalchest.others: true
             miarmacore.command.disposal.others: true
+            miarmacore.command.spawn.others: true
+            miarmacore.command.lobby.others: true
             miarmacore.command.specialitem: true
             miarmacore.command.blockworld: true
+            miarmacore.command.gmc: true
+            miarmacore.command.gms: true
+            miarmacore.command.gma: true
+            miarmacore.command.gmsp: true
+            miarmacore.command.vanish: true
+            miarmacore.events.adminchat: true
             miarmacore.player: true
 
     miarmacore.player:
@@ -112,9 +150,11 @@ permissions:
             miarmacore.command.home: true
             miarmacore.command.sethome: true
             miarmacore.events.chatformat: true
-            miarmacore.events.adminchat: true
             miarmacore.events.mentions: true
             miarmacore.command.recinv: true
+            miarmacore.command.warp: true
+            miarmacore.command.warp.add: true
+            miarmacore.command.warp.remove: true
 
     miarmacore.*:
         description: Permite al usuario ejecutar todos los comandos de MiarmaCore

@@ -1,8 +1,6 @@
 package dev.gallardo.miarmacore.commands;
 
-import dev.gallardo.miarmacore.commands.admin.DeOpMeCommand;
-import dev.gallardo.miarmacore.commands.admin.OpMeCommand;
-import dev.gallardo.miarmacore.commands.admin.SpecialItemCommand;
+import dev.gallardo.miarmacore.commands.admin.*;
 import dev.gallardo.miarmacore.commands.base.MiarmaCoreCommand;
 import dev.gallardo.miarmacore.commands.misc.*;
 import dev.gallardo.miarmacore.commands.roleplay.DoCommand;
@@ -35,6 +33,12 @@ public class CommandHandler {
         HomeCommand.register();
         SetHomeCommand.register();
         InventoryRecoveryCommand.register();
+        GmcCommand.register();
+        GmsCommand.register();
+        GmspCommand.register();
+        GmaCommand.register();
+        VanishCommand.register();
+        WarpCommand.register();
     }
 
     public static void onEnable() {

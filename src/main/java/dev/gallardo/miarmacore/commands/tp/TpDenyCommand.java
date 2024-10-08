@@ -20,8 +20,6 @@ public class TpDenyCommand {
             .withShortDescription(MiarmaCore.CONFIG.getString("commands.tpdeny.description"))
             .withUsage(MiarmaCore.CONFIG.getString("commands.tpdeny.usage"))
             .executesPlayer((sender, args) -> {
-                MiarmaCore.LOGGER.info(TPA_REQUESTS.toString());
-
                 Player target = Bukkit.getPlayer(args.getRaw(0));
 
                 if (target == null || !target.isOnline()) {

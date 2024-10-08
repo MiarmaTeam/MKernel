@@ -29,6 +29,7 @@ config:
     recoverInventoryRequiredLevel: 10
     xpLossOnDeath: 0.7
     tpCooldown: "5m"
+    maxWarps: 3
 
   modules:
     joinTitle: true
@@ -67,6 +68,8 @@ arguments:
   message: "mensaje"
   item: "item"
   inventoryIndex: "índice de inventario"
+  warpName: "nombre warp"
+  warp: "warp"
 
 commands:
   miarmacore:
@@ -259,6 +262,88 @@ commands:
       notEnoughLevels: "[P] &cNo tienes suficientes niveles. Necesitas &a%required%"
       noItemsToRecover: "[P] &cNo hay items que recuperar"
 
+  gmc:
+    name: "gmc"
+    description: "Cambia tu modo de juego a creativo"
+    permissions:
+      base: "miarmacore.command.gmc"
+      others: "miarmacore.command.gmc.others"
+    usage: "/gmc [jugador]"
+    messages:
+      self: "[P] &7Tu modo de juego ha sido cambiado a &aCreativo"
+      others: "[P] &7El modo de juego de &a%player% &7ha sido cambiado a &aCreativo"
+
+  gms:
+    name: "gms"
+    description: "Cambia tu modo de juego a supervivencia"
+    permissions:
+      base: "miarmacore.command.gms"
+      others: "miarmacore.command.gms.others"
+    usage: "/gms [jugador]"
+    messages:
+      self: "[P] &7Tu modo de juego ha sido cambiado a &aSupervivencia"
+      others: "[P] &7El modo de juego de &a%player% &7ha sido cambiado a &aSupervivencia"
+
+  gmsp:
+    name: "gmsp"
+    description: "Cambia tu modo de juego a espectador"
+    permissions:
+      base: "miarmacore.command.gmsp"
+      others: "miarmacore.command.gmsp.others"
+    usage: "/gmsp [jugador]"
+    messages:
+      self: "[P] &7Tu modo de juego ha sido cambiado a &aEspectador"
+      others: "[P] &7El modo de juego de &a%player% &7ha sido cambiado a &aEspectador"
+
+  gma:
+    name: "gma"
+    description: "Cambia tu modo de juego a aventura"
+    permissions:
+      base: "miarmacore.command.gma"
+      others: "miarmacore.command.gma.others"
+    usage: "/gma [jugador]"
+    messages:
+      self: "[P] &7Tu modo de juego ha sido cambiado a &aAventura"
+      others: "[P] &7El modo de juego de &a%player% &7ha sido cambiado a &aAventura"
+
+  vanish:
+    name: "vanish"
+    description: "Desaparece"
+    permission: "miarmacore.command.vanish"
+    messages:
+      vanished: "[P] &7Te has hecho invisible"
+      unvanished: "[P] &7Ahora eres visible de nuevo"
+
+  warp:
+    name: "warp"
+    description: "Muestra un warp de la lista"
+    permission: "miarmacore.command.warp"
+    usage: "/warp {add/remove} <nombre warp>"
+    messages:
+      noWarpsStored: "[P] &cNo tienes warps almacenados"
+      warpList: |
+        [P] &7Warps almacenados:&r
+        %warps%
+    subcommands:
+      add:
+        name: "add"
+        description: "Añade un warp"
+        permission: "miarmacore.command.warp.add"
+        usage: "/warp add <nombre>"
+        messages:
+          warpAdded: "[P] &7Warp &a%warp% &7añadido correctamente"
+          warpAlreadyExists: "[P] &cEl warp &a%warp% &cya existe"
+      remove:
+        name: "remove"
+        description: "Elimina un warp"
+        permission: "miarmacore.command.warp.remove"
+        usage: "/warp remove <nombre>"
+        messages:
+          warpRemoved: "[P] &7Warp &a%warp% &7eliminado correctamente"
+          warpNotFound: "[P] &cEl warp &a%warp% &cno existe"
+
+
+
 # -----------------------------------------------------------
 #  Message Configuration
 # -----------------------------------------------------------
@@ -326,6 +411,7 @@ language:
     worldIsBlocked: "[P] &7El mundo &a%world% &7está bloqueado"
     notEnoughLevels: "[P] &cNo tienes suficientes niveles para esto"
     cooldownHasNotExpired: "[P] &cDebes esperar %time% segundos para volver a usar este comando"
+    maxWarpsReached: "[P] &cHas alcanzado el límite de warps almacenados"
 
 
 # ⚠️ Do not modify this line ⚠️
