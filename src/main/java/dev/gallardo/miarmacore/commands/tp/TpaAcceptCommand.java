@@ -47,9 +47,9 @@ public class TpaAcceptCommand {
                 TPA_REQUESTS.removeRequest(request);
 
                 if (request.type() == TpaType.TPA) {
-                    sender.teleport(target.getLocation());
-                } else if (request.type() == TpaType.TPA_HERE) {
                     target.teleport(sender.getLocation());
+                } else if (request.type() == TpaType.TPA_HERE) {
+                    sender.teleport(target.getLocation());
                 }
 
                 Utils.sendMessage(MiarmaCore.CONFIG.getString("commands.tpaccept.messages.acceptedToTarget"), target, true,
