@@ -2,12 +2,11 @@ package dev.gallardo.miarmacore.events;
 
 import de.tr7zw.nbtapi.NBTItem;
 import dev.gallardo.miarmacore.MiarmaCore;
-import dev.gallardo.miarmacore.common.CustomConfigManager;
+import dev.gallardo.miarmacore.config.CustomConfigManager;
 import dev.gallardo.miarmacore.common.minecraft.DisposalInventory;
 import dev.gallardo.miarmacore.common.minecraft.GlobalChest;
 import dev.gallardo.miarmacore.common.minecraft.MinepacksAccessor;
 import dev.gallardo.miarmacore.tasks.LocationTracker;
-import dev.gallardo.miarmacore.util.Constants;
 import dev.gallardo.miarmacore.util.Utils;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.*;
@@ -39,8 +38,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.logging.Level;
-
-import static dev.gallardo.miarmacore.util.Constants.*;
 
 public class EventListener {
 	public static void onEnable() {
@@ -79,25 +76,38 @@ public class EventListener {
 				}
 
 				if (MiarmaCore.CONFIG.getBoolean("config.modules.recoverInventory")) {
-					Utils.saveInventory(player);
-					event.getDrops().clear();
-					event.setDroppedExp(0);
-					event.setKeepInventory(true);
+					Location deathLocation = player.getLocation();
+					List<String> deathCoords = List.of(String.valueOf(deathLocation.getBlockX()),
+							String.valueOf(deathLocation.getBlockY()), String.valueOf(deathLocation.getBlockZ()));
+					Location playerSpawnPoint = player.getRespawnLocation();
+					if (playerSpawnPoint == null) {
+						playerSpawnPoint = player.getWorld().getSpawnLocation();
+					}
 
-					player.getInventory().setArmorContents(null);
-					player.getInventory().clear();
-					player.updateInventory();
+					Collection<Player> players = (Collection<Player>) Bukkit.getOnlinePlayers();
+					if(deathLocation.distance(playerSpawnPoint) <= MiarmaCore.CONFIG.getInt("config.values.recInvSpawnDistance") ||
+						Utils.playersNearRadius(player, players, MiarmaCore.CONFIG.getInt("config.values.recInvPlayerRadius"))) {
+						Utils.sendMessage(MiarmaCore.CONFIG.getString("language.events.onDeath.itemsNotRecovered"), player, true,
+								true, List.of("%x%", "%y%", "%z%"), deathCoords);
+					} else {
+						Utils.saveInventory(player);
+						event.getDrops().clear();
+						event.setDroppedExp(0);
+						event.setKeepInventory(true);
+						player.getInventory().setArmorContents(null);
+						player.getInventory().clear();
+						player.updateInventory();
 
-					float xpLossOnDeath = Float.parseFloat(MiarmaCore.CONFIG.getString("config.values.xpLossOnDeath"));
-					int levelsToLose = Math.round(playerLevel * xpLossOnDeath);
-					int newLevel = Math.max(0, playerLevel - levelsToLose);
+						float xpLossOnDeath = Float.parseFloat(MiarmaCore.CONFIG.getString("config.values.xpLossOnDeath"));
+						int levelsToLose = Math.round(playerLevel * xpLossOnDeath);
+						int newLevel = Math.max(0, playerLevel - levelsToLose);
 
-					event.setNewLevel(newLevel);
-					event.setNewExp((int) playerExp);
+						event.setNewLevel(newLevel);
+						event.setNewExp((int) playerExp);
 
-					Utils.sendMessage(MiarmaCore.CONFIG.getString("language.events.onDeath.lostLevels"), player, true,
-							true, List.of("%levels%"), List.of(String.valueOf(levelsToLose)));
-
+						Utils.sendMessage(MiarmaCore.CONFIG.getString("language.events.onDeath.lostLevels"), player, true,
+								true, List.of("%levels%"), List.of(String.valueOf(levelsToLose)));
+					}
 				}
 			}
 

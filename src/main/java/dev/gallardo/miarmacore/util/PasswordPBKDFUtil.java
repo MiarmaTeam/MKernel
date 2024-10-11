@@ -19,8 +19,7 @@ public class PasswordPBKDFUtil {
     public static String encrypt(String password) {
         try {
             byte[] saltBytes = SALT.getBytes();
-            
-            // Concatenar la contraseña del usuario con la clave maestra
+
             String combinedPassword = password + MASTER_KEY;
             char[] combinedPasswordBytes = combinedPassword.toCharArray();
             
@@ -28,10 +27,7 @@ public class PasswordPBKDFUtil {
             SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256");
             byte[] derivedKey = factory.generateSecret(spec).getEncoded();
 
-            // Convertir la clave derivada a una cadena base64
             String derivedKeyBase64 = Base64.getEncoder().encodeToString(derivedKey);
-
-            // Construir la cadena en el formato deseado
             String result = String.format("pbkdf2:sha256:%d$%s$%s", ITERATIONS, SALT, derivedKeyBase64);
             return result;
         } catch (NoSuchAlgorithmException | InvalidKeySpecException e) {

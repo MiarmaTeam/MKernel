@@ -26,10 +26,12 @@ config:
     rottenFleshCookTime: 60
     zombificationPotionTime: 180
     spawnerBreakerProbability: 30
-    recoverInventoryRequiredLevel: 10
+    recInvRequiredLevel: 10
     xpLossOnDeath: 0.7
     tpCooldown: "5m"
     maxWarps: 3
+    recInvPlayerRadius: 10
+    recInvSpawnDistance: 150
 
   modules:
     joinTitle: true
@@ -375,6 +377,7 @@ language:
       youWereMentioned: "[P] &e%player% &7te ha mencionado!"
     onDeath:
         lostLevels: "[P] &cHas perdido &a%levels% &cniveles de &aXP &cal morir"
+        itemsNotRecovered: "[P] &7Tus items no se han recuperado porque has muerto muy cerca del spawn/point o había jugadores cerca tuya. Los puedes recuperar en: &a%x% %y% %z%"
 
   items:
     scissors:

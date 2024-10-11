@@ -1,13 +1,12 @@
 package dev.gallardo.miarmacore;
 
 import dev.gallardo.miarmacore.commands.CommandHandler;
-import dev.gallardo.miarmacore.common.ConfigWrapper;
-import dev.gallardo.miarmacore.common.CustomConfigManager;
+import dev.gallardo.miarmacore.config.ConfigWrapper;
+import dev.gallardo.miarmacore.config.CustomConfigManager;
 import dev.gallardo.miarmacore.common.minecraft.GlobalChest;
 import dev.gallardo.miarmacore.events.EventListener;
 import dev.gallardo.miarmacore.recipes.RecipeManager;
 import dev.gallardo.miarmacore.tasks.LocationTracker;
-import dev.gallardo.miarmacore.util.Constants;
 import dev.gallardo.miarmacore.util.Utils;
 import dev.jorel.commandapi.CommandAPI;
 import dev.jorel.commandapi.CommandAPIBukkitConfig;
@@ -16,8 +15,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.io.File;
 import java.nio.file.Files;
 import java.util.logging.Logger;
-
-import static dev.gallardo.miarmacore.util.Constants.*;
 
 public class MiarmaCore extends JavaPlugin {
 

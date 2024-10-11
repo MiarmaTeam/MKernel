@@ -1,6 +1,5 @@
 package dev.gallardo.miarmacore.commands.misc;
 
-import dev.gallardo.miarmacore.common.CustomConfigManager;
 import dev.gallardo.miarmacore.tasks.LocationTracker;
 import dev.gallardo.miarmacore.util.Utils;
 import dev.jorel.commandapi.CommandAPICommand;

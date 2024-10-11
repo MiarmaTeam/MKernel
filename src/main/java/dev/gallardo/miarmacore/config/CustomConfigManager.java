@@ -1,4 +1,4 @@
-package dev.gallardo.miarmacore.common;
+package dev.gallardo.miarmacore.config;
 
 import dev.gallardo.miarmacore.MiarmaCore;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -7,8 +7,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
 import java.io.IOException;
-
-import static dev.gallardo.miarmacore.util.Constants.*;
 
 public class CustomConfigManager {
 

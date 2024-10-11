@@ -1,8 +1,8 @@
 name: MiarmaCore
-version: '1.3.5'
+version: '1.3.6'
 main: dev.gallardo.miarmacore.MiarmaCore
 api-version: '1.21'
-authors: [Gallardo7761, elpapuu1333 (Contributor)]
+authors: [Gallardo7761, elpapuu1333 (Contributor & tester)]
 permissions:
     miarmacore.command:
         description: Permite al usuario ejecutar comandos de MiarmaCore
@@ -155,6 +155,8 @@ permissions:
             miarmacore.command.warp: true
             miarmacore.command.warp.add: true
             miarmacore.command.warp.remove: true
+            miarmacore.command.me: true
+            miarmacore.command.do: true
 
     miarmacore.*:
         description: Permite al usuario ejecutar todos los comandos de MiarmaCore

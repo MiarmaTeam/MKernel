@@ -3,7 +3,6 @@ package dev.gallardo.miarmacore.util;
 import dev.gallardo.miarmacore.MiarmaCore;
 import dev.gallardo.miarmacore.common.minecraft.TpaRequest;
 import dev.gallardo.miarmacore.common.minecraft.TpaRequests;
-import dev.gallardo.miarmacore.recipes.tools.AdminStickRecipe;
 import dev.jorel.commandapi.arguments.*;
 import org.bukkit.Bukkit;
 import org.bukkit.NamespacedKey;
@@ -23,8 +22,6 @@ public class Constants {
                     .map(Player::getName).toList().toArray(new String[Bukkit.getOnlinePlayers().size()])));
 
     public static List<ItemStack> RECIPES = new ArrayList<>();
-
-    public static String PREFIX = Utils.colorCodeParser(MiarmaCore.CONFIG.getString("language.prefix"));
 
     public static Argument<?> PLAYERS_ARG = new PlayerArgument(MiarmaCore.CONFIG.getString("arguments.player"))
             .replaceSuggestions(ArgumentSuggestions.strings(info -> Bukkit.getOnlinePlayers().stream()
@@ -49,8 +46,6 @@ public class Constants {
                     .map(Utils::getKey)
                     .toList().toArray(new String[RECIPES.size()])));
 
-    //public static final long COOLDOWN = Utils.cooldownToMillis(MiarmaCore.CONFIG.getString("config.values.tpCooldown"));
-
     public static Argument<?> TPA_TARGETS = new PlayerArgument(MiarmaCore.CONFIG.getString("arguments.player"))
             .replaceSuggestions(ArgumentSuggestions.strings(info -> {
                 List<TpaRequest> requests = TPA_REQUESTS.getRequests();
@@ -74,7 +69,4 @@ public class Constants {
             }));
 
     public static NamespacedKey VANISH_KEY = new NamespacedKey(MiarmaCore.PLUGIN, "vanish");
-
-    public static int MAX_WARPS = MiarmaCore.CONFIG.getInt("config.values.maxWarps");
-
 }

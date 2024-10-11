@@ -299,6 +299,10 @@ public class Utils {
         return p1.getLocation().distance(p2.getLocation());
     }
 
+    public static boolean playersNearRadius(Player player, Collection<Player> players, int radius) {
+        return players.stream().anyMatch(p -> distance(p, player) <= radius && !p.equals(player));
+    }
+
     public static void saveInventory(Player p) throws IOException{
         File f = new File(MiarmaCore.PLUGIN.getDataFolder().getAbsolutePath(), "inventories/"
                 + p.getName() + ".yml");

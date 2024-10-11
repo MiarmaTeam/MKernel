@@ -5,12 +5,10 @@ import dev.gallardo.miarmacore.common.minecraft.Warp;
 import dev.gallardo.miarmacore.util.Constants;
 import dev.gallardo.miarmacore.util.Utils;
 import dev.jorel.commandapi.CommandAPICommand;
-import dev.jorel.commandapi.arguments.Argument;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.entity.Player;
 
 import java.io.File;
 import java.io.IOException;
@@ -63,7 +61,7 @@ public class WarpCommand {
                                 + sender.getName() + ".yml");
                         FileConfiguration c = YamlConfiguration.loadConfiguration(f);
 
-                        if (c.getKeys(false).size() >= Constants.MAX_WARPS) {
+                        if (c.getKeys(false).size() >= MiarmaCore.CONFIG.getInt("config.values.maxWarps")) {
                             Utils.sendMessage(
                                 MiarmaCore.CONFIG.getString("language.errors.maxWarpsReached"),
                                 sender, true

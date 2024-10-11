@@ -1,4 +1,4 @@
-package dev.gallardo.miarmacore.common;
+package dev.gallardo.miarmacore.config;
 
 import dev.dejvokep.boostedyaml.YamlDocument;
 import dev.dejvokep.boostedyaml.dvs.versioning.BasicVersioning;
@@ -11,8 +11,6 @@ import dev.gallardo.miarmacore.MiarmaCore;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
-
-import static dev.gallardo.miarmacore.util.Constants.*;
 
 public class ConfigWrapper {
 	private YamlDocument config;
