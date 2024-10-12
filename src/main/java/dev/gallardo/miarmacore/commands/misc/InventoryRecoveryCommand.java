@@ -1,6 +1,10 @@
 package dev.gallardo.miarmacore.commands.misc;
 
 import dev.gallardo.miarmacore.MiarmaCore;
+import dev.gallardo.miarmacore.config.CommandWrapper;
+import dev.gallardo.miarmacore.config.providers.CommandProvider;
+import dev.gallardo.miarmacore.config.providers.ConfigProvider;
+import dev.gallardo.miarmacore.config.providers.MessageProvider;
 import dev.gallardo.miarmacore.util.Utils;
 import dev.jorel.commandapi.CommandAPICommand;
 
@@ -9,16 +13,17 @@ import java.util.List;
 
 public class InventoryRecoveryCommand {
     public static void register() {
-        new CommandAPICommand(MiarmaCore.CONFIG.getString("commands.recinv.name"))
-            .withPermission(MiarmaCore.CONFIG.getString("commands.recinv.permission"))
-            .withShortDescription(MiarmaCore.CONFIG.getString("commands.recinv.description"))
-            .withFullDescription(MiarmaCore.CONFIG.getString("commands.recinv.description"))
+        CommandWrapper recInvCmd = CommandProvider.getRecInvCommand();
+        new CommandAPICommand(recInvCmd.getName())
+            .withPermission(recInvCmd.getPermission().base())
+            .withShortDescription(recInvCmd.getDescription())
+            .withFullDescription(recInvCmd.getDescription())
             .executesPlayer((sender, args) -> {
                 int xpLevels = sender.getLevel();
-                int requiredLevels = MiarmaCore.CONFIG.getInt("config.values.recoverInventoryRequiredLevel");
+                int requiredLevels = ConfigProvider.Values.getRecInvRequiredLevel();
 
                 if (xpLevels < requiredLevels) {
-                    Utils.sendMessage(MiarmaCore.CONFIG.getString("commands.recinv.messages.notEnoughLevels"), sender, true,
+                    Utils.sendMessage(recInvCmd.getMessages()[1], sender, true,
                             true, List.of("%required%"),
                             List.of(String.valueOf(requiredLevels)));
                     return;
@@ -28,11 +33,11 @@ public class InventoryRecoveryCommand {
                 try {
                     items = Utils.restoreInventory(sender);
                     if(items == 0) {
-                        Utils.sendMessage(MiarmaCore.CONFIG.getString("commands.recinv.messages.noItemsToRecover"),
+                        Utils.sendMessage(recInvCmd.getMessages()[2],
                                 sender, true);
                         return;
                     }
-                    Utils.sendMessage(MiarmaCore.CONFIG.getString("commands.recinv.messages.inventoryRecovered"),
+                    Utils.sendMessage(recInvCmd.getMessages()[0],
                             sender, true, true, List.of("%items%"),
                             List.of(String.valueOf(items)));
                     sender.setLevel(xpLevels - requiredLevels);

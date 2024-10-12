@@ -1,12 +1,8 @@
 package dev.gallardo.miarmacore.util;
 
 import dev.gallardo.miarmacore.MiarmaCore;
-import dev.gallardo.miarmacore.common.minecraft.TpaRequest;
 import dev.gallardo.miarmacore.common.minecraft.TpaRequests;
-import dev.jorel.commandapi.arguments.*;
-import org.bukkit.Bukkit;
 import org.bukkit.NamespacedKey;
-import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
@@ -14,59 +10,6 @@ import java.util.List;
 
 public class Constants {
     public static TpaRequests TPA_REQUESTS = TpaRequests.getInstance();
-
-    public static final Argument<?> PASSWORD_ARG = new GreedyStringArgument(MiarmaCore.CONFIG.getString("arguments.password"));
-
-    public static Argument<?> PLAYER_ARG = new PlayerArgument(MiarmaCore.CONFIG.getString("arguments.player"))
-            .replaceSuggestions(ArgumentSuggestions.strings(info -> Bukkit.getOnlinePlayers().stream()
-                    .map(Player::getName).toList().toArray(new String[Bukkit.getOnlinePlayers().size()])));
-
     public static List<ItemStack> RECIPES = new ArrayList<>();
-
-    public static Argument<?> PLAYERS_ARG = new PlayerArgument(MiarmaCore.CONFIG.getString("arguments.player"))
-            .replaceSuggestions(ArgumentSuggestions.strings(info -> Bukkit.getOnlinePlayers().stream()
-                    .map(x -> x.getName()).toList().toArray(new String[Bukkit.getOnlinePlayers().size()])));
-
-    public static Argument<?> PLAYERS_OPT_ARG = new PlayerArgument(MiarmaCore.CONFIG.getString("arguments.player"))
-            .replaceSuggestions(ArgumentSuggestions.strings(info -> Bukkit.getOnlinePlayers().stream()
-                    .map(x -> x.getName()).toList().toArray(new String[Bukkit.getOnlinePlayers().size()])));
-
-    public static Argument<?> LEVELS = new IntegerArgument(MiarmaCore.CONFIG.getString("arguments.levels"));
-
-    public static Argument<?> WORLDS = new StringArgument(MiarmaCore.CONFIG.getString("arguments.world"))
-            .replaceSuggestions(ArgumentSuggestions.strings(info -> Bukkit.getWorlds().stream().map(x -> x.getName())
-                    .toList().toArray(new String[Bukkit.getWorlds().size()])));
-
-    public static Argument<?> MESSAGE = new GreedyStringArgument(MiarmaCore.CONFIG.getString("arguments.message"));
-
-    public static Argument<?> WARP_NAME = new GreedyStringArgument(MiarmaCore.CONFIG.getString("arguments.warpName"));
-
-    public static Argument<?> ITEMS = new StringArgument(MiarmaCore.CONFIG.getString("arguments.item"))
-            .replaceSuggestions(ArgumentSuggestions.strings(info -> RECIPES.stream()
-                    .map(Utils::getKey)
-                    .toList().toArray(new String[RECIPES.size()])));
-
-    public static Argument<?> TPA_TARGETS = new PlayerArgument(MiarmaCore.CONFIG.getString("arguments.player"))
-            .replaceSuggestions(ArgumentSuggestions.strings(info -> {
-                List<TpaRequest> requests = TPA_REQUESTS.getRequests();
-                List<String> players = Bukkit.getServer().getOnlinePlayers().stream()
-                        .map(Player::getName)
-                        .toList();
-                List<String> targets = new ArrayList<>();
-
-                for (String playerName : players) {
-                    Player player = Bukkit.getServer().getPlayer(playerName);
-
-                    boolean hasPendingRequest = requests.stream()
-                            .anyMatch(request -> request.to().equals(player));
-
-                    if (!hasPendingRequest) {
-                        targets.add(playerName);
-                    }
-                }
-
-                return targets.toArray(new String[0]);
-            }));
-
     public static NamespacedKey VANISH_KEY = new NamespacedKey(MiarmaCore.PLUGIN, "vanish");
 }

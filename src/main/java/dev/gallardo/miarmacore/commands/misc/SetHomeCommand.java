@@ -1,6 +1,8 @@
 package dev.gallardo.miarmacore.commands.misc;
 
 import dev.gallardo.miarmacore.MiarmaCore;
+import dev.gallardo.miarmacore.config.CommandWrapper;
+import dev.gallardo.miarmacore.config.providers.CommandProvider;
 import dev.gallardo.miarmacore.util.Utils;
 import dev.jorel.commandapi.CommandAPICommand;
 import org.bukkit.Location;
@@ -11,10 +13,11 @@ import java.util.List;
 
 public class SetHomeCommand {
     public static void register() {
-        new CommandAPICommand(MiarmaCore.CONFIG.getString("commands.sethome.name"))
-            .withPermission(MiarmaCore.CONFIG.getString("commands.sethome.permission"))
-            .withFullDescription(MiarmaCore.CONFIG.getString("commands.sethome.description"))
-            .withShortDescription(MiarmaCore.CONFIG.getString("commands.sethome.description"))
+        CommandWrapper setHomeCmd = CommandProvider.getSetHomeCommand();
+        new CommandAPICommand(setHomeCmd.getName())
+            .withPermission(setHomeCmd.getPermission().base())
+            .withFullDescription(setHomeCmd.getDescription())
+            .withShortDescription(setHomeCmd.getDescription())
             .executesPlayer((sender, args) -> {
                 Location loc = sender.getLocation();
                 String path = "homes." + sender.getName();
@@ -25,7 +28,7 @@ public class SetHomeCommand {
                 HOME_CONFIG.getConfig().set(path + ".yaw", loc.getYaw());
                 HOME_CONFIG.getConfig().set(path + ".pitch", loc.getPitch());
                 HOME_CONFIG.saveConfig();
-                Utils.sendMessage(MiarmaCore.CONFIG.getString("commands.sethome.messages.homeSet"), sender, true,
+                Utils.sendMessage(setHomeCmd.getMessages()[0], sender, true,
                         true, List.of("%x%", "%y%", "%z%"), List.of((int)loc.getX()+"", (int)loc.getY()+"", (int)loc.getZ()+""));
             })
             .register();

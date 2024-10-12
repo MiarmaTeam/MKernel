@@ -2,6 +2,7 @@ package dev.gallardo.miarmacore.recipes.potions;
 
 import de.tr7zw.nbtapi.NBTItem;
 import dev.gallardo.miarmacore.MiarmaCore;
+import dev.gallardo.miarmacore.config.providers.MessageProvider;
 import dev.gallardo.miarmacore.util.Utils;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -20,9 +21,9 @@ public class ZombificationPotionRecipe {
         
         ItemMeta meta = potion.getItemMeta();
         meta.setDisplayName(Utils.colorCodeParser(
-                MiarmaCore.CONFIG.getString("language.items.zombificationPotion.name")));
+                MessageProvider.Items.getZombificationPotionName()));
         meta.setLore(Collections.singletonList(Utils.colorCodeParser(
-                MiarmaCore.CONFIG.getString("language.items.zombificationPotion.lore"))));
+                MessageProvider.Items.getZombificationPotionLore())));
         meta.addEnchant(Enchantment.MENDING, 1, false);
         meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
         meta.addItemFlags(ItemFlag.HIDE_ADDITIONAL_TOOLTIP);

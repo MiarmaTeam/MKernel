@@ -1,6 +1,7 @@
 package dev.gallardo.miarmacore.common.minecraft;
 
 import dev.gallardo.miarmacore.MiarmaCore;
+import dev.gallardo.miarmacore.config.providers.MessageProvider;
 import dev.gallardo.miarmacore.util.Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
@@ -62,6 +63,6 @@ public class GlobalChest {
 
     static {
         inv = Bukkit.createInventory(null, 54,
-                Utils.colorCodeParser(MiarmaCore.CONFIG.getString("language.inventories.globalChest.title")));
+                Utils.colorCodeParser(MessageProvider.Inventories.getGlobalChestTitle()));
     }
 }

@@ -6,6 +6,8 @@ import dev.gallardo.miarmacore.config.CustomConfigManager;
 import dev.gallardo.miarmacore.common.minecraft.DisposalInventory;
 import dev.gallardo.miarmacore.common.minecraft.GlobalChest;
 import dev.gallardo.miarmacore.common.minecraft.MinepacksAccessor;
+import dev.gallardo.miarmacore.config.providers.ConfigProvider;
+import dev.gallardo.miarmacore.config.providers.MessageProvider;
 import dev.gallardo.miarmacore.tasks.LocationTracker;
 import dev.gallardo.miarmacore.util.Utils;
 import net.md_5.bungee.api.ChatColor;
@@ -63,19 +65,19 @@ public class EventListener {
 				int playerLevel = player.getLevel();
 				float playerExp = player.getExp();
 
-				if (MiarmaCore.CONFIG.getBoolean("config.modules.deathTitle")) {
+				if (ConfigProvider.Modules.isDeathTitleEnabled()) {
 					Collection<? extends Player> players = Bukkit.getServer().getOnlinePlayers();
 					for (Player p : players) {
 						p.playSound(p.getLocation(), Sound.ENTITY_WITHER_DEATH, 1, 1);
 						p.sendTitle(Utils.colorCodeParser(
 								Utils.placeholderParser(
-										MiarmaCore.CONFIG.getString("language.titles.subtitles.death"),
+										MessageProvider.Titles.getDeathSubtitle(),
 										List.of("%player%"), List.of(player.getName()))),
 								"", 30, 30, 30);
 					}
 				}
 
-				if (MiarmaCore.CONFIG.getBoolean("config.modules.recoverInventory")) {
+				if (ConfigProvider.Modules.isRecoverInventoryEnabled()) {
 					Location deathLocation = player.getLocation();
 					List<String> deathCoords = List.of(String.valueOf(deathLocation.getBlockX()),
 							String.valueOf(deathLocation.getBlockY()), String.valueOf(deathLocation.getBlockZ()));
@@ -85,9 +87,9 @@ public class EventListener {
 					}
 
 					Collection<Player> players = (Collection<Player>) Bukkit.getOnlinePlayers();
-					if(deathLocation.distance(playerSpawnPoint) <= MiarmaCore.CONFIG.getInt("config.values.recInvSpawnDistance") ||
-						Utils.playersNearRadius(player, players, MiarmaCore.CONFIG.getInt("config.values.recInvPlayerRadius"))) {
-						Utils.sendMessage(MiarmaCore.CONFIG.getString("language.events.onDeath.itemsNotRecovered"), player, true,
+					if(deathLocation.distance(playerSpawnPoint) <= ConfigProvider.Values.getRecInvSpawnDistance() ||
+						Utils.playersNearRadius(player, players, ConfigProvider.Values.getRecInvPlayerRadius())) {
+						Utils.sendMessage(MessageProvider.Events.getOnDeathItemsNotRecovered(), player, true,
 								true, List.of("%x%", "%y%", "%z%"), deathCoords);
 					} else {
 						Utils.saveInventory(player);
@@ -98,14 +100,14 @@ public class EventListener {
 						player.getInventory().clear();
 						player.updateInventory();
 
-						float xpLossOnDeath = Float.parseFloat(MiarmaCore.CONFIG.getString("config.values.xpLossOnDeath"));
+						float xpLossOnDeath = ConfigProvider.Values.getXpLossOnDeath();
 						int levelsToLose = Math.round(playerLevel * xpLossOnDeath);
 						int newLevel = Math.max(0, playerLevel - levelsToLose);
 
 						event.setNewLevel(newLevel);
 						event.setNewExp((int) playerExp);
 
-						Utils.sendMessage(MiarmaCore.CONFIG.getString("language.events.onDeath.lostLevels"), player, true,
+						Utils.sendMessage(MessageProvider.Events.getOnDeathLostLevelsItems(), player, true,
 								true, List.of("%levels%"), List.of(String.valueOf(levelsToLose)));
 					}
 				}
@@ -114,34 +116,34 @@ public class EventListener {
 			@EventHandler
 			public void onPlayerJoin(PlayerJoinEvent event) {
 				Player player = event.getPlayer();
-				if(MiarmaCore.CONFIG.getBoolean("config.modules.spawnAtLobby")) {
+				if(ConfigProvider.Modules.isSpawnAtLobbyEnabled()) {
 					if(Bukkit.getServer().getWorlds().stream()
 							.map(World::getName)
 							.map(String::toLowerCase)
-							.anyMatch(w -> w.contains(MiarmaCore.CONFIG.getString("config.worlds.lobby.name")))) {
+							.anyMatch(w -> w.contains(ConfigProvider.Worlds.getLobby().name()))) {
 						player.teleport(
 								new Location(
-									Bukkit.getWorld(MiarmaCore.CONFIG.getString("config.worlds.lobby.name")),
-									MiarmaCore.CONFIG.getConfig().getDouble("config.worlds.lobby.coords.x"),
-									MiarmaCore.CONFIG.getConfig().getDouble("config.worlds.lobby.coords.y"),
-									MiarmaCore.CONFIG.getConfig().getDouble("config.worlds.lobby.coords.z"),
-									MiarmaCore.CONFIG.getConfig().getFloat("config.worlds.lobby.coords.yaw"),
-									MiarmaCore.CONFIG.getConfig().getFloat("config.worlds.lobby.coords.pitch")
+									Bukkit.getWorld(ConfigProvider.Worlds.getLobby().name()),
+									ConfigProvider.Worlds.getLobby().x(),
+									ConfigProvider.Worlds.getLobby().y(),
+									ConfigProvider.Worlds.getLobby().z(),
+									ConfigProvider.Worlds.getLobby().yaw(),
+									ConfigProvider.Worlds.getLobby().pitch()
 								)
 						);
 					} else {
 						MiarmaCore.getPlugin(MiarmaCore.class).getLogger()
-								.log(Level.SEVERE, MiarmaCore.CONFIG.getString("language.errors.lobbyDoesNotExist"));
+								.log(Level.SEVERE, Utils.formatMessageNoPrefix(MessageProvider.Errors.lobbyDoesNotExist()));
 					}
 				}
-				if (MiarmaCore.CONFIG.getBoolean("config.modules.joinTitle")) {
+				if (ConfigProvider.Modules.isJoinTitleEnabled()) {
 
 					Collection<? extends Player> players = Bukkit.getServer().getOnlinePlayers();
 					for (Player p : players) {
 						p.sendTitle(
-								Utils.colorCodeParser(MiarmaCore.CONFIG.getString("language.titles.titleFormat"))
+								Utils.colorCodeParser(MessageProvider.Titles.getTitleFormat())
 								+ player.getName(),
-								Utils.colorCodeParser(MiarmaCore.CONFIG.getString("language.titles.subtitles.join")), 30,
+								Utils.colorCodeParser(MessageProvider.Titles.getJoinSubtitle()), 30,
 								30, 30);
 					}
 				}
@@ -163,14 +165,14 @@ public class EventListener {
 
 			@EventHandler
 			public void onPlayerLeave(PlayerQuitEvent event) {
-				if (MiarmaCore.CONFIG.getBoolean("config.modules.leaveTitle")) {
+				if (ConfigProvider.Modules.isLeaveTitleEnabled()) {
 					Player player = event.getPlayer();
 					Collection<? extends Player> players = Bukkit.getServer().getOnlinePlayers();
 					for (Player p : players) {
 						p.sendTitle(
-								Utils.colorCodeParser(MiarmaCore.CONFIG.getString("language.titles.titleFormat"))
+								Utils.colorCodeParser(MessageProvider.Titles.getTitleFormat())
 								+ player.getName(),
-								Utils.colorCodeParser(MiarmaCore.CONFIG.getString("language.titles.subtitles.leave")), 30,
+								Utils.colorCodeParser(MessageProvider.Titles.getLeaveSubtitle()), 30,
 								30, 30);
 					}
 				}
@@ -178,7 +180,7 @@ public class EventListener {
 
 			@EventHandler
 			public void onRightClick(PlayerInteractEvent event) {
-				if (!MiarmaCore.CONFIG.getBoolean("config.modules.harvestOnRightClick")) {
+				if (!ConfigProvider.Modules.isHarvestOnRightClickEnabled()) {
 		            return;
 		        }
 				if (event.getAction() == Action.RIGHT_CLICK_BLOCK) {
@@ -286,14 +288,14 @@ public class EventListener {
 					Location loc = LocationTracker.getPlayerLocation(player);
 					player.teleport(new Location(loc.getWorld(), loc.getX()-2, loc.getY(), loc.getZ()-2));
 
-					Utils.sendMessage(MiarmaCore.CONFIG.getString("language.errors.worldIsBlocked"), player, true);
+					Utils.sendMessage(MessageProvider.Errors.worldIsBlocked(), player, true);
 				}
 			}
 			
 			@EventHandler
 			public void onChatMessage(AsyncPlayerChatEvent event) {
-				if(MiarmaCore.CONFIG.getBoolean("config.modules.chatFormat")) {
-					if(event.getPlayer().hasPermission(MiarmaCore.CONFIG.getString("config.permissions.chatFormat"))) {
+				if(ConfigProvider.Modules.isChatFormatEnabled()) {
+					if(event.getPlayer().hasPermission(ConfigProvider.Permissions.getChatFormatPermission())) {
 						event.setMessage(Utils.colorCodeParser(event.getMessage()));
 					}
 				}
@@ -301,38 +303,38 @@ public class EventListener {
 						
 			@EventHandler
 			public void onAdminMessage(AsyncPlayerChatEvent event) {
-				if(MiarmaCore.CONFIG.getBoolean("config.modules.adminChat")) {
+				if(ConfigProvider.Modules.isAdminChatEnabled()) {
 					if(event.getMessage().startsWith("#") && event.getPlayer().hasPermission(
-							MiarmaCore.CONFIG.getString("config.permissions.adminChat")
+							ConfigProvider.Permissions.getAdminChatPermission()
 					)) {
 						String msg = event.getMessage().replace("#",
-								Utils.colorCodeParser(MiarmaCore.CONFIG.getString("language.adminPrefix"))+" "+
+								Utils.colorCodeParser(MessageProvider.getAdminPrefix())+" "+
 									ChatColor.GRAY+event.getPlayer().getName()+ChatColor.AQUA+":"+ChatColor.RESET+" ")
 										.replace("  ", " ");
 						event.setCancelled(true);
 						for(Player p:Bukkit.getOnlinePlayers()) {
 							if(p.hasPermission(
-									MiarmaCore.CONFIG.getString("config.permissions.adminChat")
+									ConfigProvider.Permissions.getAdminChatPermission()
 							)) {
 								p.sendRawMessage(msg);
 							}
 						}
 					} else if(event.getMessage().startsWith("#") && !event.getPlayer().hasPermission(
-							MiarmaCore.CONFIG.getString("config.permissions.adminChat")
+							ConfigProvider.Permissions.getAdminChatPermission()
 					)) {
 						event.setCancelled(true);
-						Utils.sendMessage(MiarmaCore.CONFIG.getString("language.errors.noPermission"), event.getPlayer(), true);
+						Utils.sendMessage(MessageProvider.Errors.noPermission(), event.getPlayer(), true);
 					}
 				}
 			}
 			
 			@EventHandler
 			public void onMention(AsyncPlayerChatEvent event) {
-				if(MiarmaCore.CONFIG.getBoolean("config.modules.mentions")) {
+				if(ConfigProvider.Modules.isMentionsEnabled()) {
 					List<String> players = Bukkit.getServer().getOnlinePlayers().stream().map(Player::getName).toList();
 					boolean containsPlayer = false;
 					if(event.getPlayer().hasPermission(
-							MiarmaCore.CONFIG.getString("config.permissions.mentions")
+							ConfigProvider.Permissions.getMentionsPermission()
 					)) {
 						Player victim = null;
 						for(String s:players) {
@@ -342,10 +344,10 @@ public class EventListener {
 							}
 						}
 						if (victim != null && containsPlayer){
-							String formattedMention = Utils.colorCodeParser(MiarmaCore.CONFIG.getString("language.events.onMention.format")+"@"+victim.getName())+ChatColor.RESET;
+							String formattedMention = Utils.colorCodeParser(MessageProvider.Events.getOnMentionFormat()+"@"+victim.getName())+ChatColor.RESET;
 							event.setMessage(event.getMessage().replace(victim.getName(), formattedMention));
 
-							Utils.sendMessage(MiarmaCore.CONFIG.getString("language.events.onMention.youWereMentioned"), victim, true,
+							Utils.sendMessage(MessageProvider.Events.getOnMentionMessage(), victim, true,
 									true, List.of("%player%"), List.of(event.getPlayer().getName()));
 
 							victim.playSound(victim, Sound.BLOCK_NOTE_BLOCK_PLING, 1, 1);
@@ -356,7 +358,7 @@ public class EventListener {
 
 			@EventHandler
 		    public void onBlockPlace(BlockPlaceEvent event) {
-		        if (MiarmaCore.CONFIG.getBoolean("config.modules.autoItemRefill")) {
+		        if (ConfigProvider.Modules.isAutoItemRefillEnabled()) {
 		            ItemStack item = event.getItemInHand();
 		            Material material = event.getBlockPlaced().getType();
 		            Inventory playerInventory = event.getPlayer().getInventory();
@@ -404,7 +406,7 @@ public class EventListener {
 				
 				if(specialType != null && specialType.equals("SPAWNER_BREAKER")) {
 					int prob = (int) (Math.random() * 100);
-					if(prob > MiarmaCore.CONFIG.getInt("config.values.spawnerBreakerProbability")) {
+					if(prob > ConfigProvider.Values.getSpawnerBreakerProbability()) {
 						event.setCancelled(true);
 						for(int i = 0; i < inv.getSize(); i++) {
 							ItemStack invItem = inv.getItem(i);
@@ -434,7 +436,7 @@ public class EventListener {
 			
 			@EventHandler
 			public void onItemBreak(PlayerItemBreakEvent event) {
-				if(MiarmaCore.CONFIG.getBoolean("config.modules.autoItemRefill")) {
+				if(ConfigProvider.Modules.isAutoItemRefillEnabled()) {
 					ItemStack item = event.getBrokenItem();
 					Material material = item.getType();
 					PlayerInventory playerInventory = event.getPlayer().getInventory();
@@ -539,7 +541,7 @@ public class EventListener {
 			
 			@EventHandler
 			public void onBookWrite(PlayerEditBookEvent event) {
-				if(MiarmaCore.CONFIG.getBoolean("config.modules.bookColors")) {
+				if(ConfigProvider.Modules.isBookColorsEnabled()) {
 					var bookMeta = event.getNewBookMeta();
 			        var pages = bookMeta.getPages();
 			        var newPages = new ArrayList<String>();

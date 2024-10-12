@@ -2,6 +2,8 @@ package dev.gallardo.miarmacore.recipes.tools;
 
 import de.tr7zw.nbtapi.NBTItem;
 import dev.gallardo.miarmacore.MiarmaCore;
+import dev.gallardo.miarmacore.config.providers.ConfigProvider;
+import dev.gallardo.miarmacore.config.providers.MessageProvider;
 import dev.gallardo.miarmacore.util.Utils;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -21,9 +23,9 @@ public class ScissorsRecipe {
 
         ItemMeta meta = scissors.getItemMeta();
         meta.setDisplayName(Utils.colorCodeParser(
-                MiarmaCore.CONFIG.getString("language.items.scissors.name")));
+                MessageProvider.Items.getScissorsName()));
         meta.setLore(Collections.singletonList(Utils.colorCodeParser(
-                MiarmaCore.CONFIG.getString("language.items.scissors.lore"))));
+                MessageProvider.Items.getScissorsLore())));
         meta.addEnchant(Enchantment.UNBREAKING, 1, false);
         meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
                 

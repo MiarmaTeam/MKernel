@@ -21,18 +21,6 @@ public class TpaRequests {
     }
 
     public void addRequest(Player from, Player to, TpaType type) {
-        /*long currentTime = System.currentTimeMillis();
-
-        if(cooldowns.containsKey(from)) {
-            long lastRequest = cooldowns.get(from);
-            if(currentTime - lastRequest < Constants.COOLDOWN) {
-                Utils.sendMessage(MiarmaCore.CONFIG.getString("language.errors.cooldownHasNotExpired"), from, true,
-                        true, List.of("%time%"),
-                        List.of(Utils.millisToCooldown((Constants.COOLDOWN - (currentTime - lastRequest)) / 1000)));
-                return;
-            }
-        }
-        cooldowns.put(from, currentTime);*/
         requests.add(new TpaRequest(from, to, type));
     }
 

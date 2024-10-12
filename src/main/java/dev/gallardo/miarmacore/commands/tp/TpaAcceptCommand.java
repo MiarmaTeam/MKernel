@@ -3,7 +3,12 @@ package dev.gallardo.miarmacore.commands.tp;
 import dev.gallardo.miarmacore.MiarmaCore;
 import dev.gallardo.miarmacore.common.minecraft.TpaRequest;
 import dev.gallardo.miarmacore.common.minecraft.TpaType;
+import dev.gallardo.miarmacore.config.CommandWrapper;
+import dev.gallardo.miarmacore.config.providers.CommandProvider;
+import dev.gallardo.miarmacore.config.providers.MessageProvider;
 import dev.gallardo.miarmacore.util.Utils;
+
+import static dev.gallardo.miarmacore.config.providers.CommandProvider.Arguments.TPA_TARGETS;
 import static dev.gallardo.miarmacore.util.Constants.*;
 import dev.jorel.commandapi.CommandAPICommand;
 import org.bukkit.Bukkit;
@@ -14,16 +19,17 @@ import java.util.Optional;
 
 public class TpaAcceptCommand {
     public static void register() {
-        new CommandAPICommand(MiarmaCore.CONFIG.getString("commands.tpaccept.name"))
+        CommandWrapper tpaAcceptCmd = CommandProvider.getTpaAcceptCommand();
+        new CommandAPICommand(tpaAcceptCmd.getName())
             .withArguments(TPA_TARGETS)
-            .withPermission(MiarmaCore.CONFIG.getString("commands.tpaccept.permission"))
-            .withFullDescription(MiarmaCore.CONFIG.getString("commands.tpaccept.description"))
-            .withShortDescription(MiarmaCore.CONFIG.getString("commands.tpaccept.description"))
-            .withUsage(MiarmaCore.CONFIG.getString("commands.tpaccept.usage"))
+            .withPermission(tpaAcceptCmd.getPermission().base())
+            .withFullDescription(tpaAcceptCmd.getDescription())
+            .withShortDescription(tpaAcceptCmd.getDescription())
+            .withUsage(tpaAcceptCmd.getUsage())
             .executesPlayer((sender, args) -> {
                 Player target = Bukkit.getPlayer(args.getRaw(0));
                 if (target == null || !target.isOnline()) {
-                    Utils.sendMessage(MiarmaCore.CONFIG.getString("language.errors.playerNotFound"), sender, true);
+                    Utils.sendMessage(MessageProvider.Errors.playerNotFound(), sender, true);
                     return;
                 }
 
@@ -40,7 +46,7 @@ public class TpaAcceptCommand {
                         .orElse(null);
 
                 if (request == null) {
-                    Utils.sendMessage(MiarmaCore.CONFIG.getString("language.errors.noRequestFound"), sender, true);
+                    Utils.sendMessage(MessageProvider.Errors.noRequestFound(), sender, true);
                     return;
                 }
 
@@ -52,9 +58,9 @@ public class TpaAcceptCommand {
                     sender.teleport(target.getLocation());
                 }
 
-                Utils.sendMessage(MiarmaCore.CONFIG.getString("commands.tpaccept.messages.acceptedToTarget"), target, true,
+                Utils.sendMessage(tpaAcceptCmd.getMessages()[1], target, true,
                         true, List.of("%sender%"), List.of(sender.getName()));
-                Utils.sendMessage(MiarmaCore.CONFIG.getString("commands.tpaccept.messages.accepted"), sender, true);
+                Utils.sendMessage(tpaAcceptCmd.getMessages()[0], sender, true);
             })
             .register();
     }

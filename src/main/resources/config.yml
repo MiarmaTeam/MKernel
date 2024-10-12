@@ -376,8 +376,8 @@ language:
       format: "&a&l"
       youWereMentioned: "[P] &e%player% &7te ha mencionado!"
     onDeath:
-        lostLevels: "[P] &cHas perdido &a%levels% &cniveles de &aXP &cal morir"
-        itemsNotRecovered: "[P] &7Tus items no se han recuperado porque has muerto muy cerca del spawn/point o había jugadores cerca tuya. Los puedes recuperar en: &a%x% %y% %z%"
+      lostLevelsItems: "[P] &7Has perdido &atus items &7y &a%levels% niveles de XP &7al morir. Puedes recuperar tus items con &a/recinv"
+      itemsNotRecovered: "[P] &7Tus items no se han recuperado porque has muerto muy cerca del spawn/point o había jugadores cerca tuya. Los puedes recuperar en: &a%x% %y% %z%"
 
   items:
     scissors:

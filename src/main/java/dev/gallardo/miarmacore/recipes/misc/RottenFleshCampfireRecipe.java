@@ -3,6 +3,7 @@ package dev.gallardo.miarmacore.recipes.misc;
 import static dev.gallardo.miarmacore.util.Constants.*;
 
 import dev.gallardo.miarmacore.MiarmaCore;
+import dev.gallardo.miarmacore.config.providers.ConfigProvider;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.CampfireRecipe;
@@ -16,7 +17,7 @@ public class RottenFleshCampfireRecipe {
         		rottenRecipeKey, 
         		new ItemStack(Material.BEEF), 
         		Material.ROTTEN_FLESH, 
-        		0, MiarmaCore.CONFIG.getInt("config.values.rottenFleshCookTime") * 20);
+        		0, ConfigProvider.Values.getRottenFleshCookTime() * 20);
         rottenRecipe.setCategory(CookingBookCategory.FOOD);
         return rottenRecipe;
     }

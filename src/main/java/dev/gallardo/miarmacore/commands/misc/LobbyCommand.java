@@ -1,5 +1,9 @@
 package dev.gallardo.miarmacore.commands.misc;
 
+import dev.gallardo.miarmacore.config.CommandWrapper;
+import dev.gallardo.miarmacore.config.providers.CommandProvider;
+import dev.gallardo.miarmacore.config.providers.ConfigProvider;
+import dev.gallardo.miarmacore.config.providers.MessageProvider;
 import dev.gallardo.miarmacore.util.Utils;
 import dev.jorel.commandapi.CommandAPICommand;
 import org.bukkit.Bukkit;
@@ -10,45 +14,50 @@ import dev.gallardo.miarmacore.MiarmaCore;
 
 import java.util.List;
 
+import static dev.gallardo.miarmacore.config.providers.CommandProvider.Arguments.PLAYERS_OPT_ARG;
 import static dev.gallardo.miarmacore.util.Constants.*;
 
 public class LobbyCommand {
     public static void register() {
-        new CommandAPICommand(MiarmaCore.CONFIG.getString("commands.lobby.name"))
-            .withFullDescription(MiarmaCore.CONFIG.getString("commands.lobby.description"))
-            .withShortDescription(MiarmaCore.CONFIG.getString("commands.lobby.description"))
-            .withPermission(MiarmaCore.CONFIG.getString("commands.lobby.permissions.base"))
+        CommandWrapper lobbyCmd = CommandProvider.getLobbyCommand();
+        new CommandAPICommand(lobbyCmd.getName())
+            .withFullDescription(lobbyCmd.getDescription())
+            .withShortDescription(lobbyCmd.getDescription())
+            .withPermission(lobbyCmd.getPermission().base())
             .withOptionalArguments(
                 PLAYERS_OPT_ARG.withPermission(
-                    MiarmaCore.CONFIG.getString("commands.lobby.permissions.others")
+                    lobbyCmd.getPermission().others()
                 )
             )
             .executesPlayer((sender,args) -> {
                 boolean lobbyExists = Bukkit.getServer().getWorlds().stream()
                         .map(World::getName)
                         .map(String::toLowerCase)
-                        .anyMatch(w -> w.contains(MiarmaCore.CONFIG.getString("config.worlds.lobby.name")));
+                        .anyMatch(w -> w.contains(ConfigProvider.Worlds.getLobby().name()));
 
                 if(lobbyExists) {
-                    float x = MiarmaCore.CONFIG.getInt("config.worlds.lobby.x");
-                    float y = MiarmaCore.CONFIG.getInt("config.worlds.lobby.y");
-                    float z = MiarmaCore.CONFIG.getInt("config.worlds.lobby.z");
-                    int yaw = MiarmaCore.CONFIG.getInt("config.worlds.lobby.yaw");
-                    int pitch = MiarmaCore.CONFIG.getInt("config.worlds.lobby.pitch");
-                    Location lobbyCoords = new Location(Bukkit.getWorld(MiarmaCore.CONFIG.getString("config.worlds.lobby.name")), x, y, z, yaw, pitch);
+                    String name = ConfigProvider.Worlds.getLobby().name();
+                    double x = ConfigProvider.Worlds.getLobby().x();
+                    double y = ConfigProvider.Worlds.getLobby().y();
+                    double z = ConfigProvider.Worlds.getLobby().z();
+                    int yaw = ConfigProvider.Worlds.getLobby().yaw();
+                    int pitch = ConfigProvider.Worlds.getLobby().pitch();
+                    Location lobbyCoords = new Location(Bukkit.getWorld(name), x, y, z, yaw, pitch);
+
                     if (args.count() == 0) {
                         sender.teleport(lobbyCoords);
-                        Utils.sendMessage(MiarmaCore.CONFIG.getString("commands.lobby.messages.teleported"), sender, true);
+                        Utils.sendMessage(lobbyCmd.getMessages()[0], sender, true);
                     } else if (args.count() >= 1) {
                         Player victim = Bukkit.getServer().getPlayer(args.getRaw(0));
                         victim.teleport(lobbyCoords);
-                        Utils.sendMessage(MiarmaCore.CONFIG.getString("commands.lobby.messages.lobbyYouOthers"), sender, true,
+                        Utils.sendMessage(lobbyCmd.getMessages()[1], sender, true,
                                 true, List.of("%victim%"), List.of(victim.getName()));
-                        Utils.sendMessage(MiarmaCore.CONFIG.getString("commands.lobby.messages.lobbyOthersYou"), victim, true,
+                        Utils.sendMessage(lobbyCmd.getMessages()[2], victim, true,
                                 true, List.of("%sender%"), List.of(sender.getName()));
                     }
                 } else {
-                    sender.sendMessage(MiarmaCore.CONFIG.getString("language.lobbyDoesNotExist"));
+                    Utils.sendMessage(MessageProvider.Errors.lobbyDoesNotExist(), sender, true);
+                    MiarmaCore.LOGGER.warning(Utils.formatMessageNoPrefix(MessageProvider.Errors.lobbyDoesNotExist()));
                 }
             })
             .register();

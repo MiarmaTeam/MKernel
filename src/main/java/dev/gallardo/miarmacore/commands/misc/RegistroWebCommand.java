@@ -1,11 +1,13 @@
 package dev.gallardo.miarmacore.commands.misc;
 
 import dev.gallardo.miarmacore.MiarmaCore;
+import dev.gallardo.miarmacore.config.CommandWrapper;
+import dev.gallardo.miarmacore.config.providers.CommandProvider;
 import dev.gallardo.miarmacore.util.Utils;
 import dev.gallardo.miarmacore.common.WebAPIAccessor;
 import dev.jorel.commandapi.CommandAPICommand;
-import org.bukkit.entity.Player;
 
+import static dev.gallardo.miarmacore.config.providers.CommandProvider.Arguments.PASSWORD_ARG;
 import static dev.gallardo.miarmacore.util.Constants.*;
 
 import java.util.Arrays;
@@ -14,12 +16,13 @@ import java.util.stream.Collectors;
 
 public class RegistroWebCommand {
     public static void register() {
-        new CommandAPICommand(MiarmaCore.CONFIG.getString("commands.registerweb.name"))
+        CommandWrapper registerWebCmd = CommandProvider.getRegisterWebCommand();
+        new CommandAPICommand(registerWebCmd.getName())
             .withOptionalArguments(PASSWORD_ARG)
-            .withFullDescription(MiarmaCore.CONFIG.getString("commands.registerweb.description"))
-            .withPermission(MiarmaCore.CONFIG.getString("commands.registerweb.permission"))
-            .withShortDescription(MiarmaCore.CONFIG.getString("commands.registerweb.description"))
-            .withUsage(MiarmaCore.CONFIG.getString("commands.registerweb.usage"))
+            .withFullDescription(registerWebCmd.getDescription())
+            .withPermission(registerWebCmd.getPermission().base())
+            .withShortDescription(registerWebCmd.getDescription())
+            .withUsage(registerWebCmd.getUsage())
             .executesPlayer((sender,args) -> {
                 String username = sender.getName();
                 String password;
@@ -33,16 +36,10 @@ public class RegistroWebCommand {
                 }
 
                 if(WebAPIAccessor.register(username,password,rol)) {
-                    Utils.sendMessage(
-                            Utils.placeholderParser(
-                                    MiarmaCore.CONFIG.getString("commands.registerweb.messages.success"),
-                                    List.of("%user%", "%password%"),
-                                    List.of(username, password)
-                            ),
-                            sender,true);
+                    Utils.sendMessage(registerWebCmd.getMessages()[0], sender, true, true,
+                            List.of("%user%", "%password%"), List.of(username, password));
                 } else {
-                    Utils.sendMessage(MiarmaCore.CONFIG.getString("commands.registerweb.messages.error"),
-                            sender,true);
+                    Utils.sendMessage(registerWebCmd.getMessages()[1], sender,true);
                 }
             })
             .register();

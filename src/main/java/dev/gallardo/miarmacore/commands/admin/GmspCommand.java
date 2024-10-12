@@ -1,6 +1,8 @@
 package dev.gallardo.miarmacore.commands.admin;
 
 import dev.gallardo.miarmacore.MiarmaCore;
+import dev.gallardo.miarmacore.config.CommandWrapper;
+import dev.gallardo.miarmacore.config.providers.CommandProvider;
 import dev.gallardo.miarmacore.util.Constants;
 import dev.gallardo.miarmacore.util.Utils;
 import dev.jorel.commandapi.CommandAPICommand;
@@ -9,24 +11,27 @@ import org.bukkit.GameMode;
 
 import java.util.List;
 
+import static dev.gallardo.miarmacore.config.providers.CommandProvider.Arguments.PLAYERS_OPT_ARG;
+
 public class GmspCommand {
     public static void register() {
-        new CommandAPICommand(MiarmaCore.CONFIG.getString("commands.gmsp.name"))
+        CommandWrapper gmspCmd = CommandProvider.getGmspCommand();
+        new CommandAPICommand(gmspCmd.getName())
             .withOptionalArguments(
-                    Constants.PLAYERS_OPT_ARG.withPermission(
-                            MiarmaCore.CONFIG.getString("commands.gmsp.permissions.others")
-                    )
+                PLAYERS_OPT_ARG.withPermission(
+                    gmspCmd.getPermission().others()
+                )
             )
-            .withShortDescription(MiarmaCore.CONFIG.getString("commands.gmsp.description"))
-            .withFullDescription(MiarmaCore.CONFIG.getString("commands.gmsp.description"))
-            .withUsage(MiarmaCore.CONFIG.getString("commands.gmsp.usage"))
+            .withShortDescription(gmspCmd.getDescription())
+            .withFullDescription(gmspCmd.getDescription())
+            .withUsage(gmspCmd.getUsage())
             .executesPlayer((sender,args) -> {
                 if(args.rawArgs().length == 0) {
                     sender.setGameMode(GameMode.SPECTATOR);
-                    Utils.sendMessage(MiarmaCore.CONFIG.getString("commands.gmsp.messages.self"), sender, true);
+                    Utils.sendMessage(gmspCmd.getMessages()[0], sender, true);
                 } else {
                     Bukkit.getPlayer(args.getRaw(0)).setGameMode(GameMode.SPECTATOR);
-                    Utils.sendMessage(MiarmaCore.CONFIG.getString("commands.gmsp.messages.others"), sender, true,
+                    Utils.sendMessage(gmspCmd.getMessages()[1], sender, true,
                             true, List.of("%player%"), List.of(args.getRaw(0)));
                 }
             })

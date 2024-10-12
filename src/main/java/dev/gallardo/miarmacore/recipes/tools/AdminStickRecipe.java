@@ -2,6 +2,7 @@ package dev.gallardo.miarmacore.recipes.tools;
 
 import de.tr7zw.nbtapi.NBTItem;
 import dev.gallardo.miarmacore.MiarmaCore;
+import dev.gallardo.miarmacore.config.providers.MessageProvider;
 import dev.gallardo.miarmacore.util.Utils;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -19,9 +20,9 @@ public class AdminStickRecipe {
        
         ItemMeta meta = stick.getItemMeta();
         meta.setDisplayName(Utils.colorCodeParser(
-                MiarmaCore.CONFIG.getString("language.items.adminStick.name")));
+                MessageProvider.Items.getAdminStickName()));
         meta.setLore(Collections.singletonList(Utils.colorCodeParser(
-                MiarmaCore.CONFIG.getString("language.items.adminStick.lore"))));
+                MessageProvider.Items.getAdminStickLore())));
         
         stick.setItemMeta(meta);
         

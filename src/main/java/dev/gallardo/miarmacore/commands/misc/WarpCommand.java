@@ -2,6 +2,10 @@ package dev.gallardo.miarmacore.commands.misc;
 
 import dev.gallardo.miarmacore.MiarmaCore;
 import dev.gallardo.miarmacore.common.minecraft.Warp;
+import dev.gallardo.miarmacore.config.CommandWrapper;
+import dev.gallardo.miarmacore.config.providers.CommandProvider;
+import dev.gallardo.miarmacore.config.providers.ConfigProvider;
+import dev.gallardo.miarmacore.config.providers.MessageProvider;
 import dev.gallardo.miarmacore.util.Constants;
 import dev.gallardo.miarmacore.util.Utils;
 import dev.jorel.commandapi.CommandAPICommand;
@@ -16,15 +20,18 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import static dev.gallardo.miarmacore.util.Constants.WARP_NAME;
+import static dev.gallardo.miarmacore.config.providers.CommandProvider.Arguments.WARP_NAME;
 
 public class WarpCommand {
     public static void register() {
-        new CommandAPICommand(MiarmaCore.CONFIG.getString("commands.warp.name"))
-            .withPermission(MiarmaCore.CONFIG.getString("commands.warp.permission"))
-            .withFullDescription(MiarmaCore.CONFIG.getString("commands.warp.description"))
-            .withShortDescription(MiarmaCore.CONFIG.getString("commands.warp.description"))
-            .withUsage(MiarmaCore.CONFIG.getString("commands.warp.usage"))
+        CommandWrapper warpCmd = CommandProvider.getWarpCommand();
+        CommandWrapper addSubCmd = warpCmd.getSubcommands()[0];
+        CommandWrapper removeSubCmd = warpCmd.getSubcommands()[1];
+        new CommandAPICommand(warpCmd.getName())
+            .withPermission(warpCmd.getPermission().base())
+            .withFullDescription(warpCmd.getDescription())
+            .withShortDescription(warpCmd.getDescription())
+            .withUsage(warpCmd.getUsage())
             .executesPlayer((sender, args) -> {
                 File f = new File(MiarmaCore.PLUGIN.getDataFolder().getAbsolutePath(), "warps/"
                         + sender.getName() + ".yml");
@@ -35,36 +42,43 @@ public class WarpCommand {
                         .collect(Collectors.toSet());
 
                 if (warps.isEmpty()) {
-                    Utils.sendMessage(MiarmaCore.CONFIG.getString("commands.warp.messages.noWarpsStored"),
-                            sender, true);
+                    Utils.sendMessage(warpCmd.getMessages()[0], sender, true);
                 } else {
                     String warpList = warps.stream()
                             .map(Warp::toFormattedMessage)
                             .collect(Collectors.joining("\n"));
                     warpList = Utils.formatMessage(warpList, false);
 
-                    Utils.sendMessage(MiarmaCore.CONFIG.getString("commands.warp.messages.warpList"),
+                    Utils.sendMessage(warpCmd.getMessages()[1],
                         sender, true, true,
                         List.of("%warps%"), List.of(warpList));
                 }
 
             })
             .withSubcommand(
-                new CommandAPICommand(MiarmaCore.CONFIG.getString("commands.warp.subcommands.add.name"))
-                    .withPermission(MiarmaCore.CONFIG.getString("commands.warp.subcommands.add.permission"))
-                    .withFullDescription(MiarmaCore.CONFIG.getString("commands.warp.subcommands.add.description"))
-                    .withShortDescription(MiarmaCore.CONFIG.getString("commands.warp.subcommands.add.description"))
+                new CommandAPICommand(addSubCmd.getName())
+                    .withPermission(addSubCmd.getPermission().base())
+                    .withFullDescription(addSubCmd.getDescription())
+                    .withShortDescription(addSubCmd.getDescription())
                     .withArguments(WARP_NAME)
-                    .withUsage(MiarmaCore.CONFIG.getString("commands.warp.subcommands.add.usage"))
+                    .withUsage(addSubCmd.getUsage())
                     .executesPlayer((sender, args) -> {
                         File f = new File(MiarmaCore.PLUGIN.getDataFolder().getAbsolutePath(), "warps/"
                                 + sender.getName() + ".yml");
                         FileConfiguration c = YamlConfiguration.loadConfiguration(f);
 
-                        if (c.getKeys(false).size() >= MiarmaCore.CONFIG.getInt("config.values.maxWarps")) {
+                        if (c.getKeys(false).size() >= ConfigProvider.Values.getMaxWarps()) {
                             Utils.sendMessage(
-                                MiarmaCore.CONFIG.getString("language.errors.maxWarpsReached"),
+                                MessageProvider.Errors.maxWarpsReached(),
                                 sender, true
+                            );
+                            return;
+                        }
+
+                        if(c.contains(args.getRaw(0))) {
+                            Utils.sendMessage(
+                                addSubCmd.getMessages()[1],
+                                sender, true, true, List.of("%warp%"), List.of(args.getRaw(0))
                             );
                             return;
                         }
@@ -88,18 +102,18 @@ public class WarpCommand {
                         }
 
                         Utils.sendMessage(
-                            MiarmaCore.CONFIG.getString("commands.warp.subcommands.add.messages.warpAdded"),
+                            addSubCmd.getMessages()[0],
                             sender, true, true, List.of("%warp%"), List.of(warpName)
                         );
                     })
             )
             .withSubcommand(
-                new CommandAPICommand(MiarmaCore.CONFIG.getString("commands.warp.subcommands.remove.name"))
-                    .withPermission(MiarmaCore.CONFIG.getString("commands.warp.subcommands.remove.permission"))
-                    .withFullDescription(MiarmaCore.CONFIG.getString("commands.warp.subcommands.remove.description"))
-                    .withShortDescription(MiarmaCore.CONFIG.getString("commands.warp.subcommands.remove.description"))
+                new CommandAPICommand(removeSubCmd.getName())
+                    .withPermission(removeSubCmd.getPermission().base())
+                    .withFullDescription(removeSubCmd.getDescription())
+                    .withShortDescription(removeSubCmd.getDescription())
                     .withArguments(WARP_NAME)
-                    .withUsage(MiarmaCore.CONFIG.getString("commands.warp.subcommands.remove.usage"))
+                    .withUsage(removeSubCmd.getUsage())
                     .executes((sender, args) -> {
                         File f = new File(MiarmaCore.PLUGIN.getDataFolder().getAbsolutePath(), "warps/"
                                 + sender.getName() + ".yml");
@@ -114,12 +128,12 @@ public class WarpCommand {
                                 MiarmaCore.LOGGER.severe("Error al guardar el archivo de warps de " + sender.getName());
                             }
                             Utils.sendMessage(
-                                MiarmaCore.CONFIG.getString("commands.warp.subcommands.remove.messages.warpRemoved"),
+                                removeSubCmd.getMessages()[0],
                                 sender, true, true, List.of("%warp%"), List.of(warpName)
                             );
                         } else {
                             Utils.sendMessage(
-                                MiarmaCore.CONFIG.getString("commands.warp.subcommands.remove.messages.warpNotFound"),
+                                removeSubCmd.getMessages()[1],
                                 sender, true, true, List.of("%warp%"), List.of(warpName)
                             );
                         }

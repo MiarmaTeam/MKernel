@@ -1,7 +1,9 @@
 package dev.gallardo.miarmacore.config.providers;
 
 import dev.gallardo.miarmacore.MiarmaCore;
+import dev.gallardo.miarmacore.config.WorldWrapper;
 import dev.gallardo.miarmacore.util.Utils;
+import org.bukkit.World;
 
 public class ConfigProvider {
     public static class Permissions {
@@ -29,8 +31,8 @@ public class ConfigProvider {
         public static int getRecInvRequiredLevel() {
             return MiarmaCore.CONFIG.getInt("config.values.recInvRequiredLevel");
         }
-        public static int getXpLossOnDeath() {
-            return MiarmaCore.CONFIG.getInt("config.values.xpLossOnDeath");
+        public static float getXpLossOnDeath() {
+            return MiarmaCore.CONFIG.getConfig().getFloat("config.values.xpLossOnDeath");
         }
         public static long getTpCooldown() {
             return Utils.cooldownToMillis(MiarmaCore.CONFIG.getString("config.values.tpCooldown"));
@@ -83,23 +85,14 @@ public class ConfigProvider {
     }
 
     public static class Worlds {
-        public static String getLobbyName() {
-            return MiarmaCore.CONFIG.getString("config.worlds.lobby.name");
-        }
-        public static double getLobbyX() {
-            return MiarmaCore.CONFIG.getConfig().getDouble("config.worlds.lobby.x");
-        }
-        public static double getLobbyY() {
-            return MiarmaCore.CONFIG.getConfig().getDouble("config.worlds.lobby.y");
-        }
-        public static double getLobbyZ() {
-            return MiarmaCore.CONFIG.getConfig().getDouble("config.worlds.lobby.z");
-        }
-        public static int getLobbyYaw() {
-            return MiarmaCore.CONFIG.getConfig().getInt("config.worlds.lobby.yaw");
-        }
-        public static int getLobbyPitch() {
-            return MiarmaCore.CONFIG.getConfig().getInt("config.worlds.lobby.pitch");
+        public static WorldWrapper getLobby() {
+            String name = MiarmaCore.CONFIG.getString("config.worlds.lobby.name");
+            double x = MiarmaCore.CONFIG.getConfig().getDouble("config.worlds.lobby.x");
+            double y = MiarmaCore.CONFIG.getConfig().getDouble("config.worlds.lobby.y");
+            double z = MiarmaCore.CONFIG.getConfig().getDouble("config.worlds.lobby.z");
+            int yaw = MiarmaCore.CONFIG.getConfig().getInt("config.worlds.lobby.yaw");
+            int pitch = MiarmaCore.CONFIG.getConfig().getInt("config.worlds.lobby.pitch");
+            return new WorldWrapper(name, x, y, z, yaw, pitch);
         }
     }
 }

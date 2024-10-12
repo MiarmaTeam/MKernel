@@ -1,6 +1,8 @@
 package dev.gallardo.miarmacore.commands.admin;
 
 import dev.gallardo.miarmacore.MiarmaCore;
+import dev.gallardo.miarmacore.config.CommandWrapper;
+import dev.gallardo.miarmacore.config.providers.CommandProvider;
 import dev.gallardo.miarmacore.util.Utils;
 import dev.jorel.commandapi.CommandAPICommand;
 import org.bukkit.entity.Player;
@@ -11,22 +13,23 @@ import static dev.gallardo.miarmacore.util.Constants.VANISH_KEY;
 
 public class VanishCommand {
     public static void register() {
-        new CommandAPICommand(MiarmaCore.CONFIG.getString("commands.vanish.name"))
+        CommandWrapper vanishCmd = CommandProvider.getVanishCommand();
+        new CommandAPICommand(vanishCmd.getName())
             .withAliases("v")
-            .withFullDescription(MiarmaCore.CONFIG.getString("commands.vanish.description"))
-            .withShortDescription(MiarmaCore.CONFIG.getString("commands.vanish.description"))
-            .withPermission(MiarmaCore.CONFIG.getString("commands.vanish.permission"))
+            .withFullDescription(vanishCmd.getDescription())
+            .withShortDescription(vanishCmd.getDescription())
+            .withPermission(vanishCmd.getPermission().base())
             .executesPlayer((sender,args) -> {
                 PersistentDataContainer data = sender.getPersistentDataContainer();
                 data.set(VANISH_KEY, PersistentDataType.BOOLEAN, !isVanished(sender));
 
                 if(isVanished(sender)) {
                     setVanish(sender);
-                    Utils.sendMessage(MiarmaCore.CONFIG.getString("commands.vanish.messages.vanished"),
+                    Utils.sendMessage(vanishCmd.getMessages()[0],
                             sender, true);
                 } else {
                     unsetVanish(sender);
-                    Utils.sendMessage(MiarmaCore.CONFIG.getString("commands.vanish.messages.unvanished"),
+                    Utils.sendMessage(vanishCmd.getMessages()[1],
                             sender, true);
                 }
             })

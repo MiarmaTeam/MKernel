@@ -1,5 +1,7 @@
 package dev.gallardo.miarmacore.commands.misc;
 
+import dev.gallardo.miarmacore.config.CommandWrapper;
+import dev.gallardo.miarmacore.config.providers.CommandProvider;
 import dev.gallardo.miarmacore.util.Utils;
 import dev.jorel.commandapi.CommandAPICommand;
 import org.bukkit.Bukkit;
@@ -9,17 +11,19 @@ import dev.gallardo.miarmacore.MiarmaCore;
 
 import java.util.List;
 
+import static dev.gallardo.miarmacore.config.providers.CommandProvider.Arguments.PLAYERS_OPT_ARG;
 import static dev.gallardo.miarmacore.util.Constants.*;
 
 public class SpawnCommand {
     public static void register() {
-        new CommandAPICommand(MiarmaCore.CONFIG.getString("commands.spawn.name"))
+        CommandWrapper spawnCmd = CommandProvider.getSpawnCommand();
+        new CommandAPICommand(spawnCmd.getName())
             .withOptionalArguments(PLAYERS_OPT_ARG.withPermission(
-                    MiarmaCore.CONFIG.getString("commands.spawn.permissions.others")
+                    spawnCmd.getPermission().others()
             ))
-            .withFullDescription(MiarmaCore.CONFIG.getString("commands.spawn.description"))
-            .withPermission(MiarmaCore.CONFIG.getString("commands.spawn.permissions.base"))
-            .withShortDescription(MiarmaCore.CONFIG.getString("commands.spawn.description"))
+            .withFullDescription(spawnCmd.getDescription())
+            .withPermission(spawnCmd.getPermission().base())
+            .withShortDescription(spawnCmd.getDescription())
             .executesPlayer((sender, args) -> {
 
                 double xSpawn = sender.getWorld().getSpawnLocation().getBlockX() + 0.500;
@@ -29,15 +33,15 @@ public class SpawnCommand {
                 if (args.count() == 0) {
                     Location spawnCoords = new Location(sender.getWorld(), xSpawn, ySpawn, zSpawn);
                     sender.teleport(spawnCoords);
-                    Utils.sendMessage(MiarmaCore.CONFIG.getString("commands.spawn.messages.teleported"), sender, true);
+                    Utils.sendMessage(spawnCmd.getMessages()[0], sender, true);
                 } else if (args.count() >= 1) {
                     Player victim = Bukkit.getServer().getPlayer(args.getRaw(0));
                     Location spawnCoords = new Location(victim.getWorld(), xSpawn, ySpawn, zSpawn, victim.getLocation().getYaw(), victim.getLocation().getPitch());
                     victim.teleport(spawnCoords);
 
-                    Utils.sendMessage(MiarmaCore.CONFIG.getString("commands.spawn.messages.spawnYouOthers"), sender, true,
+                    Utils.sendMessage(spawnCmd.getMessages()[1], sender, true,
                             true, List.of("%victim%"), List.of(victim.getName()));
-                    Utils.sendMessage(MiarmaCore.CONFIG.getString("commands.spawn.messages.spawnOthersYou"), victim, true,
+                    Utils.sendMessage(spawnCmd.getMessages()[2], victim, true,
                             true, List.of("%sender%"), List.of(sender.getName()));
                 }
             })

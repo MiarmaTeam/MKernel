@@ -2,6 +2,7 @@ package dev.gallardo.miarmacore.recipes.tools;
 
 import de.tr7zw.nbtapi.NBTItem;
 import dev.gallardo.miarmacore.MiarmaCore;
+import dev.gallardo.miarmacore.config.providers.MessageProvider;
 import dev.gallardo.miarmacore.util.Utils;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -20,9 +21,9 @@ public class BolsitaRecipe {
 
         ItemMeta meta = bolsita.getItemMeta();
         meta.setDisplayName(Utils.colorCodeParser(
-                MiarmaCore.CONFIG.getString("language.items.bolsita.name")));
+                MessageProvider.Items.getBolsitaName()));
         meta.setLore(Collections.singletonList(Utils.colorCodeParser(
-                MiarmaCore.CONFIG.getString("language.items.bolsita.lore"))));
+                MessageProvider.Items.getBolsitaLore())));
         bolsita.setItemMeta(meta);
 
         NBTItem nbtItem = new NBTItem(bolsita);

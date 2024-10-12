@@ -1,6 +1,7 @@
 package dev.gallardo.miarmacore.commands.roleplay;
 
-import dev.gallardo.miarmacore.MiarmaCore;
+import dev.gallardo.miarmacore.config.CommandWrapper;
+import dev.gallardo.miarmacore.config.providers.CommandProvider;
 import dev.gallardo.miarmacore.util.Utils;
 import dev.jorel.commandapi.CommandAPICommand;
 import org.bukkit.Bukkit;
@@ -8,15 +9,17 @@ import org.bukkit.Bukkit;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
+import static dev.gallardo.miarmacore.config.providers.CommandProvider.Arguments.MESSAGE;
 import static dev.gallardo.miarmacore.util.Constants.*;
 
 public class DoCommand {
     public static void register() {
-        new CommandAPICommand(MiarmaCore.CONFIG.getString("commands.do.name"))
+        CommandWrapper doCmd = CommandProvider.getDoCommand();
+        new CommandAPICommand(doCmd.getName())
             .withArguments(MESSAGE)
-            .withFullDescription(MiarmaCore.CONFIG.getString("commands.do.description"))
-            .withPermission(MiarmaCore.CONFIG.getString("commands.do.permission"))
-            .withShortDescription(MiarmaCore.CONFIG.getString("commands.do.description"))
+            .withFullDescription(doCmd.getDescription())
+            .withPermission(doCmd.getPermission().base())
+            .withShortDescription(doCmd.getDescription())
             .executesPlayer((sender, args) -> {
                 String joinedArgs = Arrays.stream(args.rawArgs()).collect(Collectors.joining(" "));
                 String msg = "§9(" + sender.getName() + ") [Do] §7" + joinedArgs;

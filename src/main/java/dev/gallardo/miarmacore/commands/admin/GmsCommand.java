@@ -1,6 +1,8 @@
 package dev.gallardo.miarmacore.commands.admin;
 
 import dev.gallardo.miarmacore.MiarmaCore;
+import dev.gallardo.miarmacore.config.CommandWrapper;
+import dev.gallardo.miarmacore.config.providers.CommandProvider;
 import dev.gallardo.miarmacore.util.Constants;
 import dev.gallardo.miarmacore.util.Utils;
 import dev.jorel.commandapi.CommandAPICommand;
@@ -9,24 +11,27 @@ import org.bukkit.GameMode;
 
 import java.util.List;
 
+import static dev.gallardo.miarmacore.config.providers.CommandProvider.Arguments.PLAYERS_OPT_ARG;
+
 public class GmsCommand {
     public static void register() {
-        new CommandAPICommand(MiarmaCore.CONFIG.getString("commands.gms.name"))
+        CommandWrapper gmsCmd = CommandProvider.getGmsCommand();
+        new CommandAPICommand(gmsCmd.getName())
             .withOptionalArguments(
-                    Constants.PLAYERS_OPT_ARG.withPermission(
-                            MiarmaCore.CONFIG.getString("commands.gms.permissions.others")
-                    )
+                PLAYERS_OPT_ARG.withPermission(
+                    gmsCmd.getPermission().others()
+                )
             )
-            .withShortDescription(MiarmaCore.CONFIG.getString("commands.gms.description"))
-            .withFullDescription(MiarmaCore.CONFIG.getString("commands.gms.description"))
-            .withUsage(MiarmaCore.CONFIG.getString("commands.gms.usage"))
+            .withShortDescription(gmsCmd.getDescription())
+            .withFullDescription(gmsCmd.getDescription())
+            .withUsage(gmsCmd.getUsage())
             .executesPlayer((sender,args) -> {
                 if(args.rawArgs().length == 0) {
                     sender.setGameMode(GameMode.SURVIVAL);
-                    Utils.sendMessage(MiarmaCore.CONFIG.getString("commands.gms.messages.self"), sender, true);
+                    Utils.sendMessage(gmsCmd.getMessages()[0], sender, true);
                 } else {
                     Bukkit.getPlayer(args.getRaw(0)).setGameMode(GameMode.SURVIVAL);
-                    Utils.sendMessage(MiarmaCore.CONFIG.getString("commands.gms.messages.others"), sender, true,
+                    Utils.sendMessage(gmsCmd.getMessages()[1], sender, true,
                             true, List.of("%player%"), List.of(args.getRaw(0)));
                 }
             })
