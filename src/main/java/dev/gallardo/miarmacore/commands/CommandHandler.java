@@ -39,6 +39,7 @@ public class CommandHandler {
         GmaCommand.register();
         VanishCommand.register();
         WarpCommand.register();
+        SpyCommand.register();
     }
 
     public static void onEnable() {

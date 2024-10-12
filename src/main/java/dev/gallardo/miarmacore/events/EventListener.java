@@ -29,6 +29,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.BlockStateMeta;
+import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -295,9 +296,27 @@ public class EventListener {
 			
 			@EventHandler
 			public void onChatMessage(AsyncPlayerChatEvent event) {
+				Player player = event.getPlayer();
+				PersistentDataContainer data = player.getPersistentDataContainer();
+
 				if(ConfigProvider.Modules.isChatFormatEnabled()) {
-					if(event.getPlayer().hasPermission(ConfigProvider.Permissions.getChatFormatPermission())) {
+					if(player.hasPermission(ConfigProvider.Permissions.getChatFormatPermission())) {
 						event.setMessage(Utils.colorCodeParser(event.getMessage()));
+					}
+				}
+			}
+
+			@EventHandler
+			public void onCommand(PlayerCommandPreprocessEvent event) {
+				Player player = event.getPlayer();
+				String message = event.getMessage();
+				Collection<? extends Player> players = Bukkit.getServer().getOnlinePlayers();
+
+				for(Player p:players) {
+					PersistentDataContainer data = p.getPersistentDataContainer();
+					if(data.has(SPY_KEY) && !player.equals(p)) {
+						Utils.sendMessage(MessageProvider.Events.getOnCommandSpyMessage(), p, false,
+							true, List.of("%player%", "%message%"), List.of(player.getName(), message));
 					}
 				}
 			}
@@ -519,7 +538,7 @@ public class EventListener {
 			public void onPotionSplash(PotionSplashEvent event) {
 				NBTItem nbtItem = new NBTItem(event.getPotion().getItem());
 				String specialItem = nbtItem.getString("specialItem");
-				if("ZOMBIFICATION_POTION".equals(specialItem)) {
+				if("zombification_potion".equals(specialItem)) {
 					Collection<LivingEntity> entities = event.getAffectedEntities();
 					for(LivingEntity le : entities) {
 						if(le instanceof Villager v) {

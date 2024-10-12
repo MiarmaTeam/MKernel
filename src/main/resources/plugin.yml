@@ -1,5 +1,5 @@
 name: MiarmaCore
-version: '1.3.6'
+version: '1.3.7'
 main: dev.gallardo.miarmacore.MiarmaCore
 api-version: '1.21'
 authors: [Gallardo7761, elpapuu1333 (Contributor & tester)]
@@ -100,6 +100,9 @@ permissions:
     miarmacore.command.warp.remove:
         description: Permite al usuario eliminar un warp
         default: true
+    miarmacore.command.spy:
+        description: Permite al usuario espiar a otro jugador
+        default: op
 
     miarmacore.events.chatformat:
         description: Permite al usuario usar formatos y colores en los mensajes de chat
@@ -130,6 +133,7 @@ permissions:
             miarmacore.command.gma: true
             miarmacore.command.gmsp: true
             miarmacore.command.vanish: true
+            miarmacore.command.spy: true
             miarmacore.events.adminchat: true
             miarmacore.player: true
 

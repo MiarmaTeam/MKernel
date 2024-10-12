@@ -344,7 +344,13 @@ commands:
           warpRemoved: "[P] &7Warp &a%warp% &7eliminado correctamente"
           warpNotFound: "[P] &cEl warp &a%warp% &cno existe"
 
-
+  spy:
+    name: "spy"
+    description: "Espía los mensajes de chat"
+    permission: "miarmacore.command.spy"
+    messages:
+      enabled: "[P] &7Modo espía &aactivado"
+      disabled: "[P] &7Modo espía &adesactivado"
 
 # -----------------------------------------------------------
 #  Message Configuration
@@ -378,6 +384,8 @@ language:
     onDeath:
       lostLevelsItems: "[P] &7Has perdido &atus items &7y &a%levels% niveles de XP &7al morir. Puedes recuperar tus items con &a/recinv"
       itemsNotRecovered: "[P] &7Tus items no se han recuperado porque has muerto muy cerca del spawn/point o había jugadores cerca tuya. Los puedes recuperar en: &a%x% %y% %z%"
+    onCommand:
+      spyMessage: "&7&o[Spy] %player%: %message%"
 
   items:
     scissors:

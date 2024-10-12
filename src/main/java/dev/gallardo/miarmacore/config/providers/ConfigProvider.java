@@ -3,7 +3,6 @@ package dev.gallardo.miarmacore.config.providers;
 import dev.gallardo.miarmacore.MiarmaCore;
 import dev.gallardo.miarmacore.config.WorldWrapper;
 import dev.gallardo.miarmacore.util.Utils;
-import org.bukkit.World;
 
 public class ConfigProvider {
     public static class Permissions {

@@ -56,6 +56,9 @@ public class MessageProvider {
         public static String getOnDeathItemsNotRecovered() {
             return MiarmaCore.CONFIG.getString("language.events.onDeath.itemsNotRecovered");
         }
+        public static String getOnCommandSpyMessage() {
+            return MiarmaCore.CONFIG.getString("language.events.onCommand.spyMessage");
+        }
     }
 
     public static class Items {

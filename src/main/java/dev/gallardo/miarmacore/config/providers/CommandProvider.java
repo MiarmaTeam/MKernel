@@ -449,4 +449,15 @@ public class CommandProvider {
                 .build();
 
     }
+
+    public static CommandWrapper getSpyCommand() {
+        return CommandWrapper.command(MiarmaCore.CONFIG.getString("commands.spy.name"))
+            .withDescription(MiarmaCore.CONFIG.getString("commands.spy.description"))
+            .withPermission(PermissionWrapper.of(MiarmaCore.CONFIG.getString("commands.spy.permission")))
+            .withMessages(
+                MiarmaCore.CONFIG.getString("commands.spy.messages.enabled"),
+                MiarmaCore.CONFIG.getString("commands.spy.messages.disabled")
+            )
+            .build();
+    }
 }
