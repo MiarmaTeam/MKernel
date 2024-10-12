@@ -33,13 +33,13 @@ public class MessageProvider {
             return MiarmaCore.CONFIG.getString("language.titles.titleFormat");
         }
         public static String getJoinSubtitle() {
-            return MiarmaCore.CONFIG.getString("language.subtitles.join");
+            return MiarmaCore.CONFIG.getString("language.titles.subtitles.join");
         }
         public static String getLeaveSubtitle() {
-            return MiarmaCore.CONFIG.getString("language.subtitles.leave");
+            return MiarmaCore.CONFIG.getString("language.titles.subtitles.leave");
         }
         public static String getDeathSubtitle() {
-            return MiarmaCore.CONFIG.getString("language.subtitles.death");
+            return MiarmaCore.CONFIG.getString("language.titles.subtitles.death");
         }
     }
 

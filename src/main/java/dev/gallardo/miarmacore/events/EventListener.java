@@ -288,7 +288,8 @@ public class EventListener {
 					Location loc = LocationTracker.getPlayerLocation(player);
 					player.teleport(new Location(loc.getWorld(), loc.getX()-2, loc.getY(), loc.getZ()-2));
 
-					Utils.sendMessage(MessageProvider.Errors.worldIsBlocked(), player, true);
+					Utils.sendMessage(MessageProvider.Errors.worldIsBlocked(), player, true, true,
+					        List.of("%world%"), List.of(world));
 				}
 			}
 			
@@ -344,7 +345,7 @@ public class EventListener {
 							}
 						}
 						if (victim != null && containsPlayer){
-							String formattedMention = Utils.colorCodeParser(MessageProvider.Events.getOnMentionFormat()+"@"+victim.getName())+ChatColor.RESET;
+							String formattedMention = Utils.colorCodeParser(MessageProvider.Events.getOnMentionFormat()+victim.getName())+ChatColor.RESET;
 							event.setMessage(event.getMessage().replace(victim.getName(), formattedMention));
 
 							Utils.sendMessage(MessageProvider.Events.getOnMentionMessage(), victim, true,

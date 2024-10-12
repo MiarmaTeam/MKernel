@@ -373,7 +373,7 @@ language:
 
   events:
     onMention:
-      format: "&a&l"
+      format: "&a&l@"
       youWereMentioned: "[P] &e%player% &7te ha mencionado!"
     onDeath:
       lostLevelsItems: "[P] &7Has perdido &atus items &7y &a%levels% niveles de XP &7al morir. Puedes recuperar tus items con &a/recinv"
