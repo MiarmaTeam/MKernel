@@ -322,20 +322,17 @@ public class Utils {
         File f = new File(MiarmaCore.PLUGIN.getDataFolder().getAbsolutePath(), "inventories/"
                 + p.getName() + ".yml");
         FileConfiguration c = YamlConfiguration.loadConfiguration(f);
-        ItemStack[] content;
+        ItemStack[] contents;
         if(c.get("inventory") != null) {
-            content = ((List<ItemStack>) c.get("inventory")).toArray(new ItemStack[0]);
+            contents = ((List<ItemStack>) c.get("inventory")).toArray(new ItemStack[0]);
         } else {
             return 0;
         }
 
-        boolean allAir = Arrays.stream(content).allMatch(item -> item == null || item.getType() == Material.AIR);
-        if(allAir) {
-            return 0;
-        }
-
-        p.getInventory().setContents(content);
-        return Arrays.stream(content)
+        Arrays.stream(contents)
+                .filter(item -> item != null && item.getType() != Material.AIR)
+                .forEach(item -> p.getInventory().addItem(item));
+        return Arrays.stream(contents)
                 .filter(item -> item != null && item.getType() != Material.AIR)
                 .mapToInt(ItemStack::getAmount)
                 .sum();
