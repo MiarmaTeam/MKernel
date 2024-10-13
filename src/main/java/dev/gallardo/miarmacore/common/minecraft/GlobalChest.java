@@ -60,6 +60,6 @@ public class GlobalChest {
 
     static {
         inv = Bukkit.createInventory(null, 54,
-                MessageUtils.colorCodeParser(MessageProvider.Inventories.getGlobalChestTitle()));
+                MessageUtils.parseColors(MessageProvider.Inventories.getGlobalChestTitle()));
     }
 }

@@ -18,6 +18,6 @@ public class DisposalInventory {
 
     static {
         inv = Bukkit.createInventory(null, 54,
-                MessageUtils.colorCodeParser(MessageProvider.Inventories.getDisposalTitle()));
+                MessageUtils.parseColors(MessageProvider.Inventories.getDisposalTitle()));
     }
 }
