@@ -1,6 +1,5 @@
 package dev.gallardo.miarmacore.common.minecraft;
 
-
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
@@ -9,7 +8,6 @@ import java.util.List;
 public class TpaRequests {
     private List<TpaRequest> requests = new ArrayList<>();
     private static TpaRequests instance;
-    //private Map<Player, Long> cooldowns = new HashMap<>();
 
     private TpaRequests() {}
 
@@ -21,29 +19,22 @@ public class TpaRequests {
     }
 
     public void addRequest(Player from, Player to, TpaType type) {
-        requests.add(new TpaRequest(from, to, type));
+        // Check if a request already exists from the same players to avoid duplicates
+        TpaRequest existingRequest = getRequest(from, to);
+        if (existingRequest == null) {
+            requests.add(new TpaRequest(from, to, type));
+        }
     }
 
-    public TpaRequest getRequest(Player from, Player to, TpaType type) {
+    public TpaRequest getRequest(Player from, Player to) {
         return requests.stream()
-                .filter(request -> request.from().equals(from)
-                        && request.to().equals(to)
-                        && request.type().equals(type))
+                .filter(request -> request.from().equals(from) && request.to().equals(to))
                 .findFirst()
                 .orElse(null);
     }
 
     public List<TpaRequest> getRequests() {
         return requests;
-    }
-
-    public void removeRequest(Player from, Player to, TpaType type) {
-        requests.stream()
-                .filter(request -> request.from().equals(from)
-                        && request.to().equals(to)
-                        && request.type().equals(type))
-                .findFirst()
-                .ifPresent(requests::remove);
     }
 
     public void removeRequest(TpaRequest request) {
@@ -56,7 +47,7 @@ public class TpaRequests {
 
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        for(TpaRequest request : requests) {
+        for (TpaRequest request : requests) {
             sb.append(request.from().getName())
                     .append(" -> ")
                     .append(request.to().getName())
@@ -67,4 +58,3 @@ public class TpaRequests {
         return sb.toString();
     }
 }
-

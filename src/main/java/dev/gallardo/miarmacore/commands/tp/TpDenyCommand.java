@@ -1,6 +1,7 @@
 package dev.gallardo.miarmacore.commands.tp;
 
 import dev.gallardo.miarmacore.common.minecraft.TpaRequest;
+import dev.gallardo.miarmacore.common.minecraft.TpaRequests;
 import dev.gallardo.miarmacore.config.CommandWrapper;
 import dev.gallardo.miarmacore.config.providers.CommandProvider;
 import dev.gallardo.miarmacore.config.providers.MessageProvider;
@@ -31,28 +32,19 @@ public class TpDenyCommand {
                     return;
                 }
 
-                TpaRequest request = TPA_REQUESTS.getRequests().stream()
-                        .filter(req -> {
-                            if (req.from().equals(sender) && req.to().equals(target)) {
-                                return true;
-                            } else if (req.from().equals(target) && req.to().equals(sender)) {
-                                return true;
-                            }
-                            return false;
-                        })
-                        .findFirst()
-                        .orElse(null);
+                TpaRequest request = TpaRequests.getInstance().getRequest(sender, target);
 
                 if (request == null) {
                     MessageUtils.sendMessage(sender, MessageProvider.Errors.noRequestFound(), true);
                     return;
                 }
 
-                TPA_REQUESTS.removeRequest(request);
+                TpaRequests.getInstance().removeRequest(request);
 
-                MessageUtils.sendMessage(sender, tpDenyCmd.getMessages()[0], true);
+                MessageUtils.sendMessage(sender, tpDenyCmd.getMessages()[0], true,
+                        List.of("%target%"), List.of(target.getName()));
                 MessageUtils.sendMessage(target, tpDenyCmd.getMessages()[1], true,
-                                            List.of("%sender%"), List.of(sender.getName()));
+                        List.of("%sender%"), List.of(sender.getName()));
             })
             .register();
     }
