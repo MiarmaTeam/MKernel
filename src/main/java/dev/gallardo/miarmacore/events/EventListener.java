@@ -315,7 +315,8 @@ public class EventListener {
 
 				for(Player p:players) {
 					PersistentDataContainer data = p.getPersistentDataContainer();
-					if(data.has(SPY_KEY) && !player.equals(p)) {
+					boolean canSpy = Boolean.TRUE.equals(data.get(SPY_KEY, PersistentDataType.BOOLEAN));
+					if(canSpy && !player.equals(p)) {
 						MessageUtils.sendMessage(p, MessageProvider.Events.getOnCommandSpyMessage(), false,
 												  List.of("%player%", "%message%"), List.of(player.getName(), message));
 					}
@@ -572,6 +573,24 @@ public class EventListener {
 			        }
 			        bookMeta.setPages(newPages);
 			        event.setNewBookMeta(bookMeta);
+				}
+			}
+
+			@EventHandler
+			public void onPlayerMove(PlayerMoveEvent event) {
+				Player player = event.getPlayer();
+				Location loc = player.getLocation();
+
+				PersistentDataContainer data = player.getPersistentDataContainer();
+				boolean isFrozen = Boolean.TRUE.equals(data.get(FROZEN_KEY, PersistentDataType.BOOLEAN));
+
+				if(isFrozen) {
+					event.setCancelled(true);
+					double x = loc.getX();
+					double y = loc.getY();
+					double z = loc.getZ();
+					Location newLoc = new Location(loc.getWorld(), x, y, z);
+					player.teleport(newLoc);
 				}
 			}
 

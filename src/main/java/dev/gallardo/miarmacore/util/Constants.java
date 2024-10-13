@@ -13,4 +13,5 @@ public class Constants {
     public static List<ItemStack> RECIPES = new ArrayList<>();
     public static NamespacedKey VANISH_KEY = new NamespacedKey(MiarmaCore.PLUGIN, "vanish");
     public static NamespacedKey SPY_KEY = new NamespacedKey(MiarmaCore.PLUGIN, "spy");
+    public static NamespacedKey FROZEN_KEY = new NamespacedKey(MiarmaCore.PLUGIN, "frozen");
 }

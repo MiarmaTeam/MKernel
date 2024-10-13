@@ -352,6 +352,29 @@ commands:
       enabled: "[P] &7Modo espía &aactivado"
       disabled: "[P] &7Modo espía &adesactivado"
 
+  freeze:
+    name: "freeze"
+    description: "Congela a un jugador"
+    permission: "miarmacore.command.freeze"
+    usage: "/freeze <jugador>"
+    messages:
+      frozen: "[P] &7El jugador &a%player% &7ha sido &bcongelado"
+      unfrozen: "[P] &7El jugador &a%player% &7ha sido &bdescongelado"
+      beenFrozen: "[P] &7Has sido &bcongelado por &a%sender%"
+      beenUnfrozen: "[P] &7Has sido &bdescongelado por &a%sender%"
+
+  heal:
+    name: "heal"
+    description: "Cura a un jugador"
+    permissions:
+      base: "miarmacore.command.heal"
+      others: "miarmacore.command.heal.others"
+    usage: "/heal <jugador>"
+    messages:
+      healedSelf: "[P] &7Te has curado"
+      healedPlayer: "[P] &7Has curado a &a%player%"
+      beenHealed: "[P] &7Has sido curado por &a%sender%"
+
 # -----------------------------------------------------------
 #  Message Configuration
 # -----------------------------------------------------------

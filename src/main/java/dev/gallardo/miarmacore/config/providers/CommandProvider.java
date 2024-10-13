@@ -25,10 +25,6 @@ public class CommandProvider {
                 .replaceSuggestions(ArgumentSuggestions.strings(info -> Bukkit.getOnlinePlayers().stream()
                         .map(Player::getName).toList().toArray(new String[Bukkit.getOnlinePlayers().size()])));
 
-        public static Argument<?> PLAYERS_ARG = new PlayerArgument(MiarmaCore.CONFIG.getString("arguments.player"))
-                .replaceSuggestions(ArgumentSuggestions.strings(info -> Bukkit.getOnlinePlayers().stream()
-                        .map(x -> x.getName()).toList().toArray(new String[Bukkit.getOnlinePlayers().size()])));
-
         public static Argument<?> PLAYERS_OPT_ARG = new PlayerArgument(MiarmaCore.CONFIG.getString("arguments.player"))
                 .replaceSuggestions(ArgumentSuggestions.strings(info -> Bukkit.getOnlinePlayers().stream()
                         .map(x -> x.getName()).toList().toArray(new String[Bukkit.getOnlinePlayers().size()])));
@@ -457,6 +453,36 @@ public class CommandProvider {
             .withMessages(
                 MiarmaCore.CONFIG.getString("commands.spy.messages.enabled"),
                 MiarmaCore.CONFIG.getString("commands.spy.messages.disabled")
+            )
+            .build();
+    }
+
+    public static CommandWrapper getFreezeCommand() {
+        return CommandWrapper.command(MiarmaCore.CONFIG.getString("commands.freeze.name"))
+            .withDescription(MiarmaCore.CONFIG.getString("commands.freeze.description"))
+            .withUsage(MiarmaCore.CONFIG.getString("commands.freeze.usage"))
+            .withPermission(PermissionWrapper.of(MiarmaCore.CONFIG.getString("commands.freeze.permission")))
+            .withMessages(
+                MiarmaCore.CONFIG.getString("commands.freeze.messages.frozen"),
+                MiarmaCore.CONFIG.getString("commands.freeze.messages.unfrozen"),
+                MiarmaCore.CONFIG.getString("commands.freeze.messages.beenFrozen"),
+                MiarmaCore.CONFIG.getString("commands.freeze.messages.beenUnfrozen")
+            )
+            .build();
+    }
+
+    public static CommandWrapper getHealCommand() {
+        return CommandWrapper.command(MiarmaCore.CONFIG.getString("commands.heal.name"))
+            .withDescription(MiarmaCore.CONFIG.getString("commands.heal.description"))
+            .withUsage(MiarmaCore.CONFIG.getString("commands.heal.usage"))
+            .withPermission(PermissionWrapper.of(
+                MiarmaCore.CONFIG.getString("commands.heal.permissions.base"),
+                MiarmaCore.CONFIG.getString("commands.heal.permissions.others")
+            ))
+            .withMessages(
+                MiarmaCore.CONFIG.getString("commands.heal.messages.healedSelf"),
+                MiarmaCore.CONFIG.getString("commands.heal.messages.healedPlayer"),
+                MiarmaCore.CONFIG.getString("commands.heal.messages.beenHealed")
             )
             .build();
     }

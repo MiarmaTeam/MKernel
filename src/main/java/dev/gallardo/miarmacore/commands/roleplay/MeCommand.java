@@ -3,7 +3,6 @@ package dev.gallardo.miarmacore.commands.roleplay;
 import dev.gallardo.miarmacore.config.CommandWrapper;
 import dev.gallardo.miarmacore.config.providers.CommandProvider;
 import dev.gallardo.miarmacore.util.PlayerUtils;
-import dev.jorel.commandapi.CommandAPI;
 import dev.jorel.commandapi.CommandAPICommand;
 import org.bukkit.Bukkit;
 
@@ -14,7 +13,6 @@ import static dev.gallardo.miarmacore.config.providers.CommandProvider.Arguments
 
 public class MeCommand {
     public static void register() {
-        CommandAPI.unregister("me");
         CommandWrapper meCmd = CommandProvider.getMeCommand();
         new CommandAPICommand(meCmd.getName())
             .withArguments(MESSAGE)

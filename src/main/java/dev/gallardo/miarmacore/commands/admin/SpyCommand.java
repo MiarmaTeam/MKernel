@@ -4,6 +4,7 @@ import dev.gallardo.miarmacore.config.CommandWrapper;
 import dev.gallardo.miarmacore.config.providers.CommandProvider;
 import dev.gallardo.miarmacore.util.MessageUtils;
 import dev.jorel.commandapi.CommandAPICommand;
+import org.bukkit.entity.Player;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
@@ -18,14 +19,26 @@ public class SpyCommand {
             .withPermission(spyCmd.getPermission().base())
             .executesPlayer((sender, args) -> {
                 PersistentDataContainer data = sender.getPersistentDataContainer();
-                if (data.has(SPY_KEY)) {
-                    data.remove(SPY_KEY);
+                boolean canSpy = Boolean.TRUE.equals(data.get(SPY_KEY, PersistentDataType.BOOLEAN));
+
+                if (canSpy) {
+                    unsetSpy(sender);
                     MessageUtils.sendMessage(sender, spyCmd.getMessages()[1], true);
                 } else {
-                    data.set(SPY_KEY, PersistentDataType.BOOLEAN, true);
+                    setSpy(sender);
                     MessageUtils.sendMessage(sender, spyCmd.getMessages()[0], true);
                 }
             })
             .register();
+    }
+
+    private static void setSpy(Player player) {
+        PersistentDataContainer data = player.getPersistentDataContainer();
+        data.set(SPY_KEY, PersistentDataType.BOOLEAN, true);
+    }
+
+    private static void unsetSpy(Player player) {
+        PersistentDataContainer data = player.getPersistentDataContainer();
+        data.set(SPY_KEY, PersistentDataType.BOOLEAN, false);
     }
 }

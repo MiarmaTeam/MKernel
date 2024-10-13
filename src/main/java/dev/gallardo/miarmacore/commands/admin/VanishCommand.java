@@ -20,24 +20,20 @@ public class VanishCommand {
             .withPermission(vanishCmd.getPermission().base())
             .executesPlayer((sender,args) -> {
                 PersistentDataContainer data = sender.getPersistentDataContainer();
-                data.set(VANISH_KEY, PersistentDataType.BOOLEAN, !isVanished(sender));
+                boolean isVanished = Boolean.TRUE.equals(data.get(VANISH_KEY, PersistentDataType.BOOLEAN));
+                data.set(VANISH_KEY, PersistentDataType.BOOLEAN, !isVanished);
 
-                if(isVanished(sender)) {
-                    setVanish(sender);
-                    MessageUtils.sendMessage(sender,
-                            vanishCmd.getMessages()[0], true);
-                } else {
+                if(isVanished) {
                     unsetVanish(sender);
                     MessageUtils.sendMessage(sender,
                             vanishCmd.getMessages()[1], true);
+                } else {
+                    setVanish(sender);
+                    MessageUtils.sendMessage(sender,
+                            vanishCmd.getMessages()[0], true);
                 }
             })
             .register();
-    }
-
-    private static boolean isVanished(Player player) {
-        PersistentDataContainer data = player.getPersistentDataContainer();
-        return Boolean.TRUE.equals(data.get(VANISH_KEY, PersistentDataType.BOOLEAN));
     }
 
     private static void setVanish(Player player) {

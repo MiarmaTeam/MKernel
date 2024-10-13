@@ -11,14 +11,13 @@ import org.bukkit.entity.Player;
 
 import java.util.List;
 
-import static dev.gallardo.miarmacore.config.providers.CommandProvider.Arguments.LEVELS;
-import static dev.gallardo.miarmacore.config.providers.CommandProvider.Arguments.PLAYERS_ARG;
+import static dev.gallardo.miarmacore.config.providers.CommandProvider.Arguments.*;
 
 public class PayXpCommand {
     public static void register() {
         CommandWrapper payXpCmd = CommandProvider.getPayXpCommand();
         new CommandAPICommand(payXpCmd.getName())
-            .withArguments(PLAYERS_ARG, LEVELS)
+            .withArguments(PLAYER_ARG, LEVELS)
             .withFullDescription(payXpCmd.getDescription())
             .withPermission(payXpCmd.getPermission().base())
             .withShortDescription(payXpCmd.getDescription())
