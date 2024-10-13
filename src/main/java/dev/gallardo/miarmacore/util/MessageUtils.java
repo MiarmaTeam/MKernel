@@ -50,6 +50,14 @@ public class MessageUtils {
         return message;
     }
 
+    // Formateo básico de mensajes para consola
+    public static String formatMessageConsole(String message, boolean removePrefix) {
+        if (removePrefix) {
+            message = message.replace("[P]", "");
+        }
+        return message;
+    }
+
     // Formateo básico de mensajes con placeholders
     public static String formatMessageNoColors(String message, boolean prefix, List<String> placeholders, List<String> values) {
         message = formatMessageNoColors(message, prefix);

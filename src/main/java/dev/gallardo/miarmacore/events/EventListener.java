@@ -70,8 +70,8 @@ public class EventListener {
 					Collection<? extends Player> players = Bukkit.getServer().getOnlinePlayers();
 					for (Player p : players) {
 						p.playSound(p.getLocation(), Sound.ENTITY_WITHER_DEATH, 1, 1);
-						p.sendTitle(MessageUtils.colorCodeParser(
-								MessageUtils.placeholderParser(
+						p.sendTitle(MessageUtils.parseColors(
+								MessageUtils.parsePlaceholders(
 										MessageProvider.Titles.getDeathSubtitle(),
 										List.of("%player%"), List.of(player.getName()))),
 								"", 30, 30, 30);
@@ -90,8 +90,8 @@ public class EventListener {
 					Collection<Player> players = (Collection<Player>) Bukkit.getOnlinePlayers();
 					if(deathLocation.distance(playerSpawnPoint) <= ConfigProvider.Values.getRecInvSpawnDistance() ||
 						PlayerUtils.playersNearRadius(player, players, ConfigProvider.Values.getRecInvPlayerRadius())) {
-						MessageUtils.sendMessage(MessageProvider.Events.getOnDeathItemsNotRecovered(), player, true,
-								true, List.of("%x%", "%y%", "%z%"), deathCoords);
+						MessageUtils.sendMessage(player, MessageProvider.Events.getOnDeathItemsNotRecovered(), true,
+													 List.of("%x%", "%y%", "%z%"), deathCoords);
 					} else {
 						FileUtils.saveInventory(player);
 						event.getDrops().clear();
@@ -108,8 +108,8 @@ public class EventListener {
 						event.setNewLevel(newLevel);
 						event.setNewExp((int) playerExp);
 
-						MessageUtils.sendMessage(MessageProvider.Events.getOnDeathLostLevelsItems(), player, true,
-								true, List.of("%levels%"), List.of(String.valueOf(levelsToLose)));
+						MessageUtils.sendMessage(player, MessageProvider.Events.getOnDeathLostLevelsItems(), true,
+													 List.of("%levels%"), List.of(String.valueOf(levelsToLose)));
 					}
 				}
 			}
@@ -134,7 +134,8 @@ public class EventListener {
 						);
 					} else {
 						MiarmaCore.getPlugin(MiarmaCore.class).getLogger()
-								.log(Level.SEVERE, MessageUtils.formatMessageNoPrefix(MessageProvider.Errors.lobbyDoesNotExist()));
+								.log(Level.SEVERE, MessageUtils.formatMessageConsole(
+										MessageProvider.Errors.lobbyDoesNotExist(), true));
 					}
 				}
 				if (ConfigProvider.Modules.isJoinTitleEnabled()) {
@@ -142,9 +143,9 @@ public class EventListener {
 					Collection<? extends Player> players = Bukkit.getServer().getOnlinePlayers();
 					for (Player p : players) {
 						p.sendTitle(
-								MessageUtils.colorCodeParser(MessageProvider.Titles.getTitleFormat())
+								MessageUtils.parseColors(MessageProvider.Titles.getTitleFormat())
 								+ player.getName(),
-								MessageUtils.colorCodeParser(MessageProvider.Titles.getJoinSubtitle()), 30,
+								MessageUtils.parseColors(MessageProvider.Titles.getJoinSubtitle()), 30,
 								30, 30);
 					}
 				}
@@ -171,9 +172,9 @@ public class EventListener {
 					Collection<? extends Player> players = Bukkit.getServer().getOnlinePlayers();
 					for (Player p : players) {
 						p.sendTitle(
-								MessageUtils.colorCodeParser(MessageProvider.Titles.getTitleFormat())
+								MessageUtils.parseColors(MessageProvider.Titles.getTitleFormat())
 								+ player.getName(),
-								MessageUtils.colorCodeParser(MessageProvider.Titles.getLeaveSubtitle()), 30,
+								MessageUtils.parseColors(MessageProvider.Titles.getLeaveSubtitle()), 30,
 								30, 30);
 					}
 				}
@@ -270,7 +271,7 @@ public class EventListener {
 			public void onCampfireCook(BlockCookEvent event) {
 				if (event.getBlock().getType() == Material.CAMPFIRE) {
 					if (event.getSource().getType() == Material.ROTTEN_FLESH) {
-						event.setResult(new ItemStack(ItemUtils.getMaterialWithProb()));
+						event.setResult(new ItemStack(ItemUtils.getBeefBoneWithProb()));
 					}
 				}
 			}
@@ -289,8 +290,8 @@ public class EventListener {
 					Location loc = LocationTracker.getPlayerLocation(player);
 					player.teleport(new Location(loc.getWorld(), loc.getX()-2, loc.getY(), loc.getZ()-2));
 
-					MessageUtils.sendMessage(MessageProvider.Errors.worldIsBlocked(), player, true, true,
-					        List.of("%world%"), List.of(world));
+					MessageUtils.sendMessage(player, MessageProvider.Errors.worldIsBlocked(), true,
+                                                List.of("%world%"), List.of(world));
 				}
 			}
 			
@@ -301,7 +302,7 @@ public class EventListener {
 
 				if(ConfigProvider.Modules.isChatFormatEnabled()) {
 					if(player.hasPermission(ConfigProvider.Permissions.getChatFormatPermission())) {
-						event.setMessage(MessageUtils.colorCodeParser(event.getMessage()));
+						event.setMessage(MessageUtils.parseColors(event.getMessage()));
 					}
 				}
 			}
@@ -315,8 +316,8 @@ public class EventListener {
 				for(Player p:players) {
 					PersistentDataContainer data = p.getPersistentDataContainer();
 					if(data.has(SPY_KEY) && !player.equals(p)) {
-						MessageUtils.sendMessage(MessageProvider.Events.getOnCommandSpyMessage(), p, false,
-							true, List.of("%player%", "%message%"), List.of(player.getName(), message));
+						MessageUtils.sendMessage(p, MessageProvider.Events.getOnCommandSpyMessage(), false,
+												  List.of("%player%", "%message%"), List.of(player.getName(), message));
 					}
 				}
 			}
@@ -329,7 +330,7 @@ public class EventListener {
 					)) {
 						String msg = event.getMessage()
 								.replace("#",
-									MessageUtils.colorCodeParser(MessageProvider.getAdminPrefix()+" "+
+									MessageUtils.parseColors(MessageProvider.getAdminPrefix()+" "+
 											"&7" + event.getPlayer().getName() + "&b: &r"))
 								.replace("  ", " ");
 						event.setCancelled(true);
@@ -344,7 +345,7 @@ public class EventListener {
 							ConfigProvider.Permissions.getAdminChatPermission()
 					)) {
 						event.setCancelled(true);
-						MessageUtils.sendMessage(MessageProvider.Errors.noPermission(), event.getPlayer(), true);
+						MessageUtils.sendMessage(event.getPlayer(), MessageProvider.Errors.noPermission(), true);
 					}
 				}
 			}
@@ -365,11 +366,11 @@ public class EventListener {
 							}
 						}
 						if (victim != null && containsPlayer){
-							String formattedMention = MessageUtils.colorCodeParser(MessageProvider.Events.getOnMentionFormat()+victim.getName())+ChatColor.RESET;
+							String formattedMention = MessageUtils.parseColors(MessageProvider.Events.getOnMentionFormat()+victim.getName())+ChatColor.RESET;
 							event.setMessage(event.getMessage().replace(victim.getName(), formattedMention));
 
-							MessageUtils.sendMessage(MessageProvider.Events.getOnMentionMessage(), victim, true,
-									true, List.of("%player%"), List.of(event.getPlayer().getName()));
+							MessageUtils.sendMessage(victim, MessageProvider.Events.getOnMentionMessage(), true,
+														List.of("%player%"), List.of(event.getPlayer().getName()));
 
 							victim.playSound(victim, Sound.BLOCK_NOTE_BLOCK_PLING, 1, 1);
 						}

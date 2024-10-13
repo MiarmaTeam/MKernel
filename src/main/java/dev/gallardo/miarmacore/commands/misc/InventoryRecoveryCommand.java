@@ -22,9 +22,8 @@ public class InventoryRecoveryCommand {
                 int requiredLevels = ConfigProvider.Values.getRecInvRequiredLevel();
 
                 if (xpLevels < requiredLevels) {
-                    MessageUtils.sendMessage(recInvCmd.getMessages()[1], sender, true,
-                            true, List.of("%required%"),
-                            List.of(String.valueOf(requiredLevels)));
+                    MessageUtils.sendMessage(sender, recInvCmd.getMessages()[1], true,
+                                                 List.of("%required%"), List.of(String.valueOf(requiredLevels)));
                     return;
                 }
 
@@ -32,13 +31,11 @@ public class InventoryRecoveryCommand {
                 try {
                     items = FileUtils.restoreInventory(sender);
                     if(items == 0) {
-                        MessageUtils.sendMessage(recInvCmd.getMessages()[2],
-                                sender, true);
+                        MessageUtils.sendMessage(sender, recInvCmd.getMessages()[2], true);
                         return;
                     }
-                    MessageUtils.sendMessage(recInvCmd.getMessages()[0],
-                            sender, true, true, List.of("%items%"),
-                            List.of(String.valueOf(items)));
+                    MessageUtils.sendMessage(sender, recInvCmd.getMessages()[0], true,
+                                                List.of("%items%"), List.of(String.valueOf(items)));
                     sender.setLevel(xpLevels - requiredLevels);
                     FileUtils.clearInventory(sender);
                 } catch (IOException e) {

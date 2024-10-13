@@ -28,9 +28,9 @@ public class HomeCommand {
                     float pitch = (float) HOME_CONFIG.getConfig().getDouble(path + ".pitch");
                     Location loc = new Location(world, x, y, z, yaw, pitch);
                     sender.teleport(loc);
-                    MessageUtils.sendMessage(homeCmd.getMessages()[0], sender, true);
+                    MessageUtils.sendMessage(sender, homeCmd.getMessages()[0], true);
                 } else {
-                    MessageUtils.sendMessage(homeCmd.getMessages()[1], sender, true);
+                    MessageUtils.sendMessage(sender, homeCmd.getMessages()[1], true);
                 }
             })
             .register();

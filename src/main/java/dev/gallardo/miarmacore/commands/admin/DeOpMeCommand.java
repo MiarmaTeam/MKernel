@@ -15,9 +15,9 @@ public class DeOpMeCommand {
             .executesPlayer((sender,args) -> {
                 if(sender.isOp()) {
                     sender.setOp(false);
-                    MessageUtils.sendMessage(deopMeCmd.getMessages()[0], sender, true);
+                    MessageUtils.sendMessage(sender, deopMeCmd.getMessages()[0], true);
                 } else {
-                    MessageUtils.sendMessage(deopMeCmd.getMessages()[1], sender, true);
+                    MessageUtils.sendMessage(sender, deopMeCmd.getMessages()[1], true);
                 }
             })
             .register();

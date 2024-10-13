@@ -27,23 +27,23 @@ public class BlockWorldCommand {
             .withShortDescription(blockWorldCmd.getDescription())
             .executesPlayer((sender, args) -> {
                 if (args.count() != 1) {
-                    MessageUtils.sendMessage(MessageProvider.Errors.invalidArgument(), sender, true);
+                    MessageUtils.sendMessage(sender, MessageProvider.Errors.invalidArgument(), true);
                 }
 
                 String world = args.getRaw(0);
 
                 if (blockedWorlds.contains(world)) {
                     blockedWorlds.remove(world);
-                    MessageUtils.sendMessage(blockWorldCmd.getMessages()[1], sender,
-                            true, true, List.of("%world%"), List.of(world));
+                    MessageUtils.sendMessage(sender, blockWorldCmd.getMessages()[1], true,
+                                                List.of("%world%"), List.of(world));
                 } else {
                     blockedWorlds.add(world);
                     List<Player> playersInWorld = Bukkit.getWorld(world).getPlayers();
                     if(!playersInWorld.isEmpty()) {
                         playersInWorld.forEach(p -> p.teleport(LocationTracker.getPlayerLocation(p)));
                     }
-                    MessageUtils.sendMessage(blockWorldCmd.getMessages()[0], sender,
-                            true, true, List.of("%world%"), List.of(world));
+                    MessageUtils.sendMessage(sender, blockWorldCmd.getMessages()[0], true,
+                                                List.of("%world%"), List.of(world));
                 }
 
                 WORLD_BLOCKER_CONFIG.getConfig().set("blockedWorlds", blockedWorlds);

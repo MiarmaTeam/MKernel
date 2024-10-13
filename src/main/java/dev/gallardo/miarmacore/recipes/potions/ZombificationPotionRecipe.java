@@ -20,9 +20,9 @@ public class ZombificationPotionRecipe {
 		ItemStack potion = new ItemStack(Material.SPLASH_POTION);
         
         ItemMeta meta = potion.getItemMeta();
-        meta.setDisplayName(MessageUtils.colorCodeParser(
+        meta.setDisplayName(MessageUtils.parseColors(
                 MessageProvider.Items.getZombificationPotionName()));
-        meta.setLore(Collections.singletonList(MessageUtils.colorCodeParser(
+        meta.setLore(Collections.singletonList(MessageUtils.parseColors(
                 MessageProvider.Items.getZombificationPotionLore())));
         meta.addEnchant(Enchantment.MENDING, 1, false);
         meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);

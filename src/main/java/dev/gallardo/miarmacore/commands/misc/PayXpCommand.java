@@ -27,20 +27,22 @@ public class PayXpCommand {
                 Integer cantidad = Integer.valueOf(args.getRaw(1));
 
                 if(args.count() > 2) {
-                    MessageUtils.sendMessage(MessageProvider.Errors.tooManyArguments(), sender, true);
+                    MessageUtils.sendMessage(sender, MessageProvider.Errors.tooManyArguments(), true);
                 }
 
                 if(sender.getLevel()>0) {
                     sender.setLevel(sender.getLevel()-cantidad);
                     victim.setLevel(victim.getLevel()+cantidad);
-                    MessageUtils.sendMessage(payXpCmd.getMessages()[0], sender, true,
-                            true, List.of("%target%", "%amount%"), List.of(victim.getName(), cantidad.toString()));
-                    MessageUtils.sendMessage(payXpCmd.getMessages()[1], victim, true,
-                            true, List.of("%sender%", "%amount%"), List.of(sender.getName(), cantidad.toString()));
+                    MessageUtils.sendMessage(sender, payXpCmd.getMessages()[0], true,
+                                                 List.of("%target%", "%amount%"),
+                                                 List.of(victim.getName(), cantidad.toString()));
+                    MessageUtils.sendMessage(victim, payXpCmd.getMessages()[1], true,
+                                                 List.of("%sender%", "%amount%"),
+                                                 List.of(sender.getName(), cantidad.toString()));
                     sender.playSound(sender, Sound.BLOCK_NOTE_BLOCK_PLING, 1, 1);
                     victim.playSound(victim, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1, 1);
                 } else {
-                    MessageUtils.sendMessage(MessageProvider.Errors.notEnoughLevels(), sender, true);
+                    MessageUtils.sendMessage(sender, MessageProvider.Errors.notEnoughLevels(), true);
                 }
             })
             .register();

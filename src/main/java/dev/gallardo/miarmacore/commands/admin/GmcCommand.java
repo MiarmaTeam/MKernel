@@ -26,11 +26,11 @@ public class GmcCommand {
             .executesPlayer((sender,args) -> {
                 if(args.rawArgs().length == 0) {
                     sender.setGameMode(GameMode.CREATIVE);
-                    MessageUtils.sendMessage(gmcCmd.getMessages()[0], sender, true);
+                    MessageUtils.sendMessage(sender, gmcCmd.getMessages()[0], true);
                 } else {
                     Bukkit.getPlayer(args.getRaw(0)).setGameMode(GameMode.CREATIVE);
-                    MessageUtils.sendMessage(gmcCmd.getMessages()[1], sender, true,
-                            true, List.of("%player%"), List.of(args.getRaw(0)));
+                    MessageUtils.sendMessage(sender, gmcCmd.getMessages()[1], true,
+                                                List.of("%player%"), List.of(args.getRaw(0)));
                 }
             })
             .register();

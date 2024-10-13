@@ -15,13 +15,13 @@ public class InventoryUtils {
             if (items[i] != null && isValidSlot(i, player) && items[i].getType().equals(material)) {
                 if (hand.equals(EquipmentSlot.HAND)) {
                     player.getInventory().setItemInMainHand(items[i]);
-                    player.getInventory().setItem(i, (ItemStack) null);
+                    player.getInventory().setItem(i, null);
                     break;
                 }
 
                 if (hand.equals(EquipmentSlot.OFF_HAND)) {
                     player.getInventory().setItemInOffHand(items[i]);
-                    player.getInventory().setItem(i, (ItemStack) null);
+                    player.getInventory().setItem(i, null);
                     break;
                 }
             }
@@ -42,7 +42,7 @@ public class InventoryUtils {
                     } else if (hand == EquipmentSlot.OFF_HAND) {
                         player.getInventory().setItemInOffHand(itemStack);
                     }
-                    contents[i] = (ItemStack) null;
+                    contents[i] = null;
                     backpack.setContents(contents);
                     break;
                 }

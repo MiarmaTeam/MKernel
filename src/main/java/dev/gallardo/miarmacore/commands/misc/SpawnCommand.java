@@ -31,16 +31,16 @@ public class SpawnCommand {
                 if (args.count() == 0) {
                     Location spawnCoords = new Location(sender.getWorld(), xSpawn, ySpawn, zSpawn);
                     sender.teleport(spawnCoords);
-                    MessageUtils.sendMessage(spawnCmd.getMessages()[0], sender, true);
+                    MessageUtils.sendMessage(sender, spawnCmd.getMessages()[0], true);
                 } else if (args.count() >= 1) {
                     Player victim = Bukkit.getServer().getPlayer(args.getRaw(0));
                     Location spawnCoords = new Location(victim.getWorld(), xSpawn, ySpawn, zSpawn, victim.getLocation().getYaw(), victim.getLocation().getPitch());
                     victim.teleport(spawnCoords);
 
-                    MessageUtils.sendMessage(spawnCmd.getMessages()[1], sender, true,
-                            true, List.of("%victim%"), List.of(victim.getName()));
-                    MessageUtils.sendMessage(spawnCmd.getMessages()[2], victim, true,
-                            true, List.of("%sender%"), List.of(sender.getName()));
+                    MessageUtils.sendMessage(sender, spawnCmd.getMessages()[1], true,
+                                                 List.of("%victim%"), List.of(victim.getName()));
+                    MessageUtils.sendMessage(victim, spawnCmd.getMessages()[2], true,
+                                                 List.of("%sender%"), List.of(sender.getName()));
                 }
             })
             .register();

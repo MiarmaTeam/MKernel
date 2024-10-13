@@ -19,9 +19,9 @@ public class AdminStickRecipe {
         ItemStack stick = new ItemStack(Material.STICK);
        
         ItemMeta meta = stick.getItemMeta();
-        meta.setDisplayName(MessageUtils.colorCodeParser(
+        meta.setDisplayName(MessageUtils.parseColors(
                 MessageProvider.Items.getAdminStickName()));
-        meta.setLore(Collections.singletonList(MessageUtils.colorCodeParser(
+        meta.setLore(Collections.singletonList(MessageUtils.parseColors(
                 MessageProvider.Items.getAdminStickLore())));
         
         stick.setItemMeta(meta);

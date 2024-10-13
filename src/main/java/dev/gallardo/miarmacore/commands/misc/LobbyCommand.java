@@ -45,18 +45,19 @@ public class LobbyCommand {
 
                     if (args.count() == 0) {
                         sender.teleport(lobbyCoords);
-                        MessageUtils.sendMessage(lobbyCmd.getMessages()[0], sender, true);
+                        MessageUtils.sendMessage(sender, lobbyCmd.getMessages()[0], true);
                     } else if (args.count() >= 1) {
                         Player victim = Bukkit.getServer().getPlayer(args.getRaw(0));
                         victim.teleport(lobbyCoords);
-                        MessageUtils.sendMessage(lobbyCmd.getMessages()[1], sender, true,
-                                true, List.of("%victim%"), List.of(victim.getName()));
-                        MessageUtils.sendMessage(lobbyCmd.getMessages()[2], victim, true,
-                                true, List.of("%sender%"), List.of(sender.getName()));
+                        MessageUtils.sendMessage(sender, lobbyCmd.getMessages()[1], true,
+                                                    List.of("%victim%"), List.of(victim.getName()));
+                        MessageUtils.sendMessage(victim, lobbyCmd.getMessages()[2], true,
+                                                    List.of("%sender%"), List.of(sender.getName()));
                     }
                 } else {
-                    MessageUtils.sendMessage(MessageProvider.Errors.lobbyDoesNotExist(), sender, true);
-                    MiarmaCore.LOGGER.warning(MessageUtils.formatMessageNoPrefix(MessageProvider.Errors.lobbyDoesNotExist()));
+                    MessageUtils.sendMessage(sender, MessageProvider.Errors.lobbyDoesNotExist(), true);
+                    MiarmaCore.LOGGER.warning(MessageUtils.formatMessageConsole(
+                            MessageProvider.Errors.lobbyDoesNotExist(), true));
                 }
             })
             .register();

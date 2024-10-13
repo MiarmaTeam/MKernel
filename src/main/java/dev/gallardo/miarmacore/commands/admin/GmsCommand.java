@@ -26,11 +26,11 @@ public class GmsCommand {
             .executesPlayer((sender,args) -> {
                 if(args.rawArgs().length == 0) {
                     sender.setGameMode(GameMode.SURVIVAL);
-                    MessageUtils.sendMessage(gmsCmd.getMessages()[0], sender, true);
+                    MessageUtils.sendMessage(sender, gmsCmd.getMessages()[0], true);
                 } else {
                     Bukkit.getPlayer(args.getRaw(0)).setGameMode(GameMode.SURVIVAL);
-                    MessageUtils.sendMessage(gmsCmd.getMessages()[1], sender, true,
-                            true, List.of("%player%"), List.of(args.getRaw(0)));
+                    MessageUtils.sendMessage(sender, gmsCmd.getMessages()[1], true,
+                                                List.of("%player%"), List.of(args.getRaw(0)));
                 }
             })
             .register();

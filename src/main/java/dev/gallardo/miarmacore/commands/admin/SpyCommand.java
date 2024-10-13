@@ -20,10 +20,10 @@ public class SpyCommand {
                 PersistentDataContainer data = sender.getPersistentDataContainer();
                 if (data.has(SPY_KEY)) {
                     data.remove(SPY_KEY);
-                    MessageUtils.sendMessage(spyCmd.getMessages()[1], sender, true);
+                    MessageUtils.sendMessage(sender, spyCmd.getMessages()[1], true);
                 } else {
                     data.set(SPY_KEY, PersistentDataType.BOOLEAN, true);
-                    MessageUtils.sendMessage(spyCmd.getMessages()[0], sender, true);
+                    MessageUtils.sendMessage(sender, spyCmd.getMessages()[0], true);
                 }
             })
             .register();

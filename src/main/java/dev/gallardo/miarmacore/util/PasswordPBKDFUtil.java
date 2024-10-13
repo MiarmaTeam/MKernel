@@ -28,8 +28,7 @@ public class PasswordPBKDFUtil {
             byte[] derivedKey = factory.generateSecret(spec).getEncoded();
 
             String derivedKeyBase64 = Base64.getEncoder().encodeToString(derivedKey);
-            String result = String.format("pbkdf2:sha256:%d$%s$%s", ITERATIONS, SALT, derivedKeyBase64);
-            return result;
+            return String.format("pbkdf2:sha256:%d$%s$%s", ITERATIONS, SALT, derivedKeyBase64);
         } catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
             MiarmaCore.LOGGER.severe("Error al encriptar la contraseña: " + e.getMessage());
             return null;

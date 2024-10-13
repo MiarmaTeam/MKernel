@@ -19,9 +19,9 @@ public class SpawnerBreakerRecipe {
         ItemStack spawnerBreaker = new ItemStack(Material.GOLDEN_PICKAXE);
         
         ItemMeta meta = spawnerBreaker.getItemMeta();  
-        meta.setDisplayName(MessageUtils.colorCodeParser(MiarmaCore.PLUGIN.getConfig()
+        meta.setDisplayName(MessageUtils.parseColors(MiarmaCore.CONFIG
         		.getString("language.items.spawnerBreaker.name")));
-        meta.setLore(Collections.singletonList(MessageUtils.colorCodeParser(MiarmaCore.PLUGIN.getConfig()
+        meta.setLore(Collections.singletonList(MessageUtils.parseColors(MiarmaCore.CONFIG
         		.getString("language.items.spawnerBreaker.lore"))));
         meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
                

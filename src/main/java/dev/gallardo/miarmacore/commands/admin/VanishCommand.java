@@ -24,12 +24,12 @@ public class VanishCommand {
 
                 if(isVanished(sender)) {
                     setVanish(sender);
-                    MessageUtils.sendMessage(vanishCmd.getMessages()[0],
-                            sender, true);
+                    MessageUtils.sendMessage(sender,
+                            vanishCmd.getMessages()[0], true);
                 } else {
                     unsetVanish(sender);
-                    MessageUtils.sendMessage(vanishCmd.getMessages()[1],
-                            sender, true);
+                    MessageUtils.sendMessage(sender,
+                            vanishCmd.getMessages()[1], true);
                 }
             })
             .register();

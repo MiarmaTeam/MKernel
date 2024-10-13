@@ -23,17 +23,20 @@ public class SendCoordsCommand {
             .withShortDescription(sendCoordsCmd.getDescription())
             .executesPlayer((sender, args) -> {
                 if (args.count() > 1) {
-                    MessageUtils.sendMessage(MessageProvider.Errors.tooManyArguments(), sender, true);
+                    MessageUtils.sendMessage(sender, MessageProvider.Errors.tooManyArguments(), true);
                 }
 
                 Player player = Bukkit.getPlayer(args.getRaw(0));
                 Location loc = sender.getLocation();
-                List<String> coords = List.of(String.valueOf(loc.getBlockX()),String.valueOf(loc.getBlockY()),String.valueOf(loc.getBlockZ()));
+                List<String> coords = List.of(String.valueOf(loc.getBlockX()),
+                                            String.valueOf(loc.getBlockY()),
+                                            String.valueOf(loc.getBlockZ()));
 
-                MessageUtils.sendMessage(sendCoordsCmd.getMessages()[0], sender, true,
-                                    true, List.of("%target%"), List.of(player.getName()));
-                MessageUtils.sendMessage(sendCoordsCmd.getMessages()[1], player, true,
-                        true, List.of("%sender%", "%x%", "%y%", "%z%"), List.of(sender.getName(), coords.get(0), coords.get(1), coords.get(2)));
+                MessageUtils.sendMessage(sender, sendCoordsCmd.getMessages()[0], true,
+                                            List.of("%target%"), List.of(player.getName()));
+                MessageUtils.sendMessage(player, sendCoordsCmd.getMessages()[1], true,
+                                            List.of("%sender%", "%x%", "%y%", "%z%"),
+                                            List.of(sender.getName(), coords.get(0), coords.get(1), coords.get(2)));
             })
             .register();
     }

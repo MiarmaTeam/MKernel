@@ -27,7 +27,7 @@ public class TpDenyCommand {
                 Player target = Bukkit.getPlayer(args.getRaw(0));
 
                 if (target == null || !target.isOnline()) {
-                    MessageUtils.sendMessage(MessageProvider.Errors.playerNotFound(), sender, true);
+                    MessageUtils.sendMessage(sender, MessageProvider.Errors.playerNotFound(), true);
                     return;
                 }
 
@@ -44,15 +44,15 @@ public class TpDenyCommand {
                         .orElse(null);
 
                 if (request == null) {
-                    MessageUtils.sendMessage(MessageProvider.Errors.noRequestFound(), sender, true);
+                    MessageUtils.sendMessage(sender, MessageProvider.Errors.noRequestFound(), true);
                     return;
                 }
 
                 TPA_REQUESTS.removeRequest(request);
 
-                MessageUtils.sendMessage(tpDenyCmd.getMessages()[0], sender, true);
-                MessageUtils.sendMessage(tpDenyCmd.getMessages()[1], target, true,
-                        true, List.of("%sender%"), List.of(sender.getName()));
+                MessageUtils.sendMessage(sender, tpDenyCmd.getMessages()[0], true);
+                MessageUtils.sendMessage(target, tpDenyCmd.getMessages()[1], true,
+                                            List.of("%sender%"), List.of(sender.getName()));
             })
             .register();
     }

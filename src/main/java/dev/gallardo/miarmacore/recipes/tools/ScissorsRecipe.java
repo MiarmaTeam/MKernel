@@ -21,9 +21,9 @@ public class ScissorsRecipe {
         ItemStack scissors = new ItemStack(Material.SHEARS);
 
         ItemMeta meta = scissors.getItemMeta();
-        meta.setDisplayName(MessageUtils.colorCodeParser(
+        meta.setDisplayName(MessageUtils.parseColors(
                 MessageProvider.Items.getScissorsName()));
-        meta.setLore(Collections.singletonList(MessageUtils.colorCodeParser(
+        meta.setLore(Collections.singletonList(MessageUtils.parseColors(
                 MessageProvider.Items.getScissorsLore())));
         meta.addEnchant(Enchantment.UNBREAKING, 1, false);
         meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);

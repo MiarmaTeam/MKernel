@@ -23,7 +23,7 @@ public class DisposalCommand {
             .withShortDescription(disposalCmd.getDescription())
             .executesPlayer((sender,args) -> {
                 if (args.count() > 1) {
-                    MessageUtils.sendMessage(MessageProvider.Errors.tooManyArguments(), sender, true);
+                    MessageUtils.sendMessage(sender, MessageProvider.Errors.tooManyArguments(), true);
                 } else if (args.count() == 0) {
                     Player player = sender;
                     player.openInventory(DisposalInventory.getInv());

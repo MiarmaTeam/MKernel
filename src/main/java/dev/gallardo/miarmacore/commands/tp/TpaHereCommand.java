@@ -28,12 +28,12 @@ public class TpaHereCommand {
                 Player target = Bukkit.getPlayer(args.getRaw(0));
 
                 if (target == null || !target.isOnline()) {
-                    MessageUtils.sendMessage(MessageProvider.Errors.playerNotFound(), sender, true);
+                    MessageUtils.sendMessage(sender, MessageProvider.Errors.playerNotFound(), true);
                     return;
                 }
 
                 if (target.equals(sender)) {
-                    MessageUtils.sendMessage(MessageProvider.Errors.cantTeleportToYourself(), sender, true);
+                    MessageUtils.sendMessage(sender, MessageProvider.Errors.cantTeleportToYourself(), true);
                     return;
                 }
 
@@ -41,18 +41,18 @@ public class TpaHereCommand {
                         .anyMatch(request -> request.from().equals(sender) && request.to().equals(target));
 
                 if (requestExists) {
-                    MessageUtils.sendMessage(MessageProvider.Errors.requestAlreadySent(), sender, true);
+                    MessageUtils.sendMessage(sender, MessageProvider.Errors.requestAlreadySent(), true);
                     return;
                 }
 
                 TPA_REQUESTS.addRequest(target, sender, TpaType.TPA_HERE);
                 MiarmaCore.LOGGER.info(TPA_REQUESTS.toString());
 
-                MessageUtils.sendMessage(tpaHereCmd.getMessages()[1], sender, true, true,
-                        List.of("%target%"), List.of(target.getName()));
+                MessageUtils.sendMessage(sender, tpaHereCmd.getMessages()[1], true,
+                                            List.of("%target%"), List.of(target.getName()));
 
-                MessageUtils.sendMessage(tpaHereCmd.getMessages()[0], target, true, true,
-                        List.of("%sender%"), List.of(sender.getName()));
+                MessageUtils.sendMessage(target, tpaHereCmd.getMessages()[0], true,
+                                            List.of("%sender%"), List.of(sender.getName()));
             })
             .register();
     }

@@ -27,11 +27,11 @@ public class SpecialItemCommand {
                 Recipe specialItem = Bukkit.getServer().getRecipe(new NamespacedKey(MiarmaCore.PLUGIN, itemName));
                 if (specialItem != null) {
                     sender.getInventory().addItem(specialItem.getResult());
-                    MessageUtils.sendMessage(specialItemCmd.getMessages()[0], sender, true,
-                             true, List.of("%item%"), List.of(itemName));
+                    MessageUtils.sendMessage(sender, specialItemCmd.getMessages()[0], true,
+                                                 List.of("%item%"), List.of(itemName));
                 } else {
-                    MessageUtils.sendMessage(MessageProvider.Errors.itemNotFound(), sender, true,
-                            true, List.of("%item%"), List.of(itemName));
+                    MessageUtils.sendMessage(sender, MessageProvider.Errors.itemNotFound(), true,
+                                                List.of("%item%"), List.of(itemName));
                 }
             })
             .register();

@@ -28,7 +28,7 @@ public class TpaAcceptCommand {
             .executesPlayer((sender, args) -> {
                 Player target = Bukkit.getPlayer(args.getRaw(0));
                 if (target == null || !target.isOnline()) {
-                    MessageUtils.sendMessage(MessageProvider.Errors.playerNotFound(), sender, true);
+                    MessageUtils.sendMessage(sender, MessageProvider.Errors.playerNotFound(), true);
                     return;
                 }
 
@@ -45,7 +45,7 @@ public class TpaAcceptCommand {
                         .orElse(null);
 
                 if (request == null) {
-                    MessageUtils.sendMessage(MessageProvider.Errors.noRequestFound(), sender, true);
+                    MessageUtils.sendMessage(sender, MessageProvider.Errors.noRequestFound(), true);
                     return;
                 }
 
@@ -57,9 +57,9 @@ public class TpaAcceptCommand {
                     sender.teleport(target.getLocation());
                 }
 
-                MessageUtils.sendMessage(tpaAcceptCmd.getMessages()[1], target, true,
-                        true, List.of("%sender%"), List.of(sender.getName()));
-                MessageUtils.sendMessage(tpaAcceptCmd.getMessages()[0], sender, true);
+                MessageUtils.sendMessage(target, tpaAcceptCmd.getMessages()[1], true,
+                                            List.of("%sender%"), List.of(sender.getName()));
+                MessageUtils.sendMessage(sender, tpaAcceptCmd.getMessages()[0], true);
             })
             .register();
     }

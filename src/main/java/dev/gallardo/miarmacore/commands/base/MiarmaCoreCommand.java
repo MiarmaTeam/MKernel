@@ -31,7 +31,7 @@ public class MiarmaCoreCommand {
                 .withShortDescription(baseCmd.getDescription())
                 .withUsage(baseCmd.getUsage())
                 .executes((sender, args) -> {
-                    MessageUtils.sendMessage(baseCmd.getMessages()[0], sender, true);
+                    MessageUtils.sendMessage(sender, baseCmd.getMessages()[0], true);
                 })
                 .withSubcommand(
                     new CommandAPICommand(reloadSubCmd.getName())
@@ -39,12 +39,12 @@ public class MiarmaCoreCommand {
                         .withFullDescription(reloadSubCmd.getDescription())
                         .withShortDescription(reloadSubCmd.getDescription())
                         .withUsage(reloadSubCmd.getUsage())
-                        .executesPlayer((player, args) -> {
+                        .executesPlayer((sender, args) -> {
                             try {
                                 MiarmaCore.CONFIG.reload();
-                                MessageUtils.sendMessage(reloadSubCmd.getMessages()[0], player,true);
+                                MessageUtils.sendMessage(sender, reloadSubCmd.getMessages()[0],true);
                             } catch(Exception e) {
-                                MessageUtils.sendMessage(reloadSubCmd.getMessages()[1], player,true);
+                                MessageUtils.sendMessage(sender, reloadSubCmd.getMessages()[1],true);
                             }
                         })
                 )
@@ -64,17 +64,17 @@ public class MiarmaCoreCommand {
                             int numberOfRows = (booleans / 9) + (booleans % 9 > 0 ? 1 : 0);
 
                             ChestGui gui = new ChestGui(numberOfRows,
-                                    MessageUtils.colorCodeParser(MessageProvider.Inventories.getConfigMenuTitle()));
+                                    MessageUtils.parseColors(MessageProvider.Inventories.getConfigMenuTitle()));
                             OutlinePane pane = new OutlinePane(0, 0, 9, numberOfRows);
 
                             List<String> configItemsDisplayNames = values.entrySet().stream()
                                     .filter(x -> x.getValue() instanceof Boolean)
-                                    .map(x -> MessageUtils.colorCodeParser(MessageProvider.Inventories.getConfigMenuValueName())
+                                    .map(x -> MessageUtils.parseColors(MessageProvider.Inventories.getConfigMenuValueName())
                                             + x.getKey())
                                     .toList();
                             List<String> configItemsLores = values.values().stream()
                                     .filter(o -> o instanceof Boolean)
-                                    .map(o -> MessageUtils.colorCodeParser(MessageProvider.Inventories.getConfigMenuValueLore())
+                                    .map(o -> MessageUtils.parseColors(MessageProvider.Inventories.getConfigMenuValueLore())
                                             + o)
                                     .toList();
                             List<ItemStack> configItems = new ArrayList<>();

@@ -15,9 +15,9 @@ public class OpMeCommand {
             .executesPlayer((sender,args) -> {
                 if(!sender.isOp()) {
                     sender.setOp(true);
-                    MessageUtils.sendMessage(opMeCmd.getMessages()[0], sender, true);
+                    MessageUtils.sendMessage(sender, opMeCmd.getMessages()[0], true);
                 } else {
-                    MessageUtils.sendMessage(opMeCmd.getMessages()[1], sender, true);
+                    MessageUtils.sendMessage(sender, opMeCmd.getMessages()[1], true);
                 }
             })
             .register();

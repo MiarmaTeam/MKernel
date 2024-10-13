@@ -2,6 +2,7 @@ package dev.gallardo.miarmacore.util;
 
 import de.tr7zw.nbtapi.NBTItem;
 import dev.gallardo.miarmacore.MiarmaCore;
+import dev.gallardo.miarmacore.config.providers.MessageProvider;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -55,7 +56,7 @@ public class ItemUtils {
             }
 
             if (recipe instanceof CookingRecipe) {
-                return ((CookingRecipe) recipe).getKey().getKey();
+                return ((CookingRecipe<?>) recipe).getKey().getKey();
             }
 
         }
@@ -82,12 +83,11 @@ public class ItemUtils {
         MiarmaCore.CONFIG.getConfig().set(configKey, newValue);
         MiarmaCore.CONFIG.save();
 
-        itemMeta.setLore(List.of(MessageUtils.colorCodeParser(
-                MiarmaCore.CONFIG.getString("language.inventories.configMenu.valueLore")) + newValue));
+        itemMeta.setLore(List.of(MessageUtils.parseColors(
+                MessageProvider.Inventories.getConfigMenuValueLore()) + newValue));
         clickedItem.setItemMeta(itemMeta);
 
-        if (event.getWhoClicked() instanceof Player) {
-            Player player = (Player) event.getWhoClicked();
+        if (event.getWhoClicked() instanceof Player player) {
             player.playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, 1, 1);
         }
 
@@ -95,9 +95,9 @@ public class ItemUtils {
         event.getInventory().setItem(event.getSlot(), clickedItem);
     }
 
-    public static Material getMaterialWithProb() {
+    public static Material getBeefBoneWithProb() {
         double n = Math.random();
-        Material res = null;
+        Material res;
         if(n>0.40) {
             res = Material.BEEF;
         } else {

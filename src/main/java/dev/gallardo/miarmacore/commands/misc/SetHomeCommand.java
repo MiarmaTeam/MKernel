@@ -27,8 +27,9 @@ public class SetHomeCommand {
                 HOME_CONFIG.getConfig().set(path + ".yaw", loc.getYaw());
                 HOME_CONFIG.getConfig().set(path + ".pitch", loc.getPitch());
                 HOME_CONFIG.saveConfig();
-                MessageUtils.sendMessage(setHomeCmd.getMessages()[0], sender, true,
-                        true, List.of("%x%", "%y%", "%z%"), List.of((int)loc.getX()+"", (int)loc.getY()+"", (int)loc.getZ()+""));
+                MessageUtils.sendMessage(sender, setHomeCmd.getMessages()[0], true,
+                                            List.of("%x%", "%y%", "%z%"),
+                                            List.of((int)loc.getX()+"", (int)loc.getY()+"", (int)loc.getZ()+""));
             })
             .register();
     }

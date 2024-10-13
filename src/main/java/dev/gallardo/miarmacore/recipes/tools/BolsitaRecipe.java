@@ -20,9 +20,9 @@ public class BolsitaRecipe {
         ItemStack bolsita = new ItemStack(Material.BUNDLE, 1);
 
         ItemMeta meta = bolsita.getItemMeta();
-        meta.setDisplayName(MessageUtils.colorCodeParser(
+        meta.setDisplayName(MessageUtils.parseColors(
                 MessageProvider.Items.getBolsitaName()));
-        meta.setLore(Collections.singletonList(MessageUtils.colorCodeParser(
+        meta.setLore(Collections.singletonList(MessageUtils.parseColors(
                 MessageProvider.Items.getBolsitaLore())));
         bolsita.setItemMeta(meta);
 
