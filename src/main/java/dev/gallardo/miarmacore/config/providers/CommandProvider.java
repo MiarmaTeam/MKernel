@@ -2,9 +2,11 @@ package dev.gallardo.miarmacore.config.providers;
 
 import dev.gallardo.miarmacore.MiarmaCore;
 import dev.gallardo.miarmacore.common.minecraft.TpaRequest;
+import dev.gallardo.miarmacore.common.minecraft.Warp;
 import dev.gallardo.miarmacore.config.CommandWrapper;
 import dev.gallardo.miarmacore.config.PermissionWrapper;
 import dev.gallardo.miarmacore.util.ItemUtils;
+import dev.gallardo.miarmacore.util.PlayerUtils;
 import dev.jorel.commandapi.arguments.*;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -41,6 +43,13 @@ public class CommandProvider {
 
         public static Argument<?> WARP_NAME = new GreedyStringArgument(MiarmaCore.CONFIG.getString("arguments.warpName"));
 
+        public static Argument<?> WARPS = new StringArgument(MiarmaCore.CONFIG.getString("arguments.warp"))
+                .replaceSuggestions(ArgumentSuggestions.strings(info -> {
+                    Player p = (Player) info.sender();
+                    List<Warp> warps = PlayerUtils.getWarps(p);
+                    return warps.stream().map(Warp::getAlias).toList().toArray(new String[warps.size()]);
+                }));
+
         public static Argument<?> ITEMS = new StringArgument(MiarmaCore.CONFIG.getString("arguments.item"))
                 .replaceSuggestions(ArgumentSuggestions.strings(info -> RECIPES.stream()
                         .map(ItemUtils::getKey)
@@ -49,24 +58,16 @@ public class CommandProvider {
         public static Argument<?> TPA_TARGETS = new PlayerArgument(MiarmaCore.CONFIG.getString("arguments.player"))
                 .replaceSuggestions(ArgumentSuggestions.strings(info -> {
                     List<TpaRequest> requests = TPA_REQUESTS.getRequests();
-                    List<String> players = Bukkit.getServer().getOnlinePlayers().stream()
-                            .map(Player::getName)
+                    List<String> pendingPlayers = requests.stream()
+                            .map(request -> request.to().getName())
                             .toList();
-                    List<String> targets = new ArrayList<>();
 
-                    for (String playerName : players) {
-                        Player player = Bukkit.getServer().getPlayer(playerName);
-
-                        boolean hasPendingRequest = requests.stream()
-                                .anyMatch(request -> request.to().equals(player));
-
-                        if (!hasPendingRequest) {
-                            targets.add(playerName);
-                        }
-                    }
-
-                    return targets.toArray(new String[0]);
+                    return Bukkit.getServer().getOnlinePlayers().stream()
+                            .map(Player::getName)
+                            .filter(playerName -> !pendingPlayers.contains(playerName))
+                            .toArray(String[]::new);
                 }));
+
     }
 
     public static CommandWrapper getBaseCommand() {

@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import static dev.gallardo.miarmacore.config.providers.CommandProvider.Arguments.WARPS;
 import static dev.gallardo.miarmacore.config.providers.CommandProvider.Arguments.WARP_NAME;
 
 public class WarpCommand {
@@ -103,7 +104,7 @@ public class WarpCommand {
                     .withPermission(removeSubCmd.getPermission().base())
                     .withFullDescription(removeSubCmd.getDescription())
                     .withShortDescription(removeSubCmd.getDescription())
-                    .withArguments(WARP_NAME)
+                    .withArguments(WARPS)
                     .withUsage(removeSubCmd.getUsage())
                     .executes((sender, args) -> {
                         File f = new File(MiarmaCore.PLUGIN.getDataFolder().getAbsolutePath(), "warps/"
