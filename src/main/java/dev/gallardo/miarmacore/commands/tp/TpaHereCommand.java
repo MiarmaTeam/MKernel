@@ -37,7 +37,7 @@ public class TpaHereCommand {
                         return;
                     }
 
-                    boolean requestExists = TpaRequests.getInstance().getRequest(target, sender) != null;
+                    boolean requestExists = TpaRequests.getInstance().getTpaHereRequest(target, sender) != null;
 
                     if (requestExists) {
                         MessageUtils.sendMessage(sender, MessageProvider.Errors.requestAlreadySent(), true);

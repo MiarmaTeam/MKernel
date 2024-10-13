@@ -37,7 +37,7 @@ public class TpaCommand {
                         return;
                     }
 
-                    boolean requestExists = TpaRequests.getInstance().getRequest(sender, target) != null;
+                    boolean requestExists = TpaRequests.getInstance().getTpaRequest(sender, target) != null;
 
                     if (requestExists) {
                         MessageUtils.sendMessage(sender, MessageProvider.Errors.requestAlreadySent(), true);

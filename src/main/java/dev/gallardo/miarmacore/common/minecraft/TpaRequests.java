@@ -20,15 +20,27 @@ public class TpaRequests {
 
     public void addRequest(Player from, Player to, TpaType type) {
         // Check if a request already exists from the same players to avoid duplicates
-        TpaRequest existingRequest = getRequest(from, to);
+        TpaRequest existingRequest;
+        if (type.equals(TpaType.TPA)) {
+            existingRequest = getTpaRequest(from, to);
+        } else {
+            existingRequest = getTpaHereRequest(from, to);
+        }
         if (existingRequest == null) {
             requests.add(new TpaRequest(from, to, type));
         }
     }
 
-    public TpaRequest getRequest(Player from, Player to) {
+    public TpaRequest getTpaRequest(Player from, Player to) {
         return requests.stream()
-                .filter(request -> request.from().equals(from) && request.to().equals(to))
+                .filter(request -> request.from().equals(from) && request.to().equals(to) && request.type().equals(TpaType.TPA))
+                .findFirst()
+                .orElse(null);
+    }
+
+    public TpaRequest getTpaHereRequest(Player from, Player to) {
+        return requests.stream()
+                .filter(request -> request.from().equals(from) && request.to().equals(to) && request.type().equals(TpaType.TPA_HERE))
                 .findFirst()
                 .orElse(null);
     }
