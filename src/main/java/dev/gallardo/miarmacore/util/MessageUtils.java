@@ -8,86 +8,80 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class MessageUtils {
-    public static String placeholderParser(String message, List<String> placeholders, List<String> values) {
-        int i = 0;
-        for(String p:placeholders) {
-            if(message.contains(p)) {
-                message = message.replace(p, values.get(i));
-                i++;
-            }
+
+    // Método para parsear placeholders
+    public static String parsePlaceholders(String message, List<String> placeholders, List<String> values) {
+        for (int i = 0; i < placeholders.size(); i++) {
+            message = message.replace(placeholders.get(i), values.get(i));
         }
         return message;
     }
 
-    public static String colorCodeParser(String message) {
-        message = MojangHEXParser(message).replace('&', '§');
-        return message;
+    // Método para convertir códigos de colores y parsear HEX
+    public static String parseColors(String message) {
+        return parseHexColors(message).replace('&', '§');
     }
 
-    public static String MojangHEXParser(String input) {
-        String hex = "&#[0-9A-Fa-f]{6}";
-        Pattern pattern = Pattern.compile(hex);
-        Matcher matcher = pattern.matcher(input);
-
-        if(matcher.find()) {
+    // Parser para códigos HEX
+    public static String parseHexColors(String input) {
+        String hexPattern = "&#[0-9A-Fa-f]{6}";
+        Matcher matcher = Pattern.compile(hexPattern).matcher(input);
+        while (matcher.find()) {
             String hexColor = matcher.group();
-            String minecraftColor = convertHexToMinecraftColor(hexColor);
-            input = input.replace(hexColor, minecraftColor);
+            input = input.replace(hexColor, convertHexToMinecraftColor(hexColor));
         }
-
         return input;
     }
 
-    public static String convertHexToMinecraftColor(String hexColor) {
-        String r1 = hexColor.substring(2, 3);
-        String r2 = hexColor.substring(3,4);
-        String g1 = hexColor.substring(4, 5);
-        String g2 = hexColor.substring(5, 6);
-        String b1 = hexColor.substring(6,7);
-        String b2 = hexColor.substring(7);
-        return "&x&" + r1 + "&" + r2 + "&" + g1 + "&" + g2 + "&" + b1 + "&" + b2;
+    // Conversión de HEX a formato de color de Minecraft
+    private static String convertHexToMinecraftColor(String hexColor) {
+        StringBuilder minecraftColor = new StringBuilder("&x");
+        for (char c : hexColor.substring(2).toCharArray()) {
+            minecraftColor.append("&").append(c);
+        }
+        return minecraftColor.toString();
     }
 
-    public static String formatMessageNoColors(String message, boolean prefix){
-        if(prefix)
-            message = message.replace("[P]", MessageProvider.getPrefix());
+    // Formateo básico de mensajes sin colores
+    public static String formatMessageNoColors(String message, boolean prefix) {
+        if (prefix) {
+            message = addPrefix(message);
+        }
         return message;
     }
 
-    public static String formatMessageNoColors(String message, boolean prefix, boolean placeholders, List<String> phs, List<String> values){
-        if(prefix)
-            message = message.replace("[P]",MessageProvider.getPrefix());
-        if(placeholders)
-            message = placeholderParser(message, phs, values);
-        return message;
+    // Formateo básico de mensajes con placeholders
+    public static String formatMessageNoColors(String message, boolean prefix, List<String> placeholders, List<String> values) {
+        message = formatMessageNoColors(message, prefix);
+        return parsePlaceholders(message, placeholders, values);
     }
 
-    public static String formatMessage(String message, boolean prefix){
-        if(prefix)
-            message = message.replace("[P]",MessageProvider.getPrefix());
-        return colorCodeParser(message);
+    // Formateo con colores y prefijo
+    public static String formatMessage(String message, boolean prefix) {
+        if (prefix) {
+            message = addPrefix(message);
+        }
+        return parseColors(message);
     }
 
-    public static String formatMessage(String message, boolean prefix, boolean placeholders, List<String> phs, List<String> values){
-        if(placeholders)
-            message = placeholderParser(message, phs, values);
-        return formatMessage(message, prefix);
+    // Formateo con colores, prefijo y placeholders
+    public static String formatMessage(String message, boolean prefix, List<String> placeholders, List<String> values) {
+        message = formatMessage(message, prefix);
+        return parsePlaceholders(message, placeholders, values);
     }
 
-    public static String formatMessageNoPrefix(String message) {
-        return colorCodeParser(message.replace("[P]", ""));
+    // Método para añadir el prefijo
+    private static String addPrefix(String message) {
+        return message.replace("[P]", MessageProvider.getPrefix());
     }
 
-    public static String removePrefix(String message) {
-        return message.replace("[P]", "");
-    }
-
-    public static void sendMessage(String message, CommandSender sender, boolean prefix) {
+    // Envío de mensajes
+    public static void sendMessage(CommandSender sender, String message, boolean prefix) {
         sender.sendMessage(formatMessage(message, prefix));
     }
 
-    public static void sendMessage(String message, CommandSender sender, boolean prefix, boolean placeholders,
-                                   List<String> phs, List<String> values) {
-        sender.sendMessage(formatMessage(message, prefix, placeholders, phs, values));
+    // Envío de mensajes con placeholders
+    public static void sendMessage(CommandSender sender, String message, boolean prefix, List<String> placeholders, List<String> values) {
+        sender.sendMessage(formatMessage(message, prefix, placeholders, values));
     }
 }
