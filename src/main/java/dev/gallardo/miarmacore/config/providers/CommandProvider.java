@@ -57,15 +57,15 @@ public class CommandProvider {
 
         public static Argument<?> TPA_TARGETS = new PlayerArgument(MiarmaCore.CONFIG.getString("arguments.player"))
                 .replaceSuggestions(ArgumentSuggestions.strings(info -> {
+                    Player sender = (Player) info.sender();
                     List<TpaRequest> requests = TPA_REQUESTS.getRequests();
+
                     List<String> pendingPlayers = requests.stream()
-                            .map(request -> request.to().getName())
+                            .filter(request -> request.to().equals(sender))
+                            .map(request -> request.from().getName())
                             .toList();
 
-                    return Bukkit.getServer().getOnlinePlayers().stream()
-                            .map(Player::getName)
-                            .filter(playerName -> !pendingPlayers.contains(playerName))
-                            .toArray(String[]::new);
+                    return pendingPlayers.toArray(String[]::new);
                 }));
 
     }
