@@ -34,7 +34,12 @@ public class TpaAcceptCommand {
                     return;
                 }
 
-                TpaRequest request = TpaRequests.getInstance().getRequest(sender, target);
+                TpaRequest request;
+                if(TpaRequests.getInstance().getTpaRequest(target, sender) != null) {
+                    request = TpaRequests.getInstance().getTpaRequest(target, sender);
+                } else {
+                    request = TpaRequests.getInstance().getTpaHereRequest(target, sender);
+                }
 
                 if (request == null) {
                     MessageUtils.sendMessage(sender, MessageProvider.Errors.noRequestFound(), true);
