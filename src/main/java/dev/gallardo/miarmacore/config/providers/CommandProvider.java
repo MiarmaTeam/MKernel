@@ -3,9 +3,8 @@ package dev.gallardo.miarmacore.config.providers;
 import dev.gallardo.miarmacore.MiarmaCore;
 import dev.gallardo.miarmacore.common.minecraft.TpaRequest;
 import dev.gallardo.miarmacore.config.CommandWrapper;
-import dev.gallardo.miarmacore.config.ConfigWrapper;
 import dev.gallardo.miarmacore.config.PermissionWrapper;
-import dev.gallardo.miarmacore.util.Utils;
+import dev.gallardo.miarmacore.util.ItemUtils;
 import dev.jorel.commandapi.arguments.*;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -44,7 +43,7 @@ public class CommandProvider {
 
         public static Argument<?> ITEMS = new StringArgument(MiarmaCore.CONFIG.getString("arguments.item"))
                 .replaceSuggestions(ArgumentSuggestions.strings(info -> RECIPES.stream()
-                        .map(Utils::getKey)
+                        .map(ItemUtils::getKey)
                         .toList().toArray(new String[RECIPES.size()])));
 
         public static Argument<?> TPA_TARGETS = new PlayerArgument(MiarmaCore.CONFIG.getString("arguments.player"))

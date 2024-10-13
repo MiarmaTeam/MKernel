@@ -1,11 +1,10 @@
 package dev.gallardo.miarmacore.commands.misc;
 
-import dev.gallardo.miarmacore.MiarmaCore;
 import dev.gallardo.miarmacore.config.CommandWrapper;
 import dev.gallardo.miarmacore.config.providers.CommandProvider;
 import dev.gallardo.miarmacore.config.providers.ConfigProvider;
-import dev.gallardo.miarmacore.config.providers.MessageProvider;
-import dev.gallardo.miarmacore.util.Utils;
+import dev.gallardo.miarmacore.util.FileUtils;
+import dev.gallardo.miarmacore.util.MessageUtils;
 import dev.jorel.commandapi.CommandAPICommand;
 
 import java.io.IOException;
@@ -23,7 +22,7 @@ public class InventoryRecoveryCommand {
                 int requiredLevels = ConfigProvider.Values.getRecInvRequiredLevel();
 
                 if (xpLevels < requiredLevels) {
-                    Utils.sendMessage(recInvCmd.getMessages()[1], sender, true,
+                    MessageUtils.sendMessage(recInvCmd.getMessages()[1], sender, true,
                             true, List.of("%required%"),
                             List.of(String.valueOf(requiredLevels)));
                     return;
@@ -31,17 +30,17 @@ public class InventoryRecoveryCommand {
 
                 int items;
                 try {
-                    items = Utils.restoreInventory(sender);
+                    items = FileUtils.restoreInventory(sender);
                     if(items == 0) {
-                        Utils.sendMessage(recInvCmd.getMessages()[2],
+                        MessageUtils.sendMessage(recInvCmd.getMessages()[2],
                                 sender, true);
                         return;
                     }
-                    Utils.sendMessage(recInvCmd.getMessages()[0],
+                    MessageUtils.sendMessage(recInvCmd.getMessages()[0],
                             sender, true, true, List.of("%items%"),
                             List.of(String.valueOf(items)));
                     sender.setLevel(xpLevels - requiredLevels);
-                    Utils.clearInventory(sender);
+                    FileUtils.clearInventory(sender);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }

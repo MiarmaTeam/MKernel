@@ -5,7 +5,7 @@ import dev.gallardo.miarmacore.common.minecraft.TpaType;
 import dev.gallardo.miarmacore.config.CommandWrapper;
 import dev.gallardo.miarmacore.config.providers.CommandProvider;
 import dev.gallardo.miarmacore.config.providers.MessageProvider;
-import dev.gallardo.miarmacore.util.Utils;
+import dev.gallardo.miarmacore.util.MessageUtils;
 import dev.jorel.commandapi.CommandAPICommand;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -28,12 +28,12 @@ public class TpaHereCommand {
                 Player target = Bukkit.getPlayer(args.getRaw(0));
 
                 if (target == null || !target.isOnline()) {
-                    Utils.sendMessage(MessageProvider.Errors.playerNotFound(), sender, true);
+                    MessageUtils.sendMessage(MessageProvider.Errors.playerNotFound(), sender, true);
                     return;
                 }
 
                 if (target.equals(sender)) {
-                    Utils.sendMessage(MessageProvider.Errors.cantTeleportToYourself(), sender, true);
+                    MessageUtils.sendMessage(MessageProvider.Errors.cantTeleportToYourself(), sender, true);
                     return;
                 }
 
@@ -41,17 +41,17 @@ public class TpaHereCommand {
                         .anyMatch(request -> request.from().equals(sender) && request.to().equals(target));
 
                 if (requestExists) {
-                    Utils.sendMessage(MessageProvider.Errors.requestAlreadySent(), sender, true);
+                    MessageUtils.sendMessage(MessageProvider.Errors.requestAlreadySent(), sender, true);
                     return;
                 }
 
                 TPA_REQUESTS.addRequest(target, sender, TpaType.TPA_HERE);
                 MiarmaCore.LOGGER.info(TPA_REQUESTS.toString());
 
-                Utils.sendMessage(tpaHereCmd.getMessages()[1], sender, true, true,
+                MessageUtils.sendMessage(tpaHereCmd.getMessages()[1], sender, true, true,
                         List.of("%target%"), List.of(target.getName()));
 
-                Utils.sendMessage(tpaHereCmd.getMessages()[0], target, true, true,
+                MessageUtils.sendMessage(tpaHereCmd.getMessages()[0], target, true, true,
                         List.of("%sender%"), List.of(sender.getName()));
             })
             .register();

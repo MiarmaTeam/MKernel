@@ -4,13 +4,12 @@ import dev.gallardo.miarmacore.common.minecraft.DisposalInventory;
 import dev.gallardo.miarmacore.config.CommandWrapper;
 import dev.gallardo.miarmacore.config.providers.CommandProvider;
 import dev.gallardo.miarmacore.config.providers.MessageProvider;
-import dev.gallardo.miarmacore.util.Utils;
+import dev.gallardo.miarmacore.util.MessageUtils;
 import dev.jorel.commandapi.CommandAPICommand;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import static dev.gallardo.miarmacore.config.providers.CommandProvider.Arguments.PLAYERS_OPT_ARG;
-import static dev.gallardo.miarmacore.util.Constants.*;
 
 public class DisposalCommand {
     public static void register() {
@@ -24,7 +23,7 @@ public class DisposalCommand {
             .withShortDescription(disposalCmd.getDescription())
             .executesPlayer((sender,args) -> {
                 if (args.count() > 1) {
-                    Utils.sendMessage(MessageProvider.Errors.tooManyArguments(), sender, true);
+                    MessageUtils.sendMessage(MessageProvider.Errors.tooManyArguments(), sender, true);
                 } else if (args.count() == 0) {
                     Player player = sender;
                     player.openInventory(DisposalInventory.getInv());

@@ -1,10 +1,8 @@
 package dev.gallardo.miarmacore.commands.admin;
 
-import dev.gallardo.miarmacore.MiarmaCore;
 import dev.gallardo.miarmacore.config.CommandWrapper;
 import dev.gallardo.miarmacore.config.providers.CommandProvider;
-import dev.gallardo.miarmacore.util.Constants;
-import dev.gallardo.miarmacore.util.Utils;
+import dev.gallardo.miarmacore.util.MessageUtils;
 import dev.jorel.commandapi.CommandAPICommand;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -28,10 +26,10 @@ public class GmspCommand {
             .executesPlayer((sender,args) -> {
                 if(args.rawArgs().length == 0) {
                     sender.setGameMode(GameMode.SPECTATOR);
-                    Utils.sendMessage(gmspCmd.getMessages()[0], sender, true);
+                    MessageUtils.sendMessage(gmspCmd.getMessages()[0], sender, true);
                 } else {
                     Bukkit.getPlayer(args.getRaw(0)).setGameMode(GameMode.SPECTATOR);
-                    Utils.sendMessage(gmspCmd.getMessages()[1], sender, true,
+                    MessageUtils.sendMessage(gmspCmd.getMessages()[1], sender, true,
                             true, List.of("%player%"), List.of(args.getRaw(0)));
                 }
             })

@@ -2,7 +2,7 @@ package dev.gallardo.miarmacore.commands.admin;
 
 import dev.gallardo.miarmacore.config.CommandWrapper;
 import dev.gallardo.miarmacore.config.providers.CommandProvider;
-import dev.gallardo.miarmacore.util.Utils;
+import dev.gallardo.miarmacore.util.MessageUtils;
 import dev.jorel.commandapi.CommandAPICommand;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
@@ -20,10 +20,10 @@ public class SpyCommand {
                 PersistentDataContainer data = sender.getPersistentDataContainer();
                 if (data.has(SPY_KEY)) {
                     data.remove(SPY_KEY);
-                    Utils.sendMessage(spyCmd.getMessages()[1], sender, true);
+                    MessageUtils.sendMessage(spyCmd.getMessages()[1], sender, true);
                 } else {
                     data.set(SPY_KEY, PersistentDataType.BOOLEAN, true);
-                    Utils.sendMessage(spyCmd.getMessages()[0], sender, true);
+                    MessageUtils.sendMessage(spyCmd.getMessages()[0], sender, true);
                 }
             })
             .register();

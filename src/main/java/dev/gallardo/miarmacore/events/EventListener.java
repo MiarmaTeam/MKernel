@@ -9,7 +9,7 @@ import dev.gallardo.miarmacore.common.minecraft.MinepacksAccessor;
 import dev.gallardo.miarmacore.config.providers.ConfigProvider;
 import dev.gallardo.miarmacore.config.providers.MessageProvider;
 import dev.gallardo.miarmacore.tasks.LocationTracker;
-import dev.gallardo.miarmacore.util.Utils;
+import dev.gallardo.miarmacore.util.*;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.*;
 import org.bukkit.block.Block;
@@ -70,8 +70,8 @@ public class EventListener {
 					Collection<? extends Player> players = Bukkit.getServer().getOnlinePlayers();
 					for (Player p : players) {
 						p.playSound(p.getLocation(), Sound.ENTITY_WITHER_DEATH, 1, 1);
-						p.sendTitle(Utils.colorCodeParser(
-								Utils.placeholderParser(
+						p.sendTitle(MessageUtils.colorCodeParser(
+								MessageUtils.placeholderParser(
 										MessageProvider.Titles.getDeathSubtitle(),
 										List.of("%player%"), List.of(player.getName()))),
 								"", 30, 30, 30);
@@ -89,11 +89,11 @@ public class EventListener {
 
 					Collection<Player> players = (Collection<Player>) Bukkit.getOnlinePlayers();
 					if(deathLocation.distance(playerSpawnPoint) <= ConfigProvider.Values.getRecInvSpawnDistance() ||
-						Utils.playersNearRadius(player, players, ConfigProvider.Values.getRecInvPlayerRadius())) {
-						Utils.sendMessage(MessageProvider.Events.getOnDeathItemsNotRecovered(), player, true,
+						PlayerUtils.playersNearRadius(player, players, ConfigProvider.Values.getRecInvPlayerRadius())) {
+						MessageUtils.sendMessage(MessageProvider.Events.getOnDeathItemsNotRecovered(), player, true,
 								true, List.of("%x%", "%y%", "%z%"), deathCoords);
 					} else {
-						Utils.saveInventory(player);
+						FileUtils.saveInventory(player);
 						event.getDrops().clear();
 						event.setDroppedExp(0);
 						event.setKeepInventory(true);
@@ -108,7 +108,7 @@ public class EventListener {
 						event.setNewLevel(newLevel);
 						event.setNewExp((int) playerExp);
 
-						Utils.sendMessage(MessageProvider.Events.getOnDeathLostLevelsItems(), player, true,
+						MessageUtils.sendMessage(MessageProvider.Events.getOnDeathLostLevelsItems(), player, true,
 								true, List.of("%levels%"), List.of(String.valueOf(levelsToLose)));
 					}
 				}
@@ -134,7 +134,7 @@ public class EventListener {
 						);
 					} else {
 						MiarmaCore.getPlugin(MiarmaCore.class).getLogger()
-								.log(Level.SEVERE, Utils.formatMessageNoPrefix(MessageProvider.Errors.lobbyDoesNotExist()));
+								.log(Level.SEVERE, MessageUtils.formatMessageNoPrefix(MessageProvider.Errors.lobbyDoesNotExist()));
 					}
 				}
 				if (ConfigProvider.Modules.isJoinTitleEnabled()) {
@@ -142,9 +142,9 @@ public class EventListener {
 					Collection<? extends Player> players = Bukkit.getServer().getOnlinePlayers();
 					for (Player p : players) {
 						p.sendTitle(
-								Utils.colorCodeParser(MessageProvider.Titles.getTitleFormat())
+								MessageUtils.colorCodeParser(MessageProvider.Titles.getTitleFormat())
 								+ player.getName(),
-								Utils.colorCodeParser(MessageProvider.Titles.getJoinSubtitle()), 30,
+								MessageUtils.colorCodeParser(MessageProvider.Titles.getJoinSubtitle()), 30,
 								30, 30);
 					}
 				}
@@ -171,9 +171,9 @@ public class EventListener {
 					Collection<? extends Player> players = Bukkit.getServer().getOnlinePlayers();
 					for (Player p : players) {
 						p.sendTitle(
-								Utils.colorCodeParser(MessageProvider.Titles.getTitleFormat())
+								MessageUtils.colorCodeParser(MessageProvider.Titles.getTitleFormat())
 								+ player.getName(),
-								Utils.colorCodeParser(MessageProvider.Titles.getLeaveSubtitle()), 30,
+								MessageUtils.colorCodeParser(MessageProvider.Titles.getLeaveSubtitle()), 30,
 								30, 30);
 					}
 				}
@@ -270,7 +270,7 @@ public class EventListener {
 			public void onCampfireCook(BlockCookEvent event) {
 				if (event.getBlock().getType() == Material.CAMPFIRE) {
 					if (event.getSource().getType() == Material.ROTTEN_FLESH) {
-						event.setResult(new ItemStack(Utils.getMaterialWithProb()));
+						event.setResult(new ItemStack(ItemUtils.getMaterialWithProb()));
 					}
 				}
 			}
@@ -289,7 +289,7 @@ public class EventListener {
 					Location loc = LocationTracker.getPlayerLocation(player);
 					player.teleport(new Location(loc.getWorld(), loc.getX()-2, loc.getY(), loc.getZ()-2));
 
-					Utils.sendMessage(MessageProvider.Errors.worldIsBlocked(), player, true, true,
+					MessageUtils.sendMessage(MessageProvider.Errors.worldIsBlocked(), player, true, true,
 					        List.of("%world%"), List.of(world));
 				}
 			}
@@ -301,7 +301,7 @@ public class EventListener {
 
 				if(ConfigProvider.Modules.isChatFormatEnabled()) {
 					if(player.hasPermission(ConfigProvider.Permissions.getChatFormatPermission())) {
-						event.setMessage(Utils.colorCodeParser(event.getMessage()));
+						event.setMessage(MessageUtils.colorCodeParser(event.getMessage()));
 					}
 				}
 			}
@@ -315,7 +315,7 @@ public class EventListener {
 				for(Player p:players) {
 					PersistentDataContainer data = p.getPersistentDataContainer();
 					if(data.has(SPY_KEY) && !player.equals(p)) {
-						Utils.sendMessage(MessageProvider.Events.getOnCommandSpyMessage(), p, false,
+						MessageUtils.sendMessage(MessageProvider.Events.getOnCommandSpyMessage(), p, false,
 							true, List.of("%player%", "%message%"), List.of(player.getName(), message));
 					}
 				}
@@ -327,10 +327,11 @@ public class EventListener {
 					if(event.getMessage().startsWith("#") && event.getPlayer().hasPermission(
 							ConfigProvider.Permissions.getAdminChatPermission()
 					)) {
-						String msg = event.getMessage().replace("#",
-								Utils.colorCodeParser(MessageProvider.getAdminPrefix())+" "+
-									ChatColor.GRAY+event.getPlayer().getName()+ChatColor.AQUA+":"+ChatColor.RESET+" ")
-										.replace("  ", " ");
+						String msg = event.getMessage()
+								.replace("#",
+									MessageUtils.colorCodeParser(MessageProvider.getAdminPrefix()+" "+
+											"&7" + event.getPlayer().getName() + "&b: &r"))
+								.replace("  ", " ");
 						event.setCancelled(true);
 						for(Player p:Bukkit.getOnlinePlayers()) {
 							if(p.hasPermission(
@@ -343,7 +344,7 @@ public class EventListener {
 							ConfigProvider.Permissions.getAdminChatPermission()
 					)) {
 						event.setCancelled(true);
-						Utils.sendMessage(MessageProvider.Errors.noPermission(), event.getPlayer(), true);
+						MessageUtils.sendMessage(MessageProvider.Errors.noPermission(), event.getPlayer(), true);
 					}
 				}
 			}
@@ -364,10 +365,10 @@ public class EventListener {
 							}
 						}
 						if (victim != null && containsPlayer){
-							String formattedMention = Utils.colorCodeParser(MessageProvider.Events.getOnMentionFormat()+victim.getName())+ChatColor.RESET;
+							String formattedMention = MessageUtils.colorCodeParser(MessageProvider.Events.getOnMentionFormat()+victim.getName())+ChatColor.RESET;
 							event.setMessage(event.getMessage().replace(victim.getName(), formattedMention));
 
-							Utils.sendMessage(MessageProvider.Events.getOnMentionMessage(), victim, true,
+							MessageUtils.sendMessage(MessageProvider.Events.getOnMentionMessage(), victim, true,
 									true, List.of("%player%"), List.of(event.getPlayer().getName()));
 
 							victim.playSound(victim, Sound.BLOCK_NOTE_BLOCK_PLING, 1, 1);
@@ -385,17 +386,17 @@ public class EventListener {
 		            Inventory playerBackpack;
 
 		            if (item.getAmount() == 1) {
-		                int itemCountInInventory = Utils.getItemCount(playerInventory, material);
+		                int itemCountInInventory = InventoryUtils.getItemCount(playerInventory, material);
 
 		                if (itemCountInInventory > 1) {
-		                    Utils.refillItem(event.getPlayer(), material, event.getHand());
+		                    InventoryUtils.refillItem(event.getPlayer(), material, event.getHand());
 		                } else {
 							if(MinepacksAccessor.isLoaded()) {
 								playerBackpack = MinepacksAccessor.getPlayerBackpackInventory(event.getPlayer());
 								if (!(playerBackpack == null) && !playerBackpack.isEmpty()) {
 									for (ItemStack i : playerBackpack.getContents()) {
 										if (i != null && i.getType().equals(material)) {
-											Utils.refillItemFromMinepack(event.getPlayer(), material, event.getHand());
+											InventoryUtils.refillItemFromMinepack(event.getPlayer(), material, event.getHand());
 											break;
 										}
 									}
@@ -466,16 +467,16 @@ public class EventListener {
 		                      EquipmentSlot.OFF_HAND : EquipmentSlot.HAND;
 
 		            if(item.getAmount() == 1) {
-		            	int itemCountInInventory = Utils.getItemCount(playerInventory, material);
+		            	int itemCountInInventory = InventoryUtils.getItemCount(playerInventory, material);
 		            	if (itemCountInInventory > 1) {
-		                    Utils.refillItem(event.getPlayer(), material, hand);
+		                    InventoryUtils.refillItem(event.getPlayer(), material, hand);
 		                } else {
 							if(MinepacksAccessor.isLoaded()) {
 								playerBackpack = MinepacksAccessor.getPlayerBackpackInventory(event.getPlayer());
 								if(!(playerBackpack == null) && !playerBackpack.isEmpty()) {
 									for (ItemStack i : playerBackpack.getContents()) {
 										if (i != null && i.getType().equals(material)) {
-											Utils.refillItemFromMinepack(event.getPlayer(), material, hand);
+											InventoryUtils.refillItemFromMinepack(event.getPlayer(), material, hand);
 											break;
 										}
 									}

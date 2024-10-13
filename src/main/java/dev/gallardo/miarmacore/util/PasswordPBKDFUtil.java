@@ -35,4 +35,14 @@ public class PasswordPBKDFUtil {
             return null;
         }
     }
+
+    public static String generateRandomPassword(int size) {
+        String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789~#$&*_+-=.";
+        StringBuilder pass = new StringBuilder();
+        for(int i = 0; i < size; i++) {
+            int random = (int) (Math.random() * chars.length());
+            pass.append(chars.charAt(random));
+        }
+        return pass.toString();
+    }
 }

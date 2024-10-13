@@ -6,8 +6,7 @@ import dev.gallardo.miarmacore.config.CommandWrapper;
 import dev.gallardo.miarmacore.config.providers.CommandProvider;
 import dev.gallardo.miarmacore.config.providers.ConfigProvider;
 import dev.gallardo.miarmacore.config.providers.MessageProvider;
-import dev.gallardo.miarmacore.util.Constants;
-import dev.gallardo.miarmacore.util.Utils;
+import dev.gallardo.miarmacore.util.MessageUtils;
 import dev.jorel.commandapi.CommandAPICommand;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -42,14 +41,14 @@ public class WarpCommand {
                         .collect(Collectors.toSet());
 
                 if (warps.isEmpty()) {
-                    Utils.sendMessage(warpCmd.getMessages()[0], sender, true);
+                    MessageUtils.sendMessage(warpCmd.getMessages()[0], sender, true);
                 } else {
                     String warpList = warps.stream()
                             .map(Warp::toFormattedMessage)
                             .collect(Collectors.joining("\n"));
-                    warpList = Utils.formatMessage(warpList, false);
+                    warpList = MessageUtils.formatMessage(warpList, false);
 
-                    Utils.sendMessage(warpCmd.getMessages()[1],
+                    MessageUtils.sendMessage(warpCmd.getMessages()[1],
                         sender, true, true,
                         List.of("%warps%"), List.of(warpList));
                 }
@@ -68,7 +67,7 @@ public class WarpCommand {
                         FileConfiguration c = YamlConfiguration.loadConfiguration(f);
 
                         if (c.getKeys(false).size() >= ConfigProvider.Values.getMaxWarps()) {
-                            Utils.sendMessage(
+                            MessageUtils.sendMessage(
                                 MessageProvider.Errors.maxWarpsReached(),
                                 sender, true
                             );
@@ -76,7 +75,7 @@ public class WarpCommand {
                         }
 
                         if(c.contains(args.getRaw(0))) {
-                            Utils.sendMessage(
+                            MessageUtils.sendMessage(
                                 addSubCmd.getMessages()[1],
                                 sender, true, true, List.of("%warp%"), List.of(args.getRaw(0))
                             );
@@ -101,7 +100,7 @@ public class WarpCommand {
                             throw new RuntimeException(e);
                         }
 
-                        Utils.sendMessage(
+                        MessageUtils.sendMessage(
                             addSubCmd.getMessages()[0],
                             sender, true, true, List.of("%warp%"), List.of(warpName)
                         );
@@ -127,12 +126,12 @@ public class WarpCommand {
                             } catch (IOException e) {
                                 MiarmaCore.LOGGER.severe("Error al guardar el archivo de warps de " + sender.getName());
                             }
-                            Utils.sendMessage(
+                            MessageUtils.sendMessage(
                                 removeSubCmd.getMessages()[0],
                                 sender, true, true, List.of("%warp%"), List.of(warpName)
                             );
                         } else {
-                            Utils.sendMessage(
+                            MessageUtils.sendMessage(
                                 removeSubCmd.getMessages()[1],
                                 sender, true, true, List.of("%warp%"), List.of(warpName)
                             );

@@ -3,7 +3,7 @@ package dev.gallardo.miarmacore.recipes.potions;
 import de.tr7zw.nbtapi.NBTItem;
 import dev.gallardo.miarmacore.MiarmaCore;
 import dev.gallardo.miarmacore.config.providers.MessageProvider;
-import dev.gallardo.miarmacore.util.Utils;
+import dev.gallardo.miarmacore.util.MessageUtils;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.enchantments.Enchantment;
@@ -20,9 +20,9 @@ public class ZombificationPotionRecipe {
 		ItemStack potion = new ItemStack(Material.SPLASH_POTION);
         
         ItemMeta meta = potion.getItemMeta();
-        meta.setDisplayName(Utils.colorCodeParser(
+        meta.setDisplayName(MessageUtils.colorCodeParser(
                 MessageProvider.Items.getZombificationPotionName()));
-        meta.setLore(Collections.singletonList(Utils.colorCodeParser(
+        meta.setLore(Collections.singletonList(MessageUtils.colorCodeParser(
                 MessageProvider.Items.getZombificationPotionLore())));
         meta.addEnchant(Enchantment.MENDING, 1, false);
         meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);

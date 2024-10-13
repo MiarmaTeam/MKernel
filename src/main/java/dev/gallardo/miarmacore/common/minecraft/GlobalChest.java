@@ -2,19 +2,16 @@ package dev.gallardo.miarmacore.common.minecraft;
 
 import dev.gallardo.miarmacore.MiarmaCore;
 import dev.gallardo.miarmacore.config.providers.MessageProvider;
-import dev.gallardo.miarmacore.util.Utils;
+import dev.gallardo.miarmacore.util.MessageUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 
 import java.io.File;
 import java.io.IOException;
-
-import static dev.gallardo.miarmacore.util.Constants.*;
 
 public class GlobalChest {
     private static File itemsFile;
@@ -63,6 +60,6 @@ public class GlobalChest {
 
     static {
         inv = Bukkit.createInventory(null, 54,
-                Utils.colorCodeParser(MessageProvider.Inventories.getGlobalChestTitle()));
+                MessageUtils.colorCodeParser(MessageProvider.Inventories.getGlobalChestTitle()));
     }
 }

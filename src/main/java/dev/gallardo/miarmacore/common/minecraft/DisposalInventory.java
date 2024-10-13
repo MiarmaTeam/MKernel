@@ -1,7 +1,7 @@
 package dev.gallardo.miarmacore.common.minecraft;
 
 import dev.gallardo.miarmacore.config.providers.MessageProvider;
-import dev.gallardo.miarmacore.util.Utils;
+import dev.gallardo.miarmacore.util.MessageUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.inventory.Inventory;
 
@@ -18,6 +18,6 @@ public class DisposalInventory {
 
     static {
         inv = Bukkit.createInventory(null, 54,
-                Utils.colorCodeParser(MessageProvider.Inventories.getDisposalTitle()));
+                MessageUtils.colorCodeParser(MessageProvider.Inventories.getDisposalTitle()));
     }
 }

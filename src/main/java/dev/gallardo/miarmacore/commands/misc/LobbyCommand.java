@@ -4,7 +4,7 @@ import dev.gallardo.miarmacore.config.CommandWrapper;
 import dev.gallardo.miarmacore.config.providers.CommandProvider;
 import dev.gallardo.miarmacore.config.providers.ConfigProvider;
 import dev.gallardo.miarmacore.config.providers.MessageProvider;
-import dev.gallardo.miarmacore.util.Utils;
+import dev.gallardo.miarmacore.util.MessageUtils;
 import dev.jorel.commandapi.CommandAPICommand;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -15,7 +15,6 @@ import dev.gallardo.miarmacore.MiarmaCore;
 import java.util.List;
 
 import static dev.gallardo.miarmacore.config.providers.CommandProvider.Arguments.PLAYERS_OPT_ARG;
-import static dev.gallardo.miarmacore.util.Constants.*;
 
 public class LobbyCommand {
     public static void register() {
@@ -46,18 +45,18 @@ public class LobbyCommand {
 
                     if (args.count() == 0) {
                         sender.teleport(lobbyCoords);
-                        Utils.sendMessage(lobbyCmd.getMessages()[0], sender, true);
+                        MessageUtils.sendMessage(lobbyCmd.getMessages()[0], sender, true);
                     } else if (args.count() >= 1) {
                         Player victim = Bukkit.getServer().getPlayer(args.getRaw(0));
                         victim.teleport(lobbyCoords);
-                        Utils.sendMessage(lobbyCmd.getMessages()[1], sender, true,
+                        MessageUtils.sendMessage(lobbyCmd.getMessages()[1], sender, true,
                                 true, List.of("%victim%"), List.of(victim.getName()));
-                        Utils.sendMessage(lobbyCmd.getMessages()[2], victim, true,
+                        MessageUtils.sendMessage(lobbyCmd.getMessages()[2], victim, true,
                                 true, List.of("%sender%"), List.of(sender.getName()));
                     }
                 } else {
-                    Utils.sendMessage(MessageProvider.Errors.lobbyDoesNotExist(), sender, true);
-                    MiarmaCore.LOGGER.warning(Utils.formatMessageNoPrefix(MessageProvider.Errors.lobbyDoesNotExist()));
+                    MessageUtils.sendMessage(MessageProvider.Errors.lobbyDoesNotExist(), sender, true);
+                    MiarmaCore.LOGGER.warning(MessageUtils.formatMessageNoPrefix(MessageProvider.Errors.lobbyDoesNotExist()));
                 }
             })
             .register();

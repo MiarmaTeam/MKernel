@@ -4,17 +4,16 @@ import dev.gallardo.miarmacore.config.CommandWrapper;
 import dev.gallardo.miarmacore.config.providers.CommandProvider;
 import dev.gallardo.miarmacore.config.providers.MessageProvider;
 import dev.gallardo.miarmacore.tasks.LocationTracker;
-import dev.gallardo.miarmacore.util.Utils;
+import dev.gallardo.miarmacore.util.MessageUtils;
 import dev.jorel.commandapi.CommandAPICommand;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-import dev.gallardo.miarmacore.MiarmaCore;
+
 import static dev.gallardo.miarmacore.MiarmaCore.WORLD_BLOCKER_CONFIG;
 
 import java.util.List;
 
 import static dev.gallardo.miarmacore.config.providers.CommandProvider.Arguments.WORLDS;
-import static dev.gallardo.miarmacore.util.Constants.*;
 
 public class BlockWorldCommand {
     public static void register() {
@@ -28,14 +27,14 @@ public class BlockWorldCommand {
             .withShortDescription(blockWorldCmd.getDescription())
             .executesPlayer((sender, args) -> {
                 if (args.count() != 1) {
-                    Utils.sendMessage(MessageProvider.Errors.invalidArgument(), sender, true);
+                    MessageUtils.sendMessage(MessageProvider.Errors.invalidArgument(), sender, true);
                 }
 
                 String world = args.getRaw(0);
 
                 if (blockedWorlds.contains(world)) {
                     blockedWorlds.remove(world);
-                    Utils.sendMessage(blockWorldCmd.getMessages()[1], sender,
+                    MessageUtils.sendMessage(blockWorldCmd.getMessages()[1], sender,
                             true, true, List.of("%world%"), List.of(world));
                 } else {
                     blockedWorlds.add(world);
@@ -43,7 +42,7 @@ public class BlockWorldCommand {
                     if(!playersInWorld.isEmpty()) {
                         playersInWorld.forEach(p -> p.teleport(LocationTracker.getPlayerLocation(p)));
                     }
-                    Utils.sendMessage(blockWorldCmd.getMessages()[0], sender,
+                    MessageUtils.sendMessage(blockWorldCmd.getMessages()[0], sender,
                             true, true, List.of("%world%"), List.of(world));
                 }
 

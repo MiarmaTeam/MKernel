@@ -1,9 +1,8 @@
 package dev.gallardo.miarmacore.commands.admin;
 
-import dev.gallardo.miarmacore.MiarmaCore;
 import dev.gallardo.miarmacore.config.CommandWrapper;
 import dev.gallardo.miarmacore.config.providers.CommandProvider;
-import dev.gallardo.miarmacore.util.Utils;
+import dev.gallardo.miarmacore.util.MessageUtils;
 import dev.jorel.commandapi.CommandAPICommand;
 import org.bukkit.entity.Player;
 import org.bukkit.persistence.PersistentDataContainer;
@@ -25,11 +24,11 @@ public class VanishCommand {
 
                 if(isVanished(sender)) {
                     setVanish(sender);
-                    Utils.sendMessage(vanishCmd.getMessages()[0],
+                    MessageUtils.sendMessage(vanishCmd.getMessages()[0],
                             sender, true);
                 } else {
                     unsetVanish(sender);
-                    Utils.sendMessage(vanishCmd.getMessages()[1],
+                    MessageUtils.sendMessage(vanishCmd.getMessages()[1],
                             sender, true);
                 }
             })

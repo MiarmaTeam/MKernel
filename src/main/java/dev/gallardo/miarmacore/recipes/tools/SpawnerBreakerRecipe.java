@@ -2,7 +2,7 @@ package dev.gallardo.miarmacore.recipes.tools;
 
 import de.tr7zw.nbtapi.NBTItem;
 import dev.gallardo.miarmacore.MiarmaCore;
-import dev.gallardo.miarmacore.util.Utils;
+import dev.gallardo.miarmacore.util.MessageUtils;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemFlag;
@@ -19,9 +19,9 @@ public class SpawnerBreakerRecipe {
         ItemStack spawnerBreaker = new ItemStack(Material.GOLDEN_PICKAXE);
         
         ItemMeta meta = spawnerBreaker.getItemMeta();  
-        meta.setDisplayName(Utils.colorCodeParser(MiarmaCore.PLUGIN.getConfig()
+        meta.setDisplayName(MessageUtils.colorCodeParser(MiarmaCore.PLUGIN.getConfig()
         		.getString("language.items.spawnerBreaker.name")));
-        meta.setLore(Collections.singletonList(Utils.colorCodeParser(MiarmaCore.PLUGIN.getConfig()
+        meta.setLore(Collections.singletonList(MessageUtils.colorCodeParser(MiarmaCore.PLUGIN.getConfig()
         		.getString("language.items.spawnerBreaker.lore"))));
         meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
                

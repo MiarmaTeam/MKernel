@@ -3,7 +3,7 @@ package dev.gallardo.miarmacore.recipes.tools;
 import de.tr7zw.nbtapi.NBTItem;
 import dev.gallardo.miarmacore.MiarmaCore;
 import dev.gallardo.miarmacore.config.providers.MessageProvider;
-import dev.gallardo.miarmacore.util.Utils;
+import dev.gallardo.miarmacore.util.MessageUtils;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
@@ -20,9 +20,9 @@ public class BolsitaRecipe {
         ItemStack bolsita = new ItemStack(Material.BUNDLE, 1);
 
         ItemMeta meta = bolsita.getItemMeta();
-        meta.setDisplayName(Utils.colorCodeParser(
+        meta.setDisplayName(MessageUtils.colorCodeParser(
                 MessageProvider.Items.getBolsitaName()));
-        meta.setLore(Collections.singletonList(Utils.colorCodeParser(
+        meta.setLore(Collections.singletonList(MessageUtils.colorCodeParser(
                 MessageProvider.Items.getBolsitaLore())));
         bolsita.setItemMeta(meta);
 

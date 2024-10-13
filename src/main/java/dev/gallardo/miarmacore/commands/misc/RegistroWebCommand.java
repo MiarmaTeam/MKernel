@@ -1,14 +1,13 @@
 package dev.gallardo.miarmacore.commands.misc;
 
-import dev.gallardo.miarmacore.MiarmaCore;
 import dev.gallardo.miarmacore.config.CommandWrapper;
 import dev.gallardo.miarmacore.config.providers.CommandProvider;
-import dev.gallardo.miarmacore.util.Utils;
 import dev.gallardo.miarmacore.common.WebAPIAccessor;
+import dev.gallardo.miarmacore.util.MessageUtils;
+import dev.gallardo.miarmacore.util.PasswordPBKDFUtil;
 import dev.jorel.commandapi.CommandAPICommand;
 
 import static dev.gallardo.miarmacore.config.providers.CommandProvider.Arguments.PASSWORD_ARG;
-import static dev.gallardo.miarmacore.util.Constants.*;
 
 import java.util.Arrays;
 import java.util.List;
@@ -32,14 +31,14 @@ public class RegistroWebCommand {
                 if(userPassword) {
                     password = Arrays.stream(args.rawArgs()).collect(Collectors.joining(" "));
                 } else {
-                    password = Utils.generateRandomPassword(8);
+                    password = PasswordPBKDFUtil.generateRandomPassword(8);
                 }
 
                 if(WebAPIAccessor.register(username,password,rol)) {
-                    Utils.sendMessage(registerWebCmd.getMessages()[0], sender, true, true,
+                    MessageUtils.sendMessage(registerWebCmd.getMessages()[0], sender, true, true,
                             List.of("%user%", "%password%"), List.of(username, password));
                 } else {
-                    Utils.sendMessage(registerWebCmd.getMessages()[1], sender,true);
+                    MessageUtils.sendMessage(registerWebCmd.getMessages()[1], sender,true);
                 }
             })
             .register();
