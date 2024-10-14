@@ -1,7 +1,7 @@
 package dev.gallardo.miarmacore.config.providers;
 
 import dev.gallardo.miarmacore.MiarmaCore;
-import dev.gallardo.miarmacore.common.minecraft.TpaRequest;
+import dev.gallardo.miarmacore.common.minecraft.teleport.TpaRequest;
 import dev.gallardo.miarmacore.common.minecraft.Warp;
 import dev.gallardo.miarmacore.config.CommandWrapper;
 import dev.gallardo.miarmacore.config.PermissionWrapper;
@@ -11,7 +11,6 @@ import dev.jorel.commandapi.arguments.*;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static dev.gallardo.miarmacore.util.Constants.RECIPES;
@@ -50,19 +49,6 @@ public class CommandProvider {
                 .replaceSuggestions(ArgumentSuggestions.strings(info -> RECIPES.stream()
                         .map(ItemUtils::getKey)
                         .toList().toArray(new String[RECIPES.size()])));
-
-        public static Argument<?> TPA_TARGETS = new PlayerArgument(MiarmaCore.CONFIG.getString("arguments.player"))
-                .replaceSuggestions(ArgumentSuggestions.strings(info -> {
-                    Player sender = (Player) info.sender();
-                    List<TpaRequest> requests = TPA_REQUESTS.getRequests();
-
-                    List<String> pendingPlayers = requests.stream()
-                            .filter(request -> request.to().equals(sender))
-                            .map(request -> request.from().getName())
-                            .toList();
-
-                    return pendingPlayers.toArray(String[]::new);
-                }));
 
     }
 
@@ -483,6 +469,19 @@ public class CommandProvider {
                 MiarmaCore.CONFIG.getString("commands.heal.messages.healedSelf"),
                 MiarmaCore.CONFIG.getString("commands.heal.messages.healedPlayer"),
                 MiarmaCore.CONFIG.getString("commands.heal.messages.beenHealed")
+            )
+            .build();
+    }
+
+    public static CommandWrapper getLaunchCommand() {
+        return CommandWrapper.command(MiarmaCore.CONFIG.getString("commands.launch.name"))
+            .withDescription(MiarmaCore.CONFIG.getString("commands.launch.description"))
+            .withUsage(MiarmaCore.CONFIG.getString("commands.launch.usage"))
+            .withPermission(PermissionWrapper.of(
+                MiarmaCore.CONFIG.getString("commands.launch.permission")
+            ))
+            .withMessages(
+                MiarmaCore.CONFIG.getString("commands.launch.messages.launched")
             )
             .build();
     }

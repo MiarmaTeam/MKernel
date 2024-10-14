@@ -9,6 +9,7 @@ import dev.gallardo.miarmacore.commands.tp.TpDenyCommand;
 import dev.gallardo.miarmacore.commands.tp.TpaAcceptCommand;
 import dev.gallardo.miarmacore.commands.tp.TpaCommand;
 import dev.gallardo.miarmacore.commands.tp.TpaHereCommand;
+import dev.gallardo.miarmacore.commands.troll.LaunchCommand;
 import dev.jorel.commandapi.CommandAPI;
 
 public class CommandHandler {
@@ -44,6 +45,7 @@ public class CommandHandler {
         SpyCommand.register();
         FreezeCommand.register();
         HealCommand.register();
+        LaunchCommand.register();
     }
 
     public static void onEnable() {

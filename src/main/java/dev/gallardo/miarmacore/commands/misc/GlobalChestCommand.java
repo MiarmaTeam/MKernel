@@ -1,6 +1,6 @@
 package dev.gallardo.miarmacore.commands.misc;
 
-import dev.gallardo.miarmacore.common.minecraft.GlobalChest;
+import dev.gallardo.miarmacore.common.minecraft.inventories.GlobalChest;
 import dev.gallardo.miarmacore.config.CommandWrapper;
 import dev.gallardo.miarmacore.config.providers.CommandProvider;
 import dev.gallardo.miarmacore.config.providers.MessageProvider;

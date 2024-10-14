@@ -9,10 +9,10 @@ import org.bukkit.scheduler.BukkitRunnable;
 import java.util.HashMap;
 import java.util.Map;
 
-public class LocationTracker {
+public class LocationTrackerTask {
     private static Map<Player, Location> LOCATIONS = new HashMap<>();
 
-    public static void startLocationTrackingTask() {
+    public static void start() {
         new BukkitRunnable() {
             @Override
             public void run() {
@@ -26,7 +26,7 @@ public class LocationTracker {
         }.runTaskTimer(MiarmaCore.PLUGIN, 0, 20);
     }
 
-    public static Location getPlayerLocation(Player player) {
+    public static Location getPlayerRealTimeLocation(Player player) {
         return LOCATIONS.get(player);
     }
 }

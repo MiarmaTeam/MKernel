@@ -1,10 +1,11 @@
 package dev.gallardo.miarmacore.commands.tp;
 
 import dev.gallardo.miarmacore.MiarmaCore;
-import dev.gallardo.miarmacore.common.minecraft.TpaRequests;
-import dev.gallardo.miarmacore.common.minecraft.TpaType;
+import dev.gallardo.miarmacore.common.minecraft.teleport.TpaRequests;
+import dev.gallardo.miarmacore.common.minecraft.teleport.TpaType;
 import dev.gallardo.miarmacore.config.CommandWrapper;
 import dev.gallardo.miarmacore.config.providers.CommandProvider;
+import dev.gallardo.miarmacore.config.providers.ConfigProvider;
 import dev.gallardo.miarmacore.config.providers.MessageProvider;
 import dev.gallardo.miarmacore.util.MessageUtils;
 import dev.jorel.commandapi.CommandAPICommand;
@@ -38,11 +39,20 @@ public class TpaCommand {
                     }
 
                     boolean requestExists = TpaRequests.getInstance().getTpaRequest(sender, target) != null;
-
                     if (requestExists) {
                         MessageUtils.sendMessage(sender, MessageProvider.Errors.requestAlreadySent(), true);
                         return;
                     }
+
+                    /*boolean onCooldown = TpaRequests.getInstance().getCooldowns().containsKey(sender);
+                    if(onCooldown) {
+                        MessageUtils.sendMessage(sender, MessageProvider.Errors.cooldownHasNotExpired(), true,
+                                List.of("%time%"), List.of(
+                                        String.valueOf((ConfigProvider.Values.getTpCooldown() -
+                                        (System.currentTimeMillis() -
+                                        TpaRequests.getInstance().getCooldowns().get(sender))) / 1000)));
+                        return;
+                    }*/
 
                     TpaRequests.getInstance().addRequest(sender, target, TpaType.TPA);
                     MiarmaCore.LOGGER.info(TpaRequests.getInstance().toString());

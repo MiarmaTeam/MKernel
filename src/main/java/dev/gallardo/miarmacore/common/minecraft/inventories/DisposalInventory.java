@@ -1,4 +1,4 @@
-package dev.gallardo.miarmacore.common.minecraft;
+package dev.gallardo.miarmacore.common.minecraft.inventories;
 
 import dev.gallardo.miarmacore.config.providers.MessageProvider;
 import dev.gallardo.miarmacore.util.MessageUtils;

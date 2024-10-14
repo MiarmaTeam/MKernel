@@ -1,7 +1,7 @@
 package dev.gallardo.miarmacore.util;
 
 import dev.gallardo.miarmacore.MiarmaCore;
-import dev.gallardo.miarmacore.common.minecraft.TpaRequests;
+import dev.gallardo.miarmacore.common.minecraft.teleport.TpaRequests;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 

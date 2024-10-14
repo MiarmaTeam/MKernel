@@ -1,5 +1,5 @@
 name: MiarmaCore
-version: '1.3.9'
+version: '1.4.0'
 main: dev.gallardo.miarmacore.MiarmaCore
 api-version: '1.21'
 authors: [Gallardo7761, elpapuu1333 (Contributor & tester)]
@@ -112,6 +112,9 @@ permissions:
     miarmacore.command.heal.others:
         description: Permite al usuario curar a otro jugador
         default: op
+    miarmacore.command.launch:
+        description: Permite al usuario lanzar a otro jugador
+        default: op
 
     miarmacore.events.chatformat:
         description: Permite al usuario usar formatos y colores en los mensajes de chat
@@ -146,6 +149,7 @@ permissions:
             miarmacore.command.freeze: true
             miarmacore.command.heal: true
             miarmacore.command.heal.others: true
+            miarmacore.command.launch: true
             miarmacore.events.adminchat: true
             miarmacore.player: true
 

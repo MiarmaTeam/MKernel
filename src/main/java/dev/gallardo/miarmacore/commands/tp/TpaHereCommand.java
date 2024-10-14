@@ -1,8 +1,8 @@
 package dev.gallardo.miarmacore.commands.tp;
 
 import dev.gallardo.miarmacore.MiarmaCore;
-import dev.gallardo.miarmacore.common.minecraft.TpaRequests;
-import dev.gallardo.miarmacore.common.minecraft.TpaType;
+import dev.gallardo.miarmacore.common.minecraft.teleport.TpaRequests;
+import dev.gallardo.miarmacore.common.minecraft.teleport.TpaType;
 import dev.gallardo.miarmacore.config.CommandWrapper;
 import dev.gallardo.miarmacore.config.providers.CommandProvider;
 import dev.gallardo.miarmacore.config.providers.MessageProvider;

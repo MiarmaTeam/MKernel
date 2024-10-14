@@ -375,6 +375,14 @@ commands:
       healedPlayer: "[P] &7Has curado a &a%player%"
       beenHealed: "[P] &7Has sido curado por &a%sender%"
 
+  launch:
+    name: "launch"
+    description: "Lanza a un jugador"
+    permission: "miarmacore.command.launch"
+    usage: "/launch <jugador>"
+    messages:
+      launched: "[P] &7Has lanzado a &a%player%"
+
 # -----------------------------------------------------------
 #  Message Configuration
 # -----------------------------------------------------------

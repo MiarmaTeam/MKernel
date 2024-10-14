@@ -3,12 +3,12 @@ package dev.gallardo.miarmacore.events;
 import de.tr7zw.nbtapi.NBTItem;
 import dev.gallardo.miarmacore.MiarmaCore;
 import dev.gallardo.miarmacore.config.CustomConfigManager;
-import dev.gallardo.miarmacore.common.minecraft.DisposalInventory;
-import dev.gallardo.miarmacore.common.minecraft.GlobalChest;
+import dev.gallardo.miarmacore.common.minecraft.inventories.DisposalInventory;
+import dev.gallardo.miarmacore.common.minecraft.inventories.GlobalChest;
 import dev.gallardo.miarmacore.common.minecraft.MinepacksAccessor;
 import dev.gallardo.miarmacore.config.providers.ConfigProvider;
 import dev.gallardo.miarmacore.config.providers.MessageProvider;
-import dev.gallardo.miarmacore.tasks.LocationTracker;
+import dev.gallardo.miarmacore.tasks.LocationTrackerTask;
 import dev.gallardo.miarmacore.util.*;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.*;
@@ -287,7 +287,7 @@ public class EventListener {
 				List<String> blockedWorlds = worldBlockerConfigManager.getConfig().getStringList("blockedWorlds");
 
 				if (blockedWorlds.contains(world)) {
-					Location loc = LocationTracker.getPlayerLocation(player);
+					Location loc = LocationTrackerTask.getPlayerRealTimeLocation(player);
 					player.teleport(new Location(loc.getWorld(), loc.getX()-2, loc.getY(), loc.getZ()-2));
 
 					MessageUtils.sendMessage(player, MessageProvider.Errors.worldIsBlocked(), true,

@@ -3,7 +3,7 @@ package dev.gallardo.miarmacore.commands.misc;
 import dev.gallardo.miarmacore.config.CommandWrapper;
 import dev.gallardo.miarmacore.config.providers.CommandProvider;
 import dev.gallardo.miarmacore.config.providers.MessageProvider;
-import dev.gallardo.miarmacore.tasks.LocationTracker;
+import dev.gallardo.miarmacore.tasks.LocationTrackerTask;
 import dev.gallardo.miarmacore.util.MessageUtils;
 import dev.jorel.commandapi.CommandAPICommand;
 import org.bukkit.Bukkit;
@@ -40,7 +40,7 @@ public class BlockWorldCommand {
                     blockedWorlds.add(world);
                     List<Player> playersInWorld = Bukkit.getWorld(world).getPlayers();
                     if(!playersInWorld.isEmpty()) {
-                        playersInWorld.forEach(p -> p.teleport(LocationTracker.getPlayerLocation(p)));
+                        playersInWorld.forEach(p -> p.teleport(LocationTrackerTask.getPlayerRealTimeLocation(p)));
                     }
                     MessageUtils.sendMessage(sender, blockWorldCmd.getMessages()[0], true,
                                                 List.of("%world%"), List.of(world));

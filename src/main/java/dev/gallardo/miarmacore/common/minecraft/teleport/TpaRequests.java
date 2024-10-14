@@ -1,12 +1,15 @@
-package dev.gallardo.miarmacore.common.minecraft;
+package dev.gallardo.miarmacore.common.minecraft.teleport;
 
+import dev.gallardo.miarmacore.config.providers.ConfigProvider;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class TpaRequests {
     private List<TpaRequest> requests = new ArrayList<>();
+    //private HashMap<Player,Long> cooldowns = new HashMap<>();
     private static TpaRequests instance;
 
     private TpaRequests() {}
@@ -19,15 +22,19 @@ public class TpaRequests {
     }
 
     public void addRequest(Player from, Player to, TpaType type) {
-        // Check if a request already exists from the same players to avoid duplicates
         TpaRequest existingRequest;
         if (type.equals(TpaType.TPA)) {
             existingRequest = getTpaRequest(from, to);
         } else {
             existingRequest = getTpaHereRequest(from, to);
         }
+
+        /*if(!cooldowns.containsKey(from)) {
+            cooldowns.put(from, System.currentTimeMillis());
+        }*/
+
         if (existingRequest == null) {
-            requests.add(new TpaRequest(from, to, type));
+            requests.addFirst(new TpaRequest(from, to, type));
         }
     }
 
@@ -48,6 +55,18 @@ public class TpaRequests {
     public List<TpaRequest> getRequests() {
         return requests;
     }
+
+    /*public HashMap<Player,Long> getCooldowns() {
+        return cooldowns;
+    }
+
+    public void removeCooldown(Player player) {
+        cooldowns.remove(player);
+    }
+
+    public void getCooldown(Player player) {
+        cooldowns.get(player);
+    }*/
 
     public void removeRequest(TpaRequest request) {
         requests.remove(request);
