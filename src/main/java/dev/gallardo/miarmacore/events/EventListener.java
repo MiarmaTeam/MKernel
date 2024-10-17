@@ -40,6 +40,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 
 public class EventListener {
@@ -220,22 +221,22 @@ public class EventListener {
 				if(h.equals(EquipmentSlot.HAND)) {
 					switch(e.getType()) {
 						case PIG: 
-							if("SCISSORS".equals(specialType)) {
+							if("scissors".equals(specialType)) {
 								helper.handleScissorsOnPig();
 							}
 							break;
 						case COW: 
-							if("SCISSORS".equals(specialType)) {
+							if("scissors".equals(specialType)) {
 								helper.handleScissorsOnCow();
 							}
 							break;
 						case CREEPER:
-							if("SCISSORS".equals(specialType)) {
+							if("scissors".equals(specialType)) {
 								helper.handleScissorsOnCreeper();
 							}
 							break;
 						case ZOMBIE: 
-							if("SCISSORS".equals(specialType)) {
+							if("scissors".equals(specialType)) {
 								helper.handleScissorsOnZombie();
 							}
 							break;
@@ -260,7 +261,7 @@ public class EventListener {
                     ItemStack itemStack = player.getItemInHand();
 					Material material = itemStack.getType();
 					if (material.equals(Material.STICK) && 
-							new NBTItem(itemStack).getString("specialItem").equals("ADMIN_STICK") &&
+							new NBTItem(itemStack).getString("specialItem").equals("admin_stick") &&
 						event.getEntity() instanceof LivingEntity) {
 						((LivingEntity) event.getEntity()).setHealth(0);
 					}
@@ -427,7 +428,7 @@ public class EventListener {
 				Block block = event.getBlock();
 				String specialType = nbtItemInHand.getString("specialItem");
 				
-				if(specialType != null && specialType.equals("SPAWNER_BREAKER")) {
+				if(specialType != null && specialType.equals("spawner_breaker")) {
 					int prob = (int) (Math.random() * 100);
 					if(prob > ConfigProvider.Values.getSpawnerBreakerProbability()) {
 						event.setCancelled(true);
@@ -521,8 +522,7 @@ public class EventListener {
 				if (event.getEntityType().equals(EntityType.ZOMBIE) ||
 			            event.getEntityType().equals(EntityType.ZOMBIE_VILLAGER)) {
 			        int prob = (int) (Math.random() * 100);
-			        if(p.getItemInHand().getEnchantments().entrySet().stream()
-			        		.map(k -> k.getKey())
+			        if(p.getItemInHand().getEnchantments().keySet().stream()
 			        		.anyMatch(e -> e.equals(ench))) {
 			        	if (prob < 70) {
 				            event.getEntity().getWorld()
