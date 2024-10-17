@@ -4,7 +4,7 @@
 #  /    \| |/ _` | '__| '_ ` _ \ / _` |/ /  / _ \| '__/ _ \ #
 # / /\/\ \ | (_| | |  | | | | | | (_| / /__| (_) | | |  __/ #
 # \/    \/_|\__,_|_|  |_| |_| |_|\__,_\____/\___/|_|  \___| #
-#  by Gallardo7761 a.k.a Jose                        v1.3.0 #
+#  by Gallardo7761 a.k.a Jose                        v1.4.0 #
 #                                                           #
 #############################################################
 #  /!\ Sections marked with [ R ] need full restart /!\     #
@@ -382,6 +382,8 @@ commands:
     usage: "/launch <jugador>"
     messages:
       launched: "[P] &7Has lanzado a &a%player%"
+
+
 
 # -----------------------------------------------------------
 #  Message Configuration
