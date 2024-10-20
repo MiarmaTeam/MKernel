@@ -10,6 +10,8 @@ import dev.gallardo.miarmacore.recipes.tools.SpawnerBreakerRecipe;
 import org.bukkit.Bukkit;
 import org.bukkit.NamespacedKey;
 
+import static dev.gallardo.miarmacore.util.Constants.*;
+
 public class RecipeManager {
 	public static void onEnable() {
 		Bukkit.getServer().addRecipe(AdminStickRecipe.get());
@@ -21,11 +23,11 @@ public class RecipeManager {
 	}
 	
 	public static void onDisable() {
-		Bukkit.getServer().removeRecipe(new NamespacedKey(MiarmaCore.PLUGIN, "admin_stick"));
-		Bukkit.getServer().removeRecipe(new NamespacedKey(MiarmaCore.PLUGIN, "scissors"));
-		Bukkit.getServer().removeRecipe(new NamespacedKey(MiarmaCore.PLUGIN, "rotten_campfire"));
-		Bukkit.getServer().removeRecipe(new NamespacedKey(MiarmaCore.PLUGIN, "spawner_breaker"));
-		Bukkit.getServer().removeRecipe(new NamespacedKey(MiarmaCore.PLUGIN, "zombification_potion"));
-		Bukkit.getServer().removeRecipe(new NamespacedKey(MiarmaCore.PLUGIN, "bolsita"));
+		Bukkit.getServer().removeRecipe(new NamespacedKey(MiarmaCore.PLUGIN, ADMIN_STICK_KEY));
+		Bukkit.getServer().removeRecipe(new NamespacedKey(MiarmaCore.PLUGIN, SCISSORS_KEY));
+		Bukkit.getServer().removeRecipe(new NamespacedKey(MiarmaCore.PLUGIN, ROTTEN_CAMFIRE_KEY));
+		Bukkit.getServer().removeRecipe(new NamespacedKey(MiarmaCore.PLUGIN, SPAWNER_BREAKER_KEY));
+		Bukkit.getServer().removeRecipe(new NamespacedKey(MiarmaCore.PLUGIN, ZOMBIFICATION_POTION_KEY));
+		Bukkit.getServer().removeRecipe(new NamespacedKey(MiarmaCore.PLUGIN, BOLSITA_KEY));
 	}
 }

@@ -7,7 +7,7 @@ import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
-public class InventoryUtils {
+public class InventoryUtil {
     public static void refillItem(Player player, Material material, EquipmentSlot hand) {
         ItemStack[] items = player.getInventory().getStorageContents();
 

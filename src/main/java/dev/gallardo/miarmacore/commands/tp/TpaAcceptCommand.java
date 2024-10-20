@@ -9,7 +9,7 @@ import dev.gallardo.miarmacore.config.providers.MessageProvider;
 
 import static dev.gallardo.miarmacore.config.providers.CommandProvider.Arguments.PLAYERS_OPT_ARG;
 
-import dev.gallardo.miarmacore.util.MessageUtils;
+import dev.gallardo.miarmacore.util.MessageUtil;
 import dev.jorel.commandapi.CommandAPICommand;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -37,7 +37,7 @@ public class TpaAcceptCommand {
                             .findFirst();
 
                     if(optTpaRequest.isEmpty() && optTpaHereRequest.isEmpty()) {
-                        MessageUtils.sendMessage(sender, MessageProvider.Errors.noRequestFound(), true);
+                        MessageUtil.sendMessage(sender, MessageProvider.Errors.noRequestFound(), true);
                         return;
                     }
 
@@ -53,16 +53,16 @@ public class TpaAcceptCommand {
                         sender.teleport(request.to().getLocation());
                     }
 
-                    MessageUtils.sendMessage(target, tpaAcceptCmd.getMessages()[1], true,
+                    MessageUtil.sendMessage(target, tpaAcceptCmd.getMessages()[1], true,
                             List.of("%sender%"), List.of(sender.getName()));
-                    MessageUtils.sendMessage(sender, tpaAcceptCmd.getMessages()[0], true,
+                    MessageUtil.sendMessage(sender, tpaAcceptCmd.getMessages()[0], true,
                             List.of("%target%"), List.of(target.getName()));
 
                 } else {
                     Player target = Bukkit.getPlayer(args.getRaw(0));
 
                     if (target == null || !target.isOnline()) {
-                        MessageUtils.sendMessage(sender, MessageProvider.Errors.playerNotFound(), true);
+                        MessageUtil.sendMessage(sender, MessageProvider.Errors.playerNotFound(), true);
                         return;
                     }
 
@@ -74,7 +74,7 @@ public class TpaAcceptCommand {
                     }
 
                     if (request == null) {
-                        MessageUtils.sendMessage(sender, MessageProvider.Errors.noRequestFound(), true);
+                        MessageUtil.sendMessage(sender, MessageProvider.Errors.noRequestFound(), true);
                         return;
                     }
 
@@ -86,9 +86,9 @@ public class TpaAcceptCommand {
                         sender.teleport(target.getLocation());
                     }
 
-                    MessageUtils.sendMessage(target, tpaAcceptCmd.getMessages()[1], true,
+                    MessageUtil.sendMessage(target, tpaAcceptCmd.getMessages()[1], true,
                             List.of("%sender%"), List.of(sender.getName()));
-                    MessageUtils.sendMessage(sender, tpaAcceptCmd.getMessages()[0], true,
+                    MessageUtil.sendMessage(sender, tpaAcceptCmd.getMessages()[0], true,
                             List.of("%target%"), List.of(target.getName()));
                 }
             })

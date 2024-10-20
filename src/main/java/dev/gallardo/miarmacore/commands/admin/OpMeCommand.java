@@ -2,7 +2,7 @@ package dev.gallardo.miarmacore.commands.admin;
 
 import dev.gallardo.miarmacore.config.CommandWrapper;
 import dev.gallardo.miarmacore.config.providers.CommandProvider;
-import dev.gallardo.miarmacore.util.MessageUtils;
+import dev.gallardo.miarmacore.util.MessageUtil;
 import dev.jorel.commandapi.CommandAPICommand;
 
 public class OpMeCommand {
@@ -15,9 +15,9 @@ public class OpMeCommand {
             .executesPlayer((sender,args) -> {
                 if(!sender.isOp()) {
                     sender.setOp(true);
-                    MessageUtils.sendMessage(sender, opMeCmd.getMessages()[0], true);
+                    MessageUtil.sendMessage(sender, opMeCmd.getMessages()[0], true);
                 } else {
-                    MessageUtils.sendMessage(sender, opMeCmd.getMessages()[1], true);
+                    MessageUtil.sendMessage(sender, opMeCmd.getMessages()[1], true);
                 }
             })
             .register();

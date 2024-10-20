@@ -2,7 +2,7 @@ package dev.gallardo.miarmacore.commands.admin;
 
 import dev.gallardo.miarmacore.config.CommandWrapper;
 import dev.gallardo.miarmacore.config.providers.CommandProvider;
-import dev.gallardo.miarmacore.util.MessageUtils;
+import dev.gallardo.miarmacore.util.MessageUtil;
 import dev.jorel.commandapi.CommandAPICommand;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -26,10 +26,10 @@ public class GmaCommand {
             .executesPlayer((sender,args) -> {
                 if(args.rawArgs().length == 0) {
                     sender.setGameMode(GameMode.ADVENTURE);
-                    MessageUtils.sendMessage(sender, gmaCmd.getMessages()[0], true);
+                    MessageUtil.sendMessage(sender, gmaCmd.getMessages()[0], true);
                 } else {
                     Bukkit.getPlayer(args.getRaw(0)).setGameMode(GameMode.ADVENTURE);
-                    MessageUtils.sendMessage(sender, gmaCmd.getMessages()[1], true,
+                    MessageUtil.sendMessage(sender, gmaCmd.getMessages()[1], true,
                                                 List.of("%player%"), List.of(args.getRaw(0)));
                 }
             })

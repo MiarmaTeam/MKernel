@@ -2,11 +2,10 @@ package dev.gallardo.miarmacore.commands.tp;
 
 import dev.gallardo.miarmacore.common.minecraft.teleport.TpaRequest;
 import dev.gallardo.miarmacore.common.minecraft.teleport.TpaRequests;
-import dev.gallardo.miarmacore.common.minecraft.teleport.TpaType;
 import dev.gallardo.miarmacore.config.CommandWrapper;
 import dev.gallardo.miarmacore.config.providers.CommandProvider;
 import dev.gallardo.miarmacore.config.providers.MessageProvider;
-import dev.gallardo.miarmacore.util.MessageUtils;
+import dev.gallardo.miarmacore.util.MessageUtil;
 import dev.jorel.commandapi.CommandAPICommand;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -36,7 +35,7 @@ public class TpDenyCommand {
                             .findFirst();
 
                     if(optTpaRequest.isEmpty() && optTpaHereRequest.isEmpty()) {
-                        MessageUtils.sendMessage(sender, MessageProvider.Errors.noRequestFound(), true);
+                        MessageUtil.sendMessage(sender, MessageProvider.Errors.noRequestFound(), true);
                         return;
                     }
 
@@ -46,16 +45,16 @@ public class TpDenyCommand {
 
                     Player target = Bukkit.getPlayer(request.from().getName());
 
-                    MessageUtils.sendMessage(sender, tpDenyCmd.getMessages()[0], true,
+                    MessageUtil.sendMessage(sender, tpDenyCmd.getMessages()[0], true,
                             List.of("%target%"), List.of(target.getName()));
-                    MessageUtils.sendMessage(target, tpDenyCmd.getMessages()[1], true,
+                    MessageUtil.sendMessage(target, tpDenyCmd.getMessages()[1], true,
                             List.of("%sender%"), List.of(sender.getName()));
 
                 } else {
                     Player target = Bukkit.getPlayer(args.getRaw(0));
 
                     if (target == null || !target.isOnline()) {
-                        MessageUtils.sendMessage(sender, MessageProvider.Errors.playerNotFound(), true);
+                        MessageUtil.sendMessage(sender, MessageProvider.Errors.playerNotFound(), true);
                         return;
                     }
 
@@ -67,15 +66,15 @@ public class TpDenyCommand {
                     }
 
                     if (request == null) {
-                        MessageUtils.sendMessage(sender, MessageProvider.Errors.noRequestFound(), true);
+                        MessageUtil.sendMessage(sender, MessageProvider.Errors.noRequestFound(), true);
                         return;
                     }
 
                     TpaRequests.getInstance().removeRequest(request);
 
-                    MessageUtils.sendMessage(sender, tpDenyCmd.getMessages()[0], true,
+                    MessageUtil.sendMessage(sender, tpDenyCmd.getMessages()[0], true,
                             List.of("%target%"), List.of(target.getName()));
-                    MessageUtils.sendMessage(target, tpDenyCmd.getMessages()[1], true,
+                    MessageUtil.sendMessage(target, tpDenyCmd.getMessages()[1], true,
                             List.of("%sender%"), List.of(sender.getName()));
                 }
             })

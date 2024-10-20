@@ -1,6 +1,6 @@
 package dev.gallardo.miarmacore.util;
 
-public class ConversionUtils {
+public class ConversionUtil {
     public static long cooldownToMillis(String s) {
         if(s.contains("s"))
             return Long.parseLong(s.replace("s", "")) * 1000;

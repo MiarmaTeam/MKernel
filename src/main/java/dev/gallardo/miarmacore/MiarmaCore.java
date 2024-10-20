@@ -7,7 +7,7 @@ import dev.gallardo.miarmacore.common.minecraft.inventories.GlobalChest;
 import dev.gallardo.miarmacore.events.EventListener;
 import dev.gallardo.miarmacore.recipes.RecipeManager;
 import dev.gallardo.miarmacore.tasks.LocationTrackerTask;
-import dev.gallardo.miarmacore.util.FileUtils;
+import dev.gallardo.miarmacore.util.FileUtil;
 import dev.jorel.commandapi.CommandAPI;
 import dev.jorel.commandapi.CommandAPIBukkitConfig;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -47,7 +47,7 @@ public class MiarmaCore extends JavaPlugin {
             file.mkdirs();
         }
 
-        FileUtils.createLangs("lang.yml");
+        FileUtil.createLangs("lang.yml");
         CommandAPI.onEnable();
         CommandHandler.onEnable();
         RecipeManager.onEnable();

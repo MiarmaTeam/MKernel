@@ -2,7 +2,7 @@ package dev.gallardo.miarmacore.commands.admin;
 
 import dev.gallardo.miarmacore.config.CommandWrapper;
 import dev.gallardo.miarmacore.config.providers.CommandProvider;
-import dev.gallardo.miarmacore.util.MessageUtils;
+import dev.gallardo.miarmacore.util.MessageUtil;
 import dev.jorel.commandapi.CommandAPICommand;
 import org.bukkit.entity.Player;
 import org.bukkit.persistence.PersistentDataContainer;
@@ -23,10 +23,10 @@ public class SpyCommand {
 
                 if (canSpy) {
                     unsetSpy(sender);
-                    MessageUtils.sendMessage(sender, spyCmd.getMessages()[1], true);
+                    MessageUtil.sendMessage(sender, spyCmd.getMessages()[1], true);
                 } else {
                     setSpy(sender);
-                    MessageUtils.sendMessage(sender, spyCmd.getMessages()[0], true);
+                    MessageUtil.sendMessage(sender, spyCmd.getMessages()[0], true);
                 }
             })
             .register();

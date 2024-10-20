@@ -3,7 +3,7 @@ package dev.gallardo.miarmacore.commands.misc;
 import dev.gallardo.miarmacore.config.CommandWrapper;
 import dev.gallardo.miarmacore.config.providers.CommandProvider;
 import dev.gallardo.miarmacore.common.WebAPIAccessor;
-import dev.gallardo.miarmacore.util.MessageUtils;
+import dev.gallardo.miarmacore.util.MessageUtil;
 import dev.gallardo.miarmacore.util.PasswordPBKDFUtil;
 import dev.jorel.commandapi.CommandAPICommand;
 
@@ -35,10 +35,10 @@ public class RegistroWebCommand {
                 }
 
                 if(WebAPIAccessor.register(username,password,rol)) {
-                    MessageUtils.sendMessage(sender, registerWebCmd.getMessages()[0], true,
+                    MessageUtil.sendMessage(sender, registerWebCmd.getMessages()[0], true,
                                                 List.of("%user%", "%password%"), List.of(username, password));
                 } else {
-                    MessageUtils.sendMessage(sender, registerWebCmd.getMessages()[1],true);
+                    MessageUtil.sendMessage(sender, registerWebCmd.getMessages()[1],true);
                 }
             })
             .register();

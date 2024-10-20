@@ -2,7 +2,7 @@ package dev.gallardo.miarmacore.commands.misc;
 
 import dev.gallardo.miarmacore.config.CommandWrapper;
 import dev.gallardo.miarmacore.config.providers.CommandProvider;
-import dev.gallardo.miarmacore.util.MessageUtils;
+import dev.gallardo.miarmacore.util.MessageUtil;
 import dev.jorel.commandapi.CommandAPICommand;
 import org.bukkit.Location;
 
@@ -27,7 +27,7 @@ public class SetHomeCommand {
                 HOME_CONFIG.getConfig().set(path + ".yaw", loc.getYaw());
                 HOME_CONFIG.getConfig().set(path + ".pitch", loc.getPitch());
                 HOME_CONFIG.saveConfig();
-                MessageUtils.sendMessage(sender, setHomeCmd.getMessages()[0], true,
+                MessageUtil.sendMessage(sender, setHomeCmd.getMessages()[0], true,
                                             List.of("%x%", "%y%", "%z%"),
                                             List.of((int)loc.getX()+"", (int)loc.getY()+"", (int)loc.getZ()+""));
             })

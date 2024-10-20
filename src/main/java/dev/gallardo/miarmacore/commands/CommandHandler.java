@@ -46,6 +46,11 @@ public class CommandHandler {
         FreezeCommand.register();
         HealCommand.register();
         LaunchCommand.register();
+        DayCommand.register();
+        NightCommand.register();
+        ThunderCommand.register();
+        SunCommand.register();
+        RainCommand.register();
     }
 
     public static void onEnable() {

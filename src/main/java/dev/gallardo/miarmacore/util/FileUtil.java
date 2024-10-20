@@ -16,9 +16,9 @@ import java.nio.file.Files;
 import java.util.Arrays;
 import java.util.List;
 
-public class FileUtils {
+public class FileUtil {
     public static void copyResourceToFile(String resourceName, String destinationPath) throws IOException {
-        ClassLoader classLoader = MessageUtils.class.getClassLoader();
+        ClassLoader classLoader = MessageUtil.class.getClassLoader();
         try (InputStream inputStream = classLoader.getResourceAsStream(resourceName);
              FileOutputStream outputStream = new FileOutputStream(destinationPath)) {
 

@@ -2,7 +2,7 @@ package dev.gallardo.miarmacore.config.providers;
 
 import dev.gallardo.miarmacore.MiarmaCore;
 import dev.gallardo.miarmacore.config.WorldWrapper;
-import dev.gallardo.miarmacore.util.ConversionUtils;
+import dev.gallardo.miarmacore.util.ConversionUtil;
 
 public class ConfigProvider {
     public static class Permissions {
@@ -34,7 +34,7 @@ public class ConfigProvider {
             return MiarmaCore.CONFIG.getConfig().getFloat("config.values.xpLossOnDeath");
         }
         public static long getTpCooldown() {
-            return ConversionUtils.cooldownToMillis(MiarmaCore.CONFIG.getString("config.values.tpCooldown"));
+            return ConversionUtil.cooldownToMillis(MiarmaCore.CONFIG.getString("config.values.tpCooldown"));
         }
         public static int getMaxWarps() {
             return MiarmaCore.CONFIG.getInt("config.values.maxWarps");

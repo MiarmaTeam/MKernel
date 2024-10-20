@@ -10,7 +10,7 @@ import java.io.File;
 import java.util.Collection;
 import java.util.List;
 
-public class PlayerUtils {
+public class PlayerUtil {
     public static double distance(Player p1, Player p2) {
         return p1.getLocation().distance(p2.getLocation());
     }

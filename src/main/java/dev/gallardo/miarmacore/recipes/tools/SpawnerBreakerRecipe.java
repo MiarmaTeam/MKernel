@@ -2,7 +2,7 @@ package dev.gallardo.miarmacore.recipes.tools;
 
 import de.tr7zw.nbtapi.NBTItem;
 import dev.gallardo.miarmacore.MiarmaCore;
-import dev.gallardo.miarmacore.util.MessageUtils;
+import dev.gallardo.miarmacore.util.MessageUtil;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemFlag;
@@ -19,16 +19,16 @@ public class SpawnerBreakerRecipe {
         ItemStack spawnerBreaker = new ItemStack(Material.GOLDEN_PICKAXE);
         
         ItemMeta meta = spawnerBreaker.getItemMeta();  
-        meta.setDisplayName(MessageUtils.parseColors(MiarmaCore.CONFIG
+        meta.setDisplayName(MessageUtil.parseColors(MiarmaCore.CONFIG
         		.getString("language.items.spawnerBreaker.name")));
-        meta.setLore(Collections.singletonList(MessageUtils.parseColors(MiarmaCore.CONFIG
+        meta.setLore(Collections.singletonList(MessageUtil.parseColors(MiarmaCore.CONFIG
         		.getString("language.items.spawnerBreaker.lore"))));
         meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
                
         spawnerBreaker.setItemMeta(meta);
         
         NBTItem nbtItem = new NBTItem(spawnerBreaker);
-        nbtItem.setString("specialItem", "spawner_breaker");
+        nbtItem.setString(SPECIAL_ITEM_TAG, SPAWNER_BREAKER_KEY);
         
         RECIPES.add(nbtItem.getItem());
         return nbtItem.getItem();
@@ -36,7 +36,7 @@ public class SpawnerBreakerRecipe {
     
     public static ShapedRecipe get() {
     	ItemStack spawnerBreaker = crear();
-        NamespacedKey spawnerBreakerRecipeKey = new NamespacedKey(MiarmaCore.PLUGIN, "spawner_breaker");
+        NamespacedKey spawnerBreakerRecipeKey = new NamespacedKey(MiarmaCore.PLUGIN, SPAWNER_BREAKER_KEY);
         ShapedRecipe spawnerBreakerRecipe = new ShapedRecipe(spawnerBreakerRecipeKey, spawnerBreaker);
         spawnerBreakerRecipe.shape(
         		" N ", 

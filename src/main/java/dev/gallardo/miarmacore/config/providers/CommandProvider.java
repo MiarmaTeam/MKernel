@@ -1,12 +1,11 @@
 package dev.gallardo.miarmacore.config.providers;
 
 import dev.gallardo.miarmacore.MiarmaCore;
-import dev.gallardo.miarmacore.common.minecraft.teleport.TpaRequest;
 import dev.gallardo.miarmacore.common.minecraft.Warp;
 import dev.gallardo.miarmacore.config.CommandWrapper;
 import dev.gallardo.miarmacore.config.PermissionWrapper;
-import dev.gallardo.miarmacore.util.ItemUtils;
-import dev.gallardo.miarmacore.util.PlayerUtils;
+import dev.gallardo.miarmacore.util.ItemUtil;
+import dev.gallardo.miarmacore.util.PlayerUtil;
 import dev.jorel.commandapi.arguments.*;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -14,7 +13,6 @@ import org.bukkit.entity.Player;
 import java.util.List;
 
 import static dev.gallardo.miarmacore.util.Constants.RECIPES;
-import static dev.gallardo.miarmacore.util.Constants.TPA_REQUESTS;
 
 public class CommandProvider {
     public static class Arguments {
@@ -41,13 +39,13 @@ public class CommandProvider {
         public static Argument<?> WARPS = new StringArgument(MiarmaCore.CONFIG.getString("arguments.warp"))
                 .replaceSuggestions(ArgumentSuggestions.strings(info -> {
                     Player p = (Player) info.sender();
-                    List<Warp> warps = PlayerUtils.getWarps(p);
+                    List<Warp> warps = PlayerUtil.getWarps(p);
                     return warps.stream().map(Warp::getAlias).toList().toArray(new String[warps.size()]);
                 }));
 
         public static Argument<?> ITEMS = new StringArgument(MiarmaCore.CONFIG.getString("arguments.item"))
                 .replaceSuggestions(ArgumentSuggestions.strings(info -> RECIPES.stream()
-                        .map(ItemUtils::getKey)
+                        .map(ItemUtil::getKey)
                         .toList().toArray(new String[RECIPES.size()])));
 
     }
@@ -266,6 +264,9 @@ public class CommandProvider {
     public static CommandWrapper getGlobalChestCommand() {
         return CommandWrapper.command(MiarmaCore.CONFIG.getString("commands.globalchest.name"))
             .withDescription(MiarmaCore.CONFIG.getString("commands.globalchest.description"))
+            .withAliases(
+                MiarmaCore.CONFIG.getConfig().getStringList("commands.globalchest.aliases").toArray(new String[0])
+            )
             .withPermission(PermissionWrapper.of(
                 MiarmaCore.CONFIG.getString("commands.globalchest.permissions.base"),
                 MiarmaCore.CONFIG.getString("commands.globalchest.permissions.others")
@@ -482,6 +483,66 @@ public class CommandProvider {
             ))
             .withMessages(
                 MiarmaCore.CONFIG.getString("commands.launch.messages.launched")
+            )
+            .build();
+    }
+
+    public static CommandWrapper getSunCommand() {
+        return CommandWrapper.command(MiarmaCore.CONFIG.getString("commands.sun.name"))
+            .withDescription(MiarmaCore.CONFIG.getString("commands.sun.description"))
+            .withPermission(PermissionWrapper.of(
+                MiarmaCore.CONFIG.getString("commands.sun.permission")
+            ))
+            .withMessages(
+                MiarmaCore.CONFIG.getString("commands.sun.messages.sunSet")
+            )
+            .build();
+    }
+
+    public static CommandWrapper getRainCommand() {
+        return CommandWrapper.command(MiarmaCore.CONFIG.getString("commands.rain.name"))
+            .withDescription(MiarmaCore.CONFIG.getString("commands.rain.description"))
+            .withPermission(PermissionWrapper.of(
+                MiarmaCore.CONFIG.getString("commands.rain.permission")
+            ))
+            .withMessages(
+                MiarmaCore.CONFIG.getString("commands.rain.messages.rainSet")
+            )
+            .build();
+    }
+
+    public static CommandWrapper getThunderCommand() {
+        return CommandWrapper.command(MiarmaCore.CONFIG.getString("commands.thunder.name"))
+            .withDescription(MiarmaCore.CONFIG.getString("commands.thunder.description"))
+            .withPermission(PermissionWrapper.of(
+                MiarmaCore.CONFIG.getString("commands.thunder.permission")
+            ))
+            .withMessages(
+                MiarmaCore.CONFIG.getString("commands.thunder.messages.thunderSet")
+            )
+            .build();
+    }
+
+    public static CommandWrapper getDayCommand() {
+        return CommandWrapper.command(MiarmaCore.CONFIG.getString("commands.day.name"))
+            .withDescription(MiarmaCore.CONFIG.getString("commands.day.description"))
+            .withPermission(PermissionWrapper.of(
+                MiarmaCore.CONFIG.getString("commands.day.permission")
+            ))
+            .withMessages(
+                MiarmaCore.CONFIG.getString("commands.day.messages.daySet")
+            )
+            .build();
+    }
+
+    public static CommandWrapper getNightCommand() {
+        return CommandWrapper.command(MiarmaCore.CONFIG.getString("commands.night.name"))
+            .withDescription(MiarmaCore.CONFIG.getString("commands.night.description"))
+            .withPermission(PermissionWrapper.of(
+                MiarmaCore.CONFIG.getString("commands.night.permission")
+            ))
+            .withMessages(
+                MiarmaCore.CONFIG.getString("commands.night.messages.nightSet")
             )
             .build();
     }

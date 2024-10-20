@@ -14,4 +14,11 @@ public class Constants {
     public static NamespacedKey VANISH_KEY = new NamespacedKey(MiarmaCore.PLUGIN, "vanish");
     public static NamespacedKey SPY_KEY = new NamespacedKey(MiarmaCore.PLUGIN, "spy");
     public static NamespacedKey FROZEN_KEY = new NamespacedKey(MiarmaCore.PLUGIN, "frozen");
+    public static String SPECIAL_ITEM_TAG = "specialItem";
+    public static String ZOMBIFICATION_POTION_KEY = "zombification_potion";
+    public static String SPAWNER_BREAKER_KEY = "spawner_breaker";
+    public static String BOLSITA_KEY = "bolsita";
+    public static String ADMIN_STICK_KEY = "admin_stick";
+    public static String SCISSORS_KEY = "scissors";
+    public static String ROTTEN_CAMFIRE_KEY = "rotten_campfire";
 }

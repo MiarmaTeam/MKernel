@@ -2,7 +2,7 @@ package dev.gallardo.miarmacore.commands.misc;
 
 import dev.gallardo.miarmacore.config.CommandWrapper;
 import dev.gallardo.miarmacore.config.providers.CommandProvider;
-import dev.gallardo.miarmacore.util.MessageUtils;
+import dev.gallardo.miarmacore.util.MessageUtil;
 import dev.jorel.commandapi.CommandAPICommand;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -28,9 +28,9 @@ public class HomeCommand {
                     float pitch = (float) HOME_CONFIG.getConfig().getDouble(path + ".pitch");
                     Location loc = new Location(world, x, y, z, yaw, pitch);
                     sender.teleport(loc);
-                    MessageUtils.sendMessage(sender, homeCmd.getMessages()[0], true);
+                    MessageUtil.sendMessage(sender, homeCmd.getMessages()[0], true);
                 } else {
-                    MessageUtils.sendMessage(sender, homeCmd.getMessages()[1], true);
+                    MessageUtil.sendMessage(sender, homeCmd.getMessages()[1], true);
                 }
             })
             .register();

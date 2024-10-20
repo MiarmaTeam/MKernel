@@ -3,7 +3,7 @@ package dev.gallardo.miarmacore.commands.misc;
 import dev.gallardo.miarmacore.config.CommandWrapper;
 import dev.gallardo.miarmacore.config.providers.CommandProvider;
 import dev.gallardo.miarmacore.config.providers.MessageProvider;
-import dev.gallardo.miarmacore.util.MessageUtils;
+import dev.gallardo.miarmacore.util.MessageUtil;
 import dev.jorel.commandapi.CommandAPICommand;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -23,7 +23,7 @@ public class SendCoordsCommand {
             .withShortDescription(sendCoordsCmd.getDescription())
             .executesPlayer((sender, args) -> {
                 if (args.count() > 1) {
-                    MessageUtils.sendMessage(sender, MessageProvider.Errors.tooManyArguments(), true);
+                    MessageUtil.sendMessage(sender, MessageProvider.Errors.tooManyArguments(), true);
                 }
 
                 Player player = Bukkit.getPlayer(args.getRaw(0));
@@ -32,9 +32,9 @@ public class SendCoordsCommand {
                                             String.valueOf(loc.getBlockY()),
                                             String.valueOf(loc.getBlockZ()));
 
-                MessageUtils.sendMessage(sender, sendCoordsCmd.getMessages()[0], true,
+                MessageUtil.sendMessage(sender, sendCoordsCmd.getMessages()[0], true,
                                             List.of("%target%"), List.of(player.getName()));
-                MessageUtils.sendMessage(player, sendCoordsCmd.getMessages()[1], true,
+                MessageUtil.sendMessage(player, sendCoordsCmd.getMessages()[1], true,
                                             List.of("%sender%", "%x%", "%y%", "%z%"),
                                             List.of(sender.getName(), coords.get(0), coords.get(1), coords.get(2)));
             })

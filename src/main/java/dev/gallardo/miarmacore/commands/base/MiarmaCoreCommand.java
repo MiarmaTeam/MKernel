@@ -8,8 +8,8 @@ import dev.gallardo.miarmacore.MiarmaCore;
 import dev.gallardo.miarmacore.config.CommandWrapper;
 import dev.gallardo.miarmacore.config.providers.CommandProvider;
 import dev.gallardo.miarmacore.config.providers.MessageProvider;
-import dev.gallardo.miarmacore.util.ItemUtils;
-import dev.gallardo.miarmacore.util.MessageUtils;
+import dev.gallardo.miarmacore.util.ItemUtil;
+import dev.gallardo.miarmacore.util.MessageUtil;
 import dev.jorel.commandapi.CommandAPICommand;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -31,7 +31,7 @@ public class MiarmaCoreCommand {
                 .withShortDescription(baseCmd.getDescription())
                 .withUsage(baseCmd.getUsage())
                 .executes((sender, args) -> {
-                    MessageUtils.sendMessage(sender, baseCmd.getMessages()[0], true);
+                    MessageUtil.sendMessage(sender, baseCmd.getMessages()[0], true);
                 })
                 .withSubcommand(
                     new CommandAPICommand(reloadSubCmd.getName())
@@ -42,9 +42,9 @@ public class MiarmaCoreCommand {
                         .executesPlayer((sender, args) -> {
                             try {
                                 MiarmaCore.CONFIG.reload();
-                                MessageUtils.sendMessage(sender, reloadSubCmd.getMessages()[0],true);
+                                MessageUtil.sendMessage(sender, reloadSubCmd.getMessages()[0],true);
                             } catch(Exception e) {
-                                MessageUtils.sendMessage(sender, reloadSubCmd.getMessages()[1],true);
+                                MessageUtil.sendMessage(sender, reloadSubCmd.getMessages()[1],true);
                             }
                         })
                 )
@@ -64,17 +64,17 @@ public class MiarmaCoreCommand {
                             int numberOfRows = (booleans / 9) + (booleans % 9 > 0 ? 1 : 0);
 
                             ChestGui gui = new ChestGui(numberOfRows,
-                                    MessageUtils.parseColors(MessageProvider.Inventories.getConfigMenuTitle()));
+                                    MessageUtil.parseColors(MessageProvider.Inventories.getConfigMenuTitle()));
                             OutlinePane pane = new OutlinePane(0, 0, 9, numberOfRows);
 
                             List<String> configItemsDisplayNames = values.entrySet().stream()
                                     .filter(x -> x.getValue() instanceof Boolean)
-                                    .map(x -> MessageUtils.parseColors(MessageProvider.Inventories.getConfigMenuValueName())
+                                    .map(x -> MessageUtil.parseColors(MessageProvider.Inventories.getConfigMenuValueName())
                                             + x.getKey())
                                     .toList();
                             List<String> configItemsLores = values.values().stream()
                                     .filter(o -> o instanceof Boolean)
-                                    .map(o -> MessageUtils.parseColors(MessageProvider.Inventories.getConfigMenuValueLore())
+                                    .map(o -> MessageUtil.parseColors(MessageProvider.Inventories.getConfigMenuValueLore())
                                             + o)
                                     .toList();
                             List<ItemStack> configItems = new ArrayList<>();
@@ -90,7 +90,7 @@ public class MiarmaCoreCommand {
                             for (int i = 0; i < configItems.size(); i++) {
                                 GuiItem guiItem = new GuiItem(configItems.get(i), event -> {
                                     event.setCancelled(true);
-                                    ItemUtils.reloadConfigItem(event);
+                                    ItemUtil.reloadConfigItem(event);
                                 });
 
                                 pane.addItem(guiItem);

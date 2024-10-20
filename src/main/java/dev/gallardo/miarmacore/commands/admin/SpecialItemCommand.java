@@ -4,7 +4,7 @@ import dev.gallardo.miarmacore.MiarmaCore;
 import dev.gallardo.miarmacore.config.CommandWrapper;
 import dev.gallardo.miarmacore.config.providers.CommandProvider;
 import dev.gallardo.miarmacore.config.providers.MessageProvider;
-import dev.gallardo.miarmacore.util.MessageUtils;
+import dev.gallardo.miarmacore.util.MessageUtil;
 import dev.jorel.commandapi.CommandAPICommand;
 import org.bukkit.Bukkit;
 import org.bukkit.NamespacedKey;
@@ -27,10 +27,10 @@ public class SpecialItemCommand {
                 Recipe specialItem = Bukkit.getServer().getRecipe(new NamespacedKey(MiarmaCore.PLUGIN, itemName));
                 if (specialItem != null) {
                     sender.getInventory().addItem(specialItem.getResult());
-                    MessageUtils.sendMessage(sender, specialItemCmd.getMessages()[0], true,
+                    MessageUtil.sendMessage(sender, specialItemCmd.getMessages()[0], true,
                                                  List.of("%item%"), List.of(itemName));
                 } else {
-                    MessageUtils.sendMessage(sender, MessageProvider.Errors.itemNotFound(), true,
+                    MessageUtil.sendMessage(sender, MessageProvider.Errors.itemNotFound(), true,
                                                 List.of("%item%"), List.of(itemName));
                 }
             })

@@ -1,5 +1,5 @@
 name: MiarmaCore
-version: '1.4.0'
+version: '1.4.1'
 main: dev.gallardo.miarmacore.MiarmaCore
 api-version: '1.21'
 authors: [Gallardo7761, elpapuu1333 (Contributor & tester)]

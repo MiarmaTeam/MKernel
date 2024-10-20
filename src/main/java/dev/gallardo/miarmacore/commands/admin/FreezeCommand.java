@@ -3,7 +3,7 @@ package dev.gallardo.miarmacore.commands.admin;
 import dev.gallardo.miarmacore.config.CommandWrapper;
 import dev.gallardo.miarmacore.config.providers.CommandProvider;
 import dev.gallardo.miarmacore.config.providers.MessageProvider;
-import dev.gallardo.miarmacore.util.MessageUtils;
+import dev.gallardo.miarmacore.util.MessageUtil;
 import dev.jorel.commandapi.CommandAPICommand;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -28,11 +28,11 @@ public class FreezeCommand {
                 Player target = Bukkit.getPlayer(args.getRaw(0));
 
                 if (target == null) {
-                    MessageUtils.sendMessage(sender, MessageProvider.Errors.playerNotFound(), true);
+                    MessageUtil.sendMessage(sender, MessageProvider.Errors.playerNotFound(), true);
                 }
 
                 if(args.count() > 1) {
-                    MessageUtils.sendMessage(sender, MessageProvider.Errors.tooManyArguments(), true);
+                    MessageUtil.sendMessage(sender, MessageProvider.Errors.tooManyArguments(), true);
                 }
 
                 PersistentDataContainer data = target.getPersistentDataContainer();
@@ -41,15 +41,15 @@ public class FreezeCommand {
 
                 if(isFrozen) {
                     unsetFrozen(target);
-                    MessageUtils.sendMessage(sender, freezeCmd.getMessages()[1], true,
+                    MessageUtil.sendMessage(sender, freezeCmd.getMessages()[1], true,
                             List.of("%player%"), List.of(target.getName()));
-                    MessageUtils.sendMessage(target, freezeCmd.getMessages()[3], true,
+                    MessageUtil.sendMessage(target, freezeCmd.getMessages()[3], true,
                             List.of("%sender%"), List.of(sender.getName()));
                 } else {
                     setFrozen(target);
-                    MessageUtils.sendMessage(sender, freezeCmd.getMessages()[0], true,
+                    MessageUtil.sendMessage(sender, freezeCmd.getMessages()[0], true,
                             List.of("%player%"), List.of(target.getName()));
-                    MessageUtils.sendMessage(target, freezeCmd.getMessages()[2], true,
+                    MessageUtil.sendMessage(target, freezeCmd.getMessages()[2], true,
                             List.of("%sender%"), List.of(sender.getName()));
                 }
 

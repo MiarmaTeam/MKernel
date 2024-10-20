@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class MessageUtils {
+public class MessageUtil {
 
     // Método para parsear placeholders
     public static String parsePlaceholders(String message, List<String> placeholders, List<String> values) {

@@ -4,7 +4,7 @@ import dev.gallardo.miarmacore.config.CommandWrapper;
 import dev.gallardo.miarmacore.config.providers.CommandProvider;
 import dev.gallardo.miarmacore.config.providers.ConfigProvider;
 import dev.gallardo.miarmacore.config.providers.MessageProvider;
-import dev.gallardo.miarmacore.util.MessageUtils;
+import dev.gallardo.miarmacore.util.MessageUtil;
 import dev.jorel.commandapi.CommandAPICommand;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -45,18 +45,18 @@ public class LobbyCommand {
 
                     if (args.count() == 0) {
                         sender.teleport(lobbyCoords);
-                        MessageUtils.sendMessage(sender, lobbyCmd.getMessages()[0], true);
+                        MessageUtil.sendMessage(sender, lobbyCmd.getMessages()[0], true);
                     } else if (args.count() >= 1) {
                         Player victim = Bukkit.getServer().getPlayer(args.getRaw(0));
                         victim.teleport(lobbyCoords);
-                        MessageUtils.sendMessage(sender, lobbyCmd.getMessages()[1], true,
+                        MessageUtil.sendMessage(sender, lobbyCmd.getMessages()[1], true,
                                                     List.of("%victim%"), List.of(victim.getName()));
-                        MessageUtils.sendMessage(victim, lobbyCmd.getMessages()[2], true,
+                        MessageUtil.sendMessage(victim, lobbyCmd.getMessages()[2], true,
                                                     List.of("%sender%"), List.of(sender.getName()));
                     }
                 } else {
-                    MessageUtils.sendMessage(sender, MessageProvider.Errors.lobbyDoesNotExist(), true);
-                    MiarmaCore.LOGGER.warning(MessageUtils.formatMessageConsole(
+                    MessageUtil.sendMessage(sender, MessageProvider.Errors.lobbyDoesNotExist(), true);
+                    MiarmaCore.LOGGER.warning(MessageUtil.formatMessageConsole(
                             MessageProvider.Errors.lobbyDoesNotExist(), true));
                 }
             })

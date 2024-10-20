@@ -3,7 +3,7 @@ package dev.gallardo.miarmacore.recipes.potions;
 import de.tr7zw.nbtapi.NBTItem;
 import dev.gallardo.miarmacore.MiarmaCore;
 import dev.gallardo.miarmacore.config.providers.MessageProvider;
-import dev.gallardo.miarmacore.util.MessageUtils;
+import dev.gallardo.miarmacore.util.MessageUtil;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.enchantments.Enchantment;
@@ -20,9 +20,9 @@ public class ZombificationPotionRecipe {
 		ItemStack potion = new ItemStack(Material.SPLASH_POTION);
         
         ItemMeta meta = potion.getItemMeta();
-        meta.setDisplayName(MessageUtils.parseColors(
+        meta.setDisplayName(MessageUtil.parseColors(
                 MessageProvider.Items.getZombificationPotionName()));
-        meta.setLore(Collections.singletonList(MessageUtils.parseColors(
+        meta.setLore(Collections.singletonList(MessageUtil.parseColors(
                 MessageProvider.Items.getZombificationPotionLore())));
         meta.addEnchant(Enchantment.MENDING, 1, false);
         meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
@@ -31,7 +31,7 @@ public class ZombificationPotionRecipe {
         potion.setItemMeta(meta);
         
         NBTItem nbtItem = new NBTItem(potion);
-        nbtItem.setString("specialItem", "zombification_potion");
+        nbtItem.setString(SPECIAL_ITEM_TAG, ZOMBIFICATION_POTION_KEY);
 
         RECIPES.add(nbtItem.getItem());
         return nbtItem.getItem();
@@ -40,7 +40,7 @@ public class ZombificationPotionRecipe {
     public static ShapedRecipe get() {
     	ItemStack potion = crear();
     	
-        NamespacedKey zombificationKey = new NamespacedKey(MiarmaCore.PLUGIN, "zombification_potion");
+        NamespacedKey zombificationKey = new NamespacedKey(MiarmaCore.PLUGIN, ZOMBIFICATION_POTION_KEY);
         ShapedRecipe recipe = new ShapedRecipe(zombificationKey, potion);
         recipe.shape(
         		" Z ", 

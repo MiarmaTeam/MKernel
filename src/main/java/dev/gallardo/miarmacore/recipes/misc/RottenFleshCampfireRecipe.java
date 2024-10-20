@@ -12,7 +12,7 @@ import org.bukkit.inventory.recipe.CookingBookCategory;
 
 public class RottenFleshCampfireRecipe {
     public static CampfireRecipe get() {
-        NamespacedKey rottenRecipeKey = new NamespacedKey(MiarmaCore.PLUGIN, "rotten_campfire");
+        NamespacedKey rottenRecipeKey = new NamespacedKey(MiarmaCore.PLUGIN, ROTTEN_CAMFIRE_KEY);
         CampfireRecipe rottenRecipe = new CampfireRecipe(
         		rottenRecipeKey, 
         		new ItemStack(Material.BEEF), 

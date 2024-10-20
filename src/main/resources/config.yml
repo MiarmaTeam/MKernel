@@ -226,6 +226,7 @@ commands:
   globalchest:
     name: "globalchest"
     description: "Abre el cofre global"
+    aliases: ["gc"]
     permissions:
       base: "miarmacore.command.globalchest"
       others: "miarmacore.command.globalchest.others"
@@ -383,7 +384,40 @@ commands:
     messages:
       launched: "[P] &7Has lanzado a &a%player%"
 
+  sun:
+    name: "sun"
+    description: "Cambia el clima a soleado"
+    permission: "miarmacore.command.sun"
+    messages:
+      sunSet: "[P] &7Se ha cambiado el clima a &asoleado"
 
+  rain:
+    name: "rain"
+    description: "Cambia el clima a lluvioso"
+    permission: "miarmacore.command.rain"
+    messages:
+      rainSet: "[P] &7Se ha cambiado el clima a &alluvioso"
+
+  thunder:
+    name: "thunder"
+    description: "Cambia el clima a tormentoso"
+    permission: "miarmacore.command.thunder"
+    messages:
+      thunderSet: "[P] &7Se ha cambiado el clima a &atormentoso"
+
+  day:
+    name: "day"
+    description: "Pone el tiempo a día"
+    permission: "miarmacore.command.day"
+    messages:
+      daySet: "[P] &7Ahora es de &adía"
+
+  night:
+    name: "night"
+    description: "Pone el tiempo a noche"
+    permission: "miarmacore.command.night"
+    messages:
+      nightSet: "[P] &7Ahora es de &anoche"
 
 # -----------------------------------------------------------
 #  Message Configuration

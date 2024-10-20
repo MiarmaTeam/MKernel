@@ -3,7 +3,7 @@ package dev.gallardo.miarmacore.recipes.tools;
 import de.tr7zw.nbtapi.NBTItem;
 import dev.gallardo.miarmacore.MiarmaCore;
 import dev.gallardo.miarmacore.config.providers.MessageProvider;
-import dev.gallardo.miarmacore.util.MessageUtils;
+import dev.gallardo.miarmacore.util.MessageUtil;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
@@ -20,14 +20,14 @@ public class BolsitaRecipe {
         ItemStack bolsita = new ItemStack(Material.BUNDLE, 1);
 
         ItemMeta meta = bolsita.getItemMeta();
-        meta.setDisplayName(MessageUtils.parseColors(
+        meta.setDisplayName(MessageUtil.parseColors(
                 MessageProvider.Items.getBolsitaName()));
-        meta.setLore(Collections.singletonList(MessageUtils.parseColors(
+        meta.setLore(Collections.singletonList(MessageUtil.parseColors(
                 MessageProvider.Items.getBolsitaLore())));
         bolsita.setItemMeta(meta);
 
         NBTItem nbtItem = new NBTItem(bolsita);
-        nbtItem.setString("specialItem", "bolsita");
+        nbtItem.setString(SPECIAL_ITEM_TAG, BOLSITA_KEY);
 
         RECIPES.add(bolsita);
         return nbtItem.getItem();
@@ -35,7 +35,7 @@ public class BolsitaRecipe {
 
     public static ShapelessRecipe get() {
         ItemStack bolsita = crear();
-        NamespacedKey bolsitaRecipeKey = new NamespacedKey(MiarmaCore.PLUGIN, "bolsita");
+        NamespacedKey bolsitaRecipeKey = new NamespacedKey(MiarmaCore.PLUGIN, BOLSITA_KEY);
         ShapelessRecipe bolsitaRecipe = new ShapelessRecipe(bolsitaRecipeKey, bolsita);
         bolsitaRecipe.addIngredient(1, Material.LEATHER);
         bolsitaRecipe.addIngredient(1, Material.STRING);

@@ -129,8 +129,6 @@ public class EntityEventHelper {
 			villager.setBaby();
 			this.player.playSound(this.player.getLocation(), Sound.ITEM_TOTEM_USE, 1, 1);
 			this.player.playEffect(EntityEffect.TOTEM_RESURRECT);
-		} else {
-
 		}
 	}
 }

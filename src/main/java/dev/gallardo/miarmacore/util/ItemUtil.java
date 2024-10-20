@@ -14,11 +14,13 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.List;
 
-public class ItemUtils {
+import static dev.gallardo.miarmacore.util.Constants.SPECIAL_ITEM_TAG;
+
+public class ItemUtil {
     public static String getKey(ItemStack item) {
         NBTItem nbtItem = new NBTItem(item);
-        if (nbtItem.getString("specialItem") != null) {
-            return nbtItem.getString("specialItem");
+        if (nbtItem.getString(SPECIAL_ITEM_TAG) != null) {
+            return nbtItem.getString(SPECIAL_ITEM_TAG);
         }
 
         List<Recipe> matchingRecipes = Bukkit.getRecipesFor(item);
@@ -83,7 +85,7 @@ public class ItemUtils {
         MiarmaCore.CONFIG.getConfig().set(configKey, newValue);
         MiarmaCore.CONFIG.save();
 
-        itemMeta.setLore(List.of(MessageUtils.parseColors(
+        itemMeta.setLore(List.of(MessageUtil.parseColors(
                 MessageProvider.Inventories.getConfigMenuValueLore()) + newValue));
         clickedItem.setItemMeta(itemMeta);
 

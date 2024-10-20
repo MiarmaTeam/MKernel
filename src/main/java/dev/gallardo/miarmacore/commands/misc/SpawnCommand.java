@@ -2,7 +2,7 @@ package dev.gallardo.miarmacore.commands.misc;
 
 import dev.gallardo.miarmacore.config.CommandWrapper;
 import dev.gallardo.miarmacore.config.providers.CommandProvider;
-import dev.gallardo.miarmacore.util.MessageUtils;
+import dev.gallardo.miarmacore.util.MessageUtil;
 import dev.jorel.commandapi.CommandAPICommand;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -31,15 +31,15 @@ public class SpawnCommand {
                 if (args.count() == 0) {
                     Location spawnCoords = new Location(sender.getWorld(), xSpawn, ySpawn, zSpawn);
                     sender.teleport(spawnCoords);
-                    MessageUtils.sendMessage(sender, spawnCmd.getMessages()[0], true);
+                    MessageUtil.sendMessage(sender, spawnCmd.getMessages()[0], true);
                 } else if (args.count() >= 1) {
                     Player victim = Bukkit.getServer().getPlayer(args.getRaw(0));
                     Location spawnCoords = new Location(victim.getWorld(), xSpawn, ySpawn, zSpawn, victim.getLocation().getYaw(), victim.getLocation().getPitch());
                     victim.teleport(spawnCoords);
 
-                    MessageUtils.sendMessage(sender, spawnCmd.getMessages()[1], true,
+                    MessageUtil.sendMessage(sender, spawnCmd.getMessages()[1], true,
                                                  List.of("%victim%"), List.of(victim.getName()));
-                    MessageUtils.sendMessage(victim, spawnCmd.getMessages()[2], true,
+                    MessageUtil.sendMessage(victim, spawnCmd.getMessages()[2], true,
                                                  List.of("%sender%"), List.of(sender.getName()));
                 }
             })

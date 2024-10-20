@@ -3,7 +3,7 @@ package dev.gallardo.miarmacore.recipes.tools;
 import de.tr7zw.nbtapi.NBTItem;
 import dev.gallardo.miarmacore.MiarmaCore;
 import dev.gallardo.miarmacore.config.providers.MessageProvider;
-import dev.gallardo.miarmacore.util.MessageUtils;
+import dev.gallardo.miarmacore.util.MessageUtil;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.enchantments.Enchantment;
@@ -21,9 +21,9 @@ public class ScissorsRecipe {
         ItemStack scissors = new ItemStack(Material.SHEARS);
 
         ItemMeta meta = scissors.getItemMeta();
-        meta.setDisplayName(MessageUtils.parseColors(
+        meta.setDisplayName(MessageUtil.parseColors(
                 MessageProvider.Items.getScissorsName()));
-        meta.setLore(Collections.singletonList(MessageUtils.parseColors(
+        meta.setLore(Collections.singletonList(MessageUtil.parseColors(
                 MessageProvider.Items.getScissorsLore())));
         meta.addEnchant(Enchantment.UNBREAKING, 1, false);
         meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
@@ -31,7 +31,7 @@ public class ScissorsRecipe {
         scissors.setItemMeta(meta);
         
         NBTItem nbtItem = new NBTItem(scissors);
-        nbtItem.setString("specialItem", "scissors");
+        nbtItem.setString(SPECIAL_ITEM_TAG, SCISSORS_KEY);
 
         RECIPES.add(nbtItem.getItem());
         return nbtItem.getItem();
@@ -39,7 +39,7 @@ public class ScissorsRecipe {
     
     public static ShapedRecipe get() {
     	ItemStack scissors = crear();
-        NamespacedKey scissorsRecipeKey = new NamespacedKey(MiarmaCore.PLUGIN, "scissors");
+        NamespacedKey scissorsRecipeKey = new NamespacedKey(MiarmaCore.PLUGIN, SCISSORS_KEY);
         ShapedRecipe scissorsRecipe = new ShapedRecipe(scissorsRecipeKey, scissors);
         scissorsRecipe.shape(
         		" D ", 
