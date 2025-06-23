@@ -1,186 +1,186 @@
-name: MiarmaCore
+name: Toorbo
 version: '1.4.1'
-main: dev.gallardo.miarmacore.MiarmaCore
+main: net.miarma.toorbo.Toorbo
 api-version: '1.21'
 authors: [Gallardo7761, elpapuu1333 (Contributor & tester)]
 permissions:
-    miarmacore.command:
-        description: Permite al usuario ejecutar comandos de MiarmaCore
+    toorbo.command:
+        description: Permite al usuario ejecutar comandos de Toorbo
         default: true
-    miarmacore.command.reload:
-        description: Permite al usuario recargar la configuración de MiarmaCore
+    toorbo.command.reload:
+        description: Permite al usuario recargar la configuración de Toorbo
         default: op
-    miarmacore.command.config:
-        description: Permite al usuario configurar los módulos de MiarmaCore
+    toorbo.command.config:
+        description: Permite al usuario configurar los módulos de Toorbo
         default: op
-    miarmacore.command.registerweb:
+    toorbo.command.registerweb:
         description: Permite al usuario registrar una cuenta en la web
         default: true
-    miarmacore.command.tpa:
+    toorbo.command.tpa:
         description: Permite al usuario enviar una petición de teletransporte
         default: true
-    miarmacore.command.tpahere:
+    toorbo.command.tpahere:
         description: Permite al usuario enviar una petición de teletransporte a otro jugador
         default: true
-    miarmacore.command.tpaccept:
+    toorbo.command.tpaccept:
         description: Permite al usuario aceptar una petición de teletransporte
         default: true
-    miarmacore.command.tpdeny:
+    toorbo.command.tpdeny:
         description: Permite al usuario rechazar una petición de teletransporte
         default: true
-    miarmacore.globalchest:
+    toorbo.globalchest:
         description: Permite al usuario abrir el cofre global
         default: true
-    miarmacore.globalchest.others:
+    toorbo.globalchest.others:
         description: Permite al usuario abrir el cofre global de otro jugador
         default: op
-    miarmacore.disposal:
+    toorbo.disposal:
         description: Permite al usuario abrir el contenedor de basura
         default: true
-    miarmacore.disposal.others:
+    toorbo.disposal.others:
         description: Permite al usuario abrir el contenedor de basura de otro jugador
         default: op
-    miarmacore.command.sendcoords:
+    toorbo.command.sendcoords:
         description: Permite al usuario enviar sus coordenadas a otro jugador
         default: true
-    miarmacore.command.spawn:
+    toorbo.command.spawn:
         description: Permite al usuario teletransportarse al punto de spawn
         default: true
-    miarmacore.command.spawn.others:
+    toorbo.command.spawn.others:
         description: Permite al usuario teletransportar a otro jugador al punto de spawn
         default: op
-    miarmacore.command.lobby:
+    toorbo.command.lobby:
         description: Permite al usuario teletransportarse al lobby
         default: true
-    miarmacore.command.lobby.others:
+    toorbo.command.lobby.others:
         description: Permite al usuario teletransportar a otro jugador al lobby
         default: op
-    miarmacore.command.opme:
+    toorbo.command.opme:
         description: Permite al usuario hacerse op
         default: op
-    miarmacore.command.deopme:
+    toorbo.command.deopme:
         description: Permite al usuario quitarse el op
         default: op
-    miarmacore.command.specialitem:
+    toorbo.command.specialitem:
         description: Permite al usuario obtener un item especial
         default: op
-    miarmacore.command.blockworld:
+    toorbo.command.blockworld:
         description: Permite al usuario bloquear un mundo
         default: op
-    miarmacore.command.home:
+    toorbo.command.home:
         description: Permite al usuario teletransportarse a su casa
         default: true
-    miarmacore.command.sethome:
+    toorbo.command.sethome:
         description: Permite al usuario establecer su casa
         default: true
-    miarmacore.command.recinv:
+    toorbo.command.recinv:
         description: Permite recuperar tu inventario
         default: true
-    miarmacore.command.gmc:
+    toorbo.command.gmc:
         description: Permite al usuario cambiar su modo de juego a creativo
         default: op
-    miarmacore.command.gms:
+    toorbo.command.gms:
         description: Permite al usuario cambiar su modo de juego a supervivencia
         default: op
-    miarmacore.command.gma:
+    toorbo.command.gma:
         description: Permite al usuario cambiar su modo de juego a aventura
         default: op
-    miarmacore.command.gmsp:
+    toorbo.command.gmsp:
         description: Permite al usuario cambiar su modo de juego a espectador
         default: op
-    miarmacore.command.vanish:
+    toorbo.command.vanish:
         description: Permite al usuario volverse invisible
         default: op
-    miarmacore.command.warp:
+    toorbo.command.warp:
         description: Permite al usuario teletransportarse a un warp
         default: true
-    miarmacore.command.warp.add:
+    toorbo.command.warp.add:
         description: Permite al usuario añadir un warp
         default: true
-    miarmacore.command.warp.remove:
+    toorbo.command.warp.remove:
         description: Permite al usuario eliminar un warp
         default: true
-    miarmacore.command.spy:
+    toorbo.command.spy:
         description: Permite al usuario espiar a otro jugador
         default: op
-    miarmacore.command.freeze:
+    toorbo.command.freeze:
         description: Permite al usuario congelar a otro jugador
         default: op
-    miarmacore.command.heal:
+    toorbo.command.heal:
         description: Permite al usuario curarse
         default: true
-    miarmacore.command.heal.others:
+    toorbo.command.heal.others:
         description: Permite al usuario curar a otro jugador
         default: op
-    miarmacore.command.launch:
+    toorbo.command.launch:
         description: Permite al usuario lanzar a otro jugador
         default: op
 
-    miarmacore.events.chatformat:
+    toorbo.events.chatformat:
         description: Permite al usuario usar formatos y colores en los mensajes de chat
         default: true
-    miarmacore.events.adminchat:
+    toorbo.events.adminchat:
         description: Permite al usuario usar el chat de administración
         default: op
-    miarmacore.events.mentions:
+    toorbo.events.mentions:
         description: Permite al usuario usar menciones
         default: true
 
-    miarmacore.admin:
+    toorbo.admin:
         description: Permite al usuario ejecutar comandos de administrador
         default: op
         children:
-            miarmacore.command.reload: true
-            miarmacore.command.config: true
-            miarmacore.command.opme: true
-            miarmacore.command.deopme: true
-            miarmacore.command.globalchest.others: true
-            miarmacore.command.disposal.others: true
-            miarmacore.command.spawn.others: true
-            miarmacore.command.lobby.others: true
-            miarmacore.command.specialitem: true
-            miarmacore.command.blockworld: true
-            miarmacore.command.gmc: true
-            miarmacore.command.gms: true
-            miarmacore.command.gma: true
-            miarmacore.command.gmsp: true
-            miarmacore.command.vanish: true
-            miarmacore.command.spy: true
-            miarmacore.command.freeze: true
-            miarmacore.command.heal: true
-            miarmacore.command.heal.others: true
-            miarmacore.command.launch: true
-            miarmacore.events.adminchat: true
-            miarmacore.player: true
+            toorbo.command.reload: true
+            toorbo.command.config: true
+            toorbo.command.opme: true
+            toorbo.command.deopme: true
+            toorbo.command.globalchest.others: true
+            toorbo.command.disposal.others: true
+            toorbo.command.spawn.others: true
+            toorbo.command.lobby.others: true
+            toorbo.command.specialitem: true
+            toorbo.command.blockworld: true
+            toorbo.command.gmc: true
+            toorbo.command.gms: true
+            toorbo.command.gma: true
+            toorbo.command.gmsp: true
+            toorbo.command.vanish: true
+            toorbo.command.spy: true
+            toorbo.command.freeze: true
+            toorbo.command.heal: true
+            toorbo.command.heal.others: true
+            toorbo.command.launch: true
+            toorbo.events.adminchat: true
+            toorbo.player: true
 
-    miarmacore.player:
+    toorbo.player:
         description: Permite al usuario ejecutar comandos de jugador
         default: true
         children:
-            miarmacore.command.tpa: true
-            miarmacore.command.tpahere: true
-            miarmacore.command.tpaccept: true
-            miarmacore.command.tpdeny: true
-            miarmacore.command.registerweb: true
-            miarmacore.command.globalchest: true
-            miarmacore.command.disposal: true
-            miarmacore.command.sendcoords: true
-            miarmacore.command.spawn: true
-            miarmacore.command.lobby: true
-            miarmacore.command.home: true
-            miarmacore.command.sethome: true
-            miarmacore.events.chatformat: true
-            miarmacore.events.mentions: true
-            miarmacore.command.recinv: true
-            miarmacore.command.warp: true
-            miarmacore.command.warp.add: true
-            miarmacore.command.warp.remove: true
-            miarmacore.command.me: true
-            miarmacore.command.do: true
+            toorbo.command.tpa: true
+            toorbo.command.tpahere: true
+            toorbo.command.tpaccept: true
+            toorbo.command.tpdeny: true
+            toorbo.command.registerweb: true
+            toorbo.command.globalchest: true
+            toorbo.command.disposal: true
+            toorbo.command.sendcoords: true
+            toorbo.command.spawn: true
+            toorbo.command.lobby: true
+            toorbo.command.home: true
+            toorbo.command.sethome: true
+            toorbo.events.chatformat: true
+            toorbo.events.mentions: true
+            toorbo.command.recinv: true
+            toorbo.command.warp: true
+            toorbo.command.warp.add: true
+            toorbo.command.warp.remove: true
+            toorbo.command.me: true
+            toorbo.command.do: true
 
-    miarmacore.*:
-        description: Permite al usuario ejecutar todos los comandos de MiarmaCore
+    toorbo.*:
+        description: Permite al usuario ejecutar todos los comandos de Toorbo
         default: op
         children:
-            miarmacore.admin: true
-            miarmacore.player: true
+            toorbo.admin: true
+            toorbo.player: true

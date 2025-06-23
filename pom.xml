@@ -4,16 +4,17 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>dev.gallardo</groupId>
-    <artifactId>MiarmaCorePlugin</artifactId>
+    <groupId>net.miarma</groupId>
+    <artifactId>toorbo</artifactId>
     <version>1.4.1</version>
     <packaging>jar</packaging>
 
-    <name>MiarmaCorePlugin</name>
+    <name>Toorbo</name>
 
     <properties>
         <java.version>21</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <mc.version>1.21.6</mc.version>
     </properties>
 
     <build>
@@ -24,7 +25,7 @@
                 <artifactId>maven-jar-plugin</artifactId>
                 <version>3.4.2</version>
                 <configuration>
-                    <finalName>MiarmaCore-${project.version}</finalName>
+                    <finalName>Toorbo-${project.version}-${mc.version}</finalName>
                 </configuration>
             </plugin>
             <plugin>
@@ -40,7 +41,7 @@
                         <configuration>
                             <shadedArtifactAttached>true</shadedArtifactAttached>
                             <shadedClassifierName>shaded</shadedClassifierName>
-                            <finalName>MiarmaCore-${project.version}</finalName>
+                            <finalName>Toorbo-${project.version}-${mc.version}</finalName>
                             <artifactSet>
                                 <includes>
                                     <include>dev.jorel:commandapi-bukkit-shade</include>
@@ -50,23 +51,25 @@
                             </artifactSet>
                             <transformers>
                                 <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                    <mainClass>dev.gallardo.miarmacore.MiarmaCore</mainClass>
+                                    <mainClass>net.miarma.toorbo.Toorbo</mainClass>
                                 </transformer>
                             </transformers>
                             <outputDirectory>
-                                C:\Users\jomaa\Desktop\</outputDirectory>
+                                /home/jomaa/Escritorio</outputDirectory>
                             <relocations>
                                 <relocation>
                                     <pattern>dev.jorel.commandapi</pattern>
-                                    <shadedPattern> dev.gallardo.miarmacore.commandapi</shadedPattern>
+                                    <shadedPattern> net.miarma.toorbo.commandapi</shadedPattern>
                                 </relocation>
+                                <!-- REMOVED because Spigot complains about it
                                 <relocation>
                                     <pattern>dev.dejvokep.boostedyaml</pattern>
-                                    <shadedPattern>dev.gallardo.miarmacore.boostedyaml</shadedPattern>
+                                    <shadedPattern>net.miarma.toorbo.boostedyaml</shadedPattern>
                                 </relocation>
+                                -->
                                 <relocation>
                                     <pattern>com.github.stefvanschie.inventoryframework</pattern>
-                                    <shadedPattern> dev.gallardo.miarmacore.inventoryframework</shadedPattern>
+                                    <shadedPattern> net.miarma.toorbo.inventoryframework</shadedPattern>
                                 </relocation>
                             </relocations>
                         </configuration>
@@ -83,7 +86,7 @@
                         <configuration>
                             <target>
                                 <delete
-                                        file="C:\Users\jomaa\Desktop\MiarmaCore-${project.version}.jar" />
+                                        file="/home/jomaa/Escritorio/Toorbo-${project.version}-${mc.version}" />
                             </target>
                         </configuration>
                         <goals>
@@ -118,10 +121,23 @@
             <id>sonatype</id>
             <url>https://oss.sonatype.org/content/groups/public/</url>
         </repository>
+        <!-- REPLACED WITH 10.0.2-SNAPSHOT
         <repository>
             <id>mccommandapi</id>
             <url>
                 https://raw.githubusercontent.com/JorelAli/1.13-Command-API/mvn-repo/1.13CommandAPI/</url>
+        </repository>
+        -->
+        <repository>
+            <name>Central Portal Snapshots</name>
+            <id>central-portal-snapshots</id>
+            <url>https://central.sonatype.com/repository/maven-snapshots/</url>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
         </repository>
         <repository>
             <id>minecraft-repo</id>
@@ -149,7 +165,7 @@
         <dependency>
             <groupId>dev.jorel</groupId>
             <artifactId>commandapi-bukkit-shade</artifactId>
-            <version>9.5.3</version>
+            <version>10.0.2-SNAPSHOT</version>
         </dependency>
 
         <dependency>
