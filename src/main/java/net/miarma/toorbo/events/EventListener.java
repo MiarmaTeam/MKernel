@@ -229,6 +229,16 @@ public class EventListener {
 								helper.handleScissorsOnCow();
 							}
 							break;
+						case RABBIT:
+							if(SCISSORS_KEY.equals(specialType)) {
+								helper.handleScissorsOnRabbit();
+							}
+							break;
+						case CHICKEN:
+							if(SCISSORS_KEY.equals(specialType)) {
+								helper.handleScissorsOnChicken();
+							}
+							break;
 						case CREEPER:
 							if(SCISSORS_KEY.equals(specialType)) {
 								helper.handleScissorsOnCreeper();
@@ -541,7 +551,7 @@ public class EventListener {
 					int r = (int) (Math.random() * 100.);
 					for(LivingEntity le : entities) {
 						if(le instanceof Villager v) {
-							if(r >= 50) {
+							if(r >= 30) {
 								v.zombify();
 							} else {
 								v.setHealth(0.);

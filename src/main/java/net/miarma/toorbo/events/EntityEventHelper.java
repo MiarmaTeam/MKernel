@@ -64,57 +64,103 @@ public class EntityEventHelper {
 	}
 	
 	public void handleScissorsOnPig() {
-		if (((Ageable) this.entity).isAdult()) {
-			int n = (int) ((Math.random() + 1) * 1.25);
-			this.player.playSound(this.player.getLocation(), Sound.ENTITY_SHEEP_SHEAR, 1, 1);
-			((Ageable) this.entity).setBaby();
-			this.player.getWorld().dropItemNaturally(this.entity.getLocation(), new ItemStack(Material.PORKCHOP, n));
-			if (damage + 2 <= this.maxDamage) {
-				dMeta.setDamage(damage + 2);
-				this.itemStack.setItemMeta(dMeta);
+		double r = Math.random();
+		if(r < 0.30) {
+			if (((Ageable) this.entity).isAdult()) {
+				int n = (int) ((Math.random() + 1) * 1.25);
+				this.player.playSound(this.player.getLocation(), Sound.ENTITY_SHEEP_SHEAR, 1, 1);
+				((Ageable) this.entity).setBaby();
+				this.player.getWorld().dropItemNaturally(this.entity.getLocation(), new ItemStack(Material.PORKCHOP, n));
+
 			}
 		}
+		if (damage + 2 <= this.maxDamage) {
+			dMeta.setDamage(damage + 2);
+			this.itemStack.setItemMeta(dMeta);
+		}
+
 	}
 	
 	public void handleScissorsOnCow() {
-		if (((Ageable) this.entity).isAdult()) {
-			int n = (int) ((Math.random() + 1) * 1.25);
-			this.player.playSound(this.player.getLocation(), Sound.ENTITY_SHEEP_SHEAR, 1, 1);
-			((Ageable) this.entity).setBaby();
-			this.player.getWorld().dropItemNaturally(this.entity.getLocation(), new ItemStack(Material.BEEF, n));
-			if (damage + 2 <= this.maxDamage) {
-				dMeta.setDamage(damage + 2);
-				this.itemStack.setItemMeta(dMeta);
+		double r = Math.random();
+		if(r < 0.30) {
+			if (((Ageable) this.entity).isAdult()) {
+				int n = (int) ((Math.random() + 1) * 1.25);
+				this.player.playSound(this.player.getLocation(), Sound.ENTITY_SHEEP_SHEAR, 1, 1);
+				((Ageable) this.entity).setBaby();
+				this.player.getWorld().dropItemNaturally(this.entity.getLocation(), new ItemStack(Material.BEEF, n));
 			}
+		}
+		if (damage + 2 <= this.maxDamage) {
+			dMeta.setDamage(damage + 2);
+			this.itemStack.setItemMeta(dMeta);
+		}
+	}
+
+	public void handleScissorsOnRabbit() {
+		double r = Math.random();
+		if(r < 0.30) {
+			if (((Ageable) this.entity).isAdult()) {
+				int n = (int) ((Math.random() + 1) * 1.25);
+				this.player.playSound(this.player.getLocation(), Sound.ENTITY_SHEEP_SHEAR, 1, 1);
+				((Ageable) this.entity).setBaby();
+				this.player.getWorld().dropItemNaturally(this.entity.getLocation(), new ItemStack(Material.RABBIT, n));
+			}
+		}
+		if (damage + 2 <= this.maxDamage) {
+			dMeta.setDamage(damage + 2);
+			this.itemStack.setItemMeta(dMeta);
+		}
+	}
+
+	public void handleScissorsOnChicken() {
+		double r = Math.random();
+		if(r < 0.30) {
+			if (((Ageable) this.entity).isAdult()) {
+				int n = (int) ((Math.random() + 1) * 1.25);
+				this.player.playSound(this.player.getLocation(), Sound.ENTITY_SHEEP_SHEAR, 1, 1);
+				((Ageable) this.entity).setBaby();
+				this.player.getWorld().dropItemNaturally(this.entity.getLocation(), new ItemStack(Material.CHICKEN, n));
+			}
+		}
+		if (damage + 2 <= this.maxDamage) {
+			dMeta.setDamage(damage + 2);
+			this.itemStack.setItemMeta(dMeta);
 		}
 	}
 
 	public void handleScissorsOnZombie() {
-		if (((Ageable) this.entity).isAdult()) {
-			int n = (int) ((Math.random() + 1) * 1.25);
-			this.player.playSound(this.player.getLocation(), Sound.ENTITY_SHEEP_SHEAR, 1, 1);
-			this.entity.remove();
-			Skeleton skeleton = (Skeleton) this.entity.getLocation().getWorld().spawnEntity(this.entity.getLocation(),
-					EntityType.SKELETON);
-			EntityEquipment equipment = skeleton.getEquipment();
-			equipment.setItemInMainHand(null);
-			this.player.getWorld().dropItemNaturally(this.entity.getLocation(), new ItemStack(Material.ROTTEN_FLESH, n));
-			if (damage + 2 <= this.maxDamage) {
-				dMeta.setDamage(damage + 2);
-				this.itemStack.setItemMeta(dMeta);
-			}
+		double r = Math.random();
+		if (r < 0.5) {
+			if (((Ageable) this.entity).isAdult()) {
+				int n = (int) ((Math.random() + 1) * 1.25);
+				this.player.playSound(this.player.getLocation(), Sound.ENTITY_SHEEP_SHEAR, 1, 1);
+				this.entity.remove();
+				Skeleton skeleton = (Skeleton) this.entity.getLocation().getWorld().spawnEntity(this.entity.getLocation(),
+						EntityType.SKELETON);
+				EntityEquipment equipment = skeleton.getEquipment();
+				equipment.setItemInMainHand(null);
+				this.player.getWorld().dropItemNaturally(this.entity.getLocation(), new ItemStack(Material.ROTTEN_FLESH, n));
+				if (damage + 2 <= this.maxDamage) {
+					dMeta.setDamage(damage + 2);
+					this.itemStack.setItemMeta(dMeta);
+				}
 
+			}
 		}
 	}
 	
 	public void handleRottenFleshOnSkeleton() {
-		if(this.amount >= 15) {
-			this.entity.remove();
-			this.itemStack.setAmount(amount - 15);
-			Zombie zombie = (Zombie) this.entity.getLocation().getWorld()
-					.spawnEntity(this.entity.getLocation(), EntityType.ZOMBIE);
-			EntityEquipment equipment = zombie.getEquipment();
-			equipment.setItemInMainHand(new ItemStack(Material.BOW));
+		int r = (int) (Math.random() * 100.);
+		if(r >= 50) {
+			if(this.amount >= 15) {
+				this.entity.remove();
+				this.itemStack.setAmount(amount - 15);
+				Zombie zombie = (Zombie) this.entity.getLocation().getWorld()
+						.spawnEntity(this.entity.getLocation(), EntityType.ZOMBIE);
+				EntityEquipment equipment = zombie.getEquipment();
+				equipment.setItemInMainHand(new ItemStack(Material.BOW));
+			}
 		}
 	}
 	

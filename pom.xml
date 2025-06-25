@@ -5,8 +5,8 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>net.miarma</groupId>
-    <artifactId>toorbo</artifactId>
-    <version>1.4.1</version>
+    <artifactId>Toorbo</artifactId>
+    <version>1.4.2</version>
     <packaging>jar</packaging>
 
     <name>Toorbo</name>
@@ -54,8 +54,9 @@
                                     <mainClass>net.miarma.toorbo.Toorbo</mainClass>
                                 </transformer>
                             </transformers>
-                            <outputDirectory>
-                                /home/jomaa/Escritorio</outputDirectory>
+                            <!--<outputDirectory>
+                                /home/jomaa/Escritorio
+                                </outputDirectory>-->
                             <relocations>
                                 <relocation>
                                     <pattern>dev.jorel.commandapi</pattern>
@@ -76,7 +77,7 @@
                     </execution>
                 </executions>
             </plugin>
-            <plugin>
+            <!--<plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-antrun-plugin</artifactId>
                 <version>3.0.0</version>
@@ -94,7 +95,7 @@
                         </goals>
                     </execution>
                 </executions>
-            </plugin>
+            </plugin>-->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -121,23 +122,10 @@
             <id>sonatype</id>
             <url>https://oss.sonatype.org/content/groups/public/</url>
         </repository>
-        <!-- REPLACED WITH 10.0.2-SNAPSHOT
         <repository>
             <id>mccommandapi</id>
             <url>
                 https://raw.githubusercontent.com/JorelAli/1.13-Command-API/mvn-repo/1.13CommandAPI/</url>
-        </repository>
-        -->
-        <repository>
-            <name>Central Portal Snapshots</name>
-            <id>central-portal-snapshots</id>
-            <url>https://central.sonatype.com/repository/maven-snapshots/</url>
-            <releases>
-                <enabled>false</enabled>
-            </releases>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
         </repository>
         <repository>
             <id>minecraft-repo</id>
@@ -165,7 +153,7 @@
         <dependency>
             <groupId>dev.jorel</groupId>
             <artifactId>commandapi-bukkit-shade</artifactId>
-            <version>10.0.2-SNAPSHOT</version>
+            <version>10.1.0</version>
         </dependency>
 
         <dependency>
@@ -177,21 +165,21 @@
         <dependency>
             <groupId>at.pcgamingfreaks</groupId>
             <artifactId>Minepacks-API</artifactId>
-            <version>2.4.22</version>
+            <version>2.4.31.7</version>
             <scope>compile</scope>
         </dependency>
 
         <dependency>
             <groupId>de.tr7zw</groupId>
             <artifactId>item-nbt-api-plugin</artifactId>
-            <version>2.12.4</version>
+            <version>2.15.0</version>
             <scope>provided</scope>
         </dependency>
 
         <dependency>
             <groupId>com.github.stefvanschie.inventoryframework</groupId>
             <artifactId>IF</artifactId>
-            <version>0.10.17</version>
+            <version>0.11.1</version>
         </dependency>
 
         <dependency>

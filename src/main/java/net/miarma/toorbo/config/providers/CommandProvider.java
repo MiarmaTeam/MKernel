@@ -51,42 +51,30 @@ public class CommandProvider {
     }
 
     public static CommandWrapper getBaseCommand() {
-        return CommandWrapper.command("miarmacore")
-            .withDescription(Toorbo.CONFIG.getString("commands.miarmacore.description"))
+        return CommandWrapper.command("toorbo")
+            .withDescription(Toorbo.CONFIG.getString("commands.toorbo.description"))
             .withAliases("mc", "mcore")
-            .withUsage(Toorbo.CONFIG.getString("commands.miarmacore.usage"))
-            .withPermission(PermissionWrapper.of(Toorbo.CONFIG.getString("commands.miarmacore.permission")))
+            .withUsage(Toorbo.CONFIG.getString("commands.toorbo.usage"))
+            .withPermission(PermissionWrapper.of(Toorbo.CONFIG.getString("commands.toorbo.permission")))
             .withMessages("[P] Desarrollado por &#2ca268&lGallardo7761&r para &#2ca268&lMiarmaCraft&r")
             .withSubcommands(
-                CommandWrapper.command(Toorbo.CONFIG.getString("commands.miarmacore.subcommands.reload.name"))
-                    .withDescription(Toorbo.CONFIG.getString("commands.miarmacore.subcommands.reload.description"))
-                    .withUsage(Toorbo.CONFIG.getString("commands.miarmacore.subcommands.reload.usage"))
-                    .withPermission(PermissionWrapper.of(Toorbo.CONFIG.getString("commands.miarmacore.subcommands.reload.permission")))
+                CommandWrapper.command(Toorbo.CONFIG.getString("commands.toorbo.subcommands.reload.name"))
+                    .withDescription(Toorbo.CONFIG.getString("commands.toorbo.subcommands.reload.description"))
+                    .withUsage(Toorbo.CONFIG.getString("commands.toorbo.subcommands.reload.usage"))
+                    .withPermission(PermissionWrapper.of(Toorbo.CONFIG.getString("commands.toorbo.subcommands.reload.permission")))
                     .withMessages(
-                        Toorbo.CONFIG.getString("commands.miarmacore.subcommands.reload.messages.success"),
-                        Toorbo.CONFIG.getString("commands.miarmacore.subcommands.reload.messages.error")
+                        Toorbo.CONFIG.getString("commands.toorbo.subcommands.reload.messages.success"),
+                        Toorbo.CONFIG.getString("commands.toorbo.subcommands.reload.messages.error")
                     )
                     .build(),
-                CommandWrapper.command(Toorbo.CONFIG.getString("commands.miarmacore.subcommands.config.name"))
-                    .withDescription(Toorbo.CONFIG.getString("commands.miarmacore.subcommands.config.description"))
-                    .withUsage(Toorbo.CONFIG.getString("commands.miarmacore.subcommands.config.usage"))
-                    .withPermission(PermissionWrapper.of(Toorbo.CONFIG.getString("commands.miarmacore.subcommands.config.permission")))
+                CommandWrapper.command(Toorbo.CONFIG.getString("commands.toorbo.subcommands.config.name"))
+                    .withDescription(Toorbo.CONFIG.getString("commands.toorbo.subcommands.config.description"))
+                    .withUsage(Toorbo.CONFIG.getString("commands.toorbo.subcommands.config.usage"))
+                    .withPermission(PermissionWrapper.of(Toorbo.CONFIG.getString("commands.toorbo.subcommands.config.permission")))
                     .build()
             )
             .build();
 
-    }
-
-    public static CommandWrapper getRegisterWebCommand() {
-        return CommandWrapper.command(Toorbo.CONFIG.getString("commands.registerweb.name"))
-            .withDescription(Toorbo.CONFIG.getString("commands.registerweb.description"))
-            .withPermission(PermissionWrapper.of(Toorbo.CONFIG.getString("commands.registerweb.permission")))
-            .withUsage(Toorbo.CONFIG.getString("commands.registerweb.usage"))
-            .withMessages(
-                Toorbo.CONFIG.getString("commands.registerweb.messages.success"),
-                Toorbo.CONFIG.getString("commands.registerweb.messages.error")
-            )
-            .build();
     }
 
     public static CommandWrapper getTpaCommand() {
@@ -543,6 +531,18 @@ public class CommandProvider {
             ))
             .withMessages(
                 Toorbo.CONFIG.getString("commands.night.messages.nightSet")
+            )
+            .build();
+    }
+
+    public static CommandWrapper getInvseeCommand() {
+        return CommandWrapper.command(Toorbo.CONFIG.getString("commands.invsee"))
+            .withDescription(Toorbo.CONFIG.getString("commands.invsee.description"))
+            .withPermission(PermissionWrapper.of(
+                Toorbo.CONFIG.getString("commands.invsee.permission")
+            ))
+            .withMessages(
+                Toorbo.CONFIG.getString("commands.invsee.messages.opened")
             )
             .build();
     }

@@ -15,7 +15,6 @@ import dev.jorel.commandapi.CommandAPI;
 public class CommandHandler {
     private static void registerCommands() {
         BaseCommand.register();
-        RegistroWebCommand.register();
         TpaCommand.register();
         TpaAcceptCommand.register();
         TpDenyCommand.register();
@@ -51,6 +50,7 @@ public class CommandHandler {
         ThunderCommand.register();
         SunCommand.register();
         RainCommand.register();
+        InvseeCommand.register();
     }
 
     public static void onEnable() {
