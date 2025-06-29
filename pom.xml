@@ -5,11 +5,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>net.miarma</groupId>
-    <artifactId>Toorbo</artifactId>
+    <artifactId>MKernel</artifactId>
     <version>1.4.2</version>
     <packaging>jar</packaging>
 
-    <name>Toorbo</name>
+    <name>MKernel</name>
 
     <properties>
         <java.version>21</java.version>
@@ -25,7 +25,7 @@
                 <artifactId>maven-jar-plugin</artifactId>
                 <version>3.4.2</version>
                 <configuration>
-                    <finalName>Toorbo-${project.version}-${mc.version}</finalName>
+                    <finalName>MKernel-${project.version}-${mc.version}</finalName>
                 </configuration>
             </plugin>
             <plugin>
@@ -41,7 +41,7 @@
                         <configuration>
                             <shadedArtifactAttached>true</shadedArtifactAttached>
                             <shadedClassifierName>shaded</shadedClassifierName>
-                            <finalName>Toorbo-${project.version}-${mc.version}</finalName>
+                            <finalName>MKernel-${project.version}-${mc.version}</finalName>
                             <artifactSet>
                                 <includes>
                                     <include>dev.jorel:commandapi-bukkit-shade</include>
@@ -51,7 +51,7 @@
                             </artifactSet>
                             <transformers>
                                 <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                    <mainClass>net.miarma.toorbo.Toorbo</mainClass>
+                                    <mainClass>net.miarma.mkernel.MKernel</mainClass>
                                 </transformer>
                             </transformers>
                             <!--<outputDirectory>
@@ -60,17 +60,17 @@
                             <relocations>
                                 <relocation>
                                     <pattern>dev.jorel.commandapi</pattern>
-                                    <shadedPattern> net.miarma.toorbo.commandapi</shadedPattern>
+                                    <shadedPattern>net.miarma.mkernel.commandapi</shadedPattern>
                                 </relocation>
                                 <!-- REMOVED because Spigot complains about it
                                 <relocation>
                                     <pattern>dev.dejvokep.boostedyaml</pattern>
-                                    <shadedPattern>net.miarma.toorbo.boostedyaml</shadedPattern>
+                                    <shadedPattern>net.miarma.mkernel.boostedyaml</shadedPattern>
                                 </relocation>
                                 -->
                                 <relocation>
                                     <pattern>com.github.stefvanschie.inventoryframework</pattern>
-                                    <shadedPattern> net.miarma.toorbo.inventoryframework</shadedPattern>
+                                    <shadedPattern>net.miarma.mkernel.inventoryframework</shadedPattern>
                                 </relocation>
                             </relocations>
                         </configuration>
@@ -87,7 +87,7 @@
                         <configuration>
                             <target>
                                 <delete
-                                        file="/home/jomaa/Escritorio/Toorbo-${project.version}-${mc.version}" />
+                                        file="/home/jomaa/Escritorio/MKernel-${project.version}-${mc.version}" />
                             </target>
                         </configuration>
                         <goals>
