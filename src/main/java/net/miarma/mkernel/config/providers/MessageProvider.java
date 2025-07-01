@@ -17,6 +17,9 @@ public class MessageProvider {
         public static String getDisposalTitle() {
             return MKernel.CONFIG.getString("language.inventories.disposal.title");
         }
+        public static String getInvseeTitle() {
+            return MKernel.CONFIG.getString("language.inventories.invsee.title");
+        }
         public static String getConfigMenuTitle() {
             return MKernel.CONFIG.getString("language.inventories.configMenu.title");
         }

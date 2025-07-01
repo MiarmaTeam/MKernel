@@ -2,6 +2,7 @@ package net.miarma.mkernel.events;
 
 import de.tr7zw.nbtapi.NBTItem;
 import net.miarma.mkernel.MKernel;
+import net.miarma.mkernel.common.minecraft.inventories.InvseeInventory;
 import net.miarma.mkernel.config.CustomConfigManager;
 import net.miarma.mkernel.common.minecraft.inventories.DisposalInventory;
 import net.miarma.mkernel.common.minecraft.inventories.GlobalChest;
@@ -57,7 +58,27 @@ public class EventListener {
 				if (event.getInventory().equals(GlobalChest.getInv())) {
 					GlobalChest.saveChest();
 				} else if(event.getInventory().equals(DisposalInventory.getInv())) {
-					DisposalInventory.getInv().clear();				}
+					DisposalInventory.getInv().clear();
+				} else if(InvseeInventory.isInvseeInventory(event.getInventory())) {
+					Player admin = (Player) event.getPlayer();
+
+					if (!InvseeInventory.adminPlayerMap.containsKey(admin)) return;
+
+					Player target = InvseeInventory.adminPlayerMap.remove(admin);
+					Inventory view = event.getInventory();
+					PlayerInventory tInv = target.getInventory();
+
+					for (int i = 0; i < 36; i++) {
+						tInv.setItem(i, view.getItem(i));
+					}
+
+					tInv.setHelmet(view.getItem(36));
+					tInv.setChestplate(view.getItem(37));
+					tInv.setLeggings(view.getItem(38));
+					tInv.setBoots(view.getItem(39));
+					tInv.setItemInOffHand(view.getItem(40));
+
+				}
 			}
 
 			@EventHandler

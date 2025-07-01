@@ -536,7 +536,7 @@ public class CommandProvider {
     }
 
     public static CommandWrapper getInvseeCommand() {
-        return CommandWrapper.command(MKernel.CONFIG.getString("commands.invsee"))
+        return CommandWrapper.command(MKernel.CONFIG.getString("commands.invsee.name"))
             .withDescription(MKernel.CONFIG.getString("commands.invsee.description"))
             .withPermission(PermissionWrapper.of(
                 MKernel.CONFIG.getString("commands.invsee.permission")

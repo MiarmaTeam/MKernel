@@ -1,4 +1,4 @@
-package net.miarma.mkernel.commands.misc;
+package net.miarma.mkernel.commands.admin;
 
 import net.miarma.mkernel.config.CommandWrapper;
 import net.miarma.mkernel.config.providers.CommandProvider;
