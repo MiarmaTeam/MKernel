@@ -1,4 +1,4 @@
-package net.miarma.mkernel.util;
+package net.miarma.mkernel.common;
 
 import net.miarma.mkernel.MKernel;
 import net.miarma.mkernel.common.minecraft.teleport.TpaRequests;
@@ -17,7 +17,6 @@ public class Constants {
     public static String SPECIAL_ITEM_TAG = "specialItem";
     public static String ZOMBIFICATION_POTION_KEY = "zombification_potion";
     public static String SPAWNER_BREAKER_KEY = "spawner_breaker";
-    public static String BOLSITA_KEY = "bolsita";
     public static String ADMIN_STICK_KEY = "admin_stick";
     public static String SCISSORS_KEY = "scissors";
     public static String ROTTEN_CAMFIRE_KEY = "rotten_campfire";

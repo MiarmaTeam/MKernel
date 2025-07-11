@@ -8,7 +8,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
-import static net.miarma.mkernel.util.Constants.VANISH_KEY;
+import static net.miarma.mkernel.common.Constants.VANISH_KEY;
 
 public class VanishCommand {
     public static void register() {

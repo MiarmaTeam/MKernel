@@ -1,4 +1,4 @@
-package net.miarma.mkernel.events;
+package net.miarma.mkernel.common.minecraft.events;
 
 import org.bukkit.EntityEffect;
 import org.bukkit.Material;

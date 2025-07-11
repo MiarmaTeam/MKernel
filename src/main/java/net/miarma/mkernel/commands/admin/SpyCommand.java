@@ -8,7 +8,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
-import static net.miarma.mkernel.util.Constants.SPY_KEY;
+import static net.miarma.mkernel.common.Constants.SPY_KEY;
 
 public class SpyCommand {
     public static void register() {

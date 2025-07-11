@@ -14,7 +14,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.Collections;
 
-import static net.miarma.mkernel.util.Constants.*;
+import static net.miarma.mkernel.common.Constants.*;
 
 public class ScissorsRecipe {
 	private static ItemStack crear() {

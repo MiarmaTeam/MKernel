@@ -11,7 +11,7 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
-import static net.miarma.mkernel.util.Constants.*;
+import static net.miarma.mkernel.common.Constants.*;
 
 import java.util.Collections;
 

@@ -1,6 +1,5 @@
 package net.miarma.mkernel.util;
 
-import net.miarma.mkernel.common.minecraft.MinepacksAccessor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.EquipmentSlot;
@@ -30,7 +29,7 @@ public class InventoryUtil {
     }
 
     public static void refillItemFromMinepack(Player player, Material material, EquipmentSlot hand) {
-        Inventory backpack = MinepacksAccessor.getPlayerBackpackInventory(player);
+        Inventory backpack = net.miarma.mkernel.common.minecraft.MinepackAccessor.getPlayerBackpackInventory(player);
 
         if (backpack != null) {
             ItemStack[] contents = backpack.getContents();

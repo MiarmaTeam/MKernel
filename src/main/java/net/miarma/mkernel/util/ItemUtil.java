@@ -14,7 +14,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.List;
 
-import static net.miarma.mkernel.util.Constants.SPECIAL_ITEM_TAG;
+import static net.miarma.mkernel.common.Constants.SPECIAL_ITEM_TAG;
 
 public class ItemUtil {
     public static String getKey(ItemStack item) {

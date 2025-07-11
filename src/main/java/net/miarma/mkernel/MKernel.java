@@ -1,10 +1,10 @@
 package net.miarma.mkernel;
 
-import net.miarma.mkernel.commands.CommandHandler;
+import net.miarma.mkernel.commands.CommandManager;
 import net.miarma.mkernel.config.ConfigWrapper;
 import net.miarma.mkernel.config.CustomConfigManager;
 import net.miarma.mkernel.common.minecraft.inventories.GlobalChest;
-import net.miarma.mkernel.events.EventListener;
+import net.miarma.mkernel.listeners.ListenerManager;
 import net.miarma.mkernel.recipes.RecipeManager;
 import net.miarma.mkernel.tasks.LocationTrackerTask;
 import net.miarma.mkernel.util.FileUtil;
@@ -48,10 +48,16 @@ public class MKernel extends JavaPlugin {
         }
 
         FileUtil.createLangs("lang.yml");
+
+        // CommandAPI
         CommandAPI.onEnable();
-        CommandHandler.onEnable();
+
+        // Mis managers propios
+        CommandManager.onEnable();
         RecipeManager.onEnable();
-        EventListener.onEnable();
+        ListenerManager.onEnable();
+
+        // Inicializaciones finales
         LocationTrackerTask.start();
         GlobalChest.loadConfig();
         GlobalChest.loadChest();

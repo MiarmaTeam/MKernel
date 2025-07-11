@@ -12,7 +12,7 @@ import org.bukkit.entity.Player;
 
 import java.util.List;
 
-import static net.miarma.mkernel.util.Constants.RECIPES;
+import static net.miarma.mkernel.common.Constants.RECIPES;
 
 public class CommandProvider {
     public static class Arguments {

@@ -13,7 +13,7 @@ import org.bukkit.persistence.PersistentDataType;
 import java.util.List;
 
 import static net.miarma.mkernel.config.providers.CommandProvider.Arguments.PLAYER_ARG;
-import static net.miarma.mkernel.util.Constants.FROZEN_KEY;
+import static net.miarma.mkernel.common.Constants.FROZEN_KEY;
 
 public class FreezeCommand {
     public static void register() {

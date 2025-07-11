@@ -1,6 +1,6 @@
 package net.miarma.mkernel.recipes.misc;
 
-import static net.miarma.mkernel.util.Constants.*;
+import static net.miarma.mkernel.common.Constants.*;
 
 import net.miarma.mkernel.MKernel;
 import net.miarma.mkernel.config.providers.ConfigProvider;
