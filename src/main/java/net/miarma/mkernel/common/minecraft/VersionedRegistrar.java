@@ -8,8 +8,10 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.Recipe;
+import org.bukkit.plugin.EventExecutor;
 import org.bukkit.plugin.Plugin;
 
 import java.lang.reflect.Method;
@@ -20,36 +22,39 @@ public class VersionedRegistrar {
     public static void registerListener(Plugin plugin, Listener listener) {
         Class<?> clazz = listener.getClass();
 
-        Version version = clazz.getAnnotation(Version.class);
-        if (version != null && !isVersionCompatible(version.value())) {
+        Version classVersion = clazz.getAnnotation(Version.class);
+        if (classVersion != null && !isVersionCompatible(classVersion.value())) {
             MKernel.LOGGER.warning("No se registró " + clazz.getSimpleName() +
-                    " porque requiere la versión " + version.value());
+                    " porque requiere la versión " + classVersion.value());
             return;
         }
 
-        Listener wrapped = new FilteredListener(listener);
-        Bukkit.getPluginManager().registerEvents(wrapped, plugin);
-    }
+        for (Method method : clazz.getDeclaredMethods()) {
+            if (!method.isAnnotationPresent(EventHandler.class)) continue;
 
-    private record FilteredListener(Listener original) implements Listener {
-        @EventHandler
-        public void handle(Event event) {
-            for (Method method : original.getClass().getDeclaredMethods()) {
-                if (!method.isAnnotationPresent(EventHandler.class)) continue;
-                if (!method.getParameterTypes()[0].isAssignableFrom(event.getClass())) continue;
+            Class<?>[] params = method.getParameterTypes();
+            if (params.length != 1 || !Event.class.isAssignableFrom(params[0])) continue;
 
-                Version version = method.getAnnotation(Version.class);
-                if (version != null && !isVersionCompatible(version.value())) continue;
+            @SuppressWarnings("unchecked")
+            Class<? extends Event> eventClass = (Class<? extends Event>) params[0];
 
+            Version methodVersion = method.getAnnotation(Version.class);
+            if (methodVersion != null && !isVersionCompatible(methodVersion.value())) continue;
+
+            method.setAccessible(true);
+            EventExecutor executor = (listener1, event) -> {
+                if (!eventClass.isInstance(event)) return;
                 try {
-                    method.setAccessible(true);
-                    method.invoke(original, event);
-                } catch (Exception e) {
-                    MKernel.LOGGER.severe("Error manejando el evento " + event.getClass().getSimpleName());
+                    method.invoke(listener, event);
+                } catch (Throwable t) {
+                    MKernel.LOGGER.severe("Error ejecutando " + method.getName() + " en " + clazz.getSimpleName());
                 }
-            }
+            };
+
+            Bukkit.getPluginManager().registerEvent(eventClass, listener, EventPriority.NORMAL, executor, plugin);
         }
     }
+
 
     // === COMANDOS ===
     public static void registerCommand(Class<?> commandClass) {

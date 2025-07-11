@@ -1,5 +1,5 @@
 name: MKernel
-version: '1.4.2'
+version: '1.5.0'
 main: net.miarma.mkernel.MKernel
 api-version: '1.21'
 authors: [Gallardo7761, elpapuu1333 (Contributor & tester)]
