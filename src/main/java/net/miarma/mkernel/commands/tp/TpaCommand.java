@@ -1,7 +1,7 @@
 package net.miarma.mkernel.commands.tp;
 
 import net.miarma.mkernel.MKernel;
-import net.miarma.mkernel.common.minecraft.teleport.TpaRequests;
+import net.miarma.mkernel.common.minecraft.teleport.TpaManager;
 import net.miarma.mkernel.common.minecraft.teleport.TpaType;
 import net.miarma.mkernel.config.CommandWrapper;
 import net.miarma.mkernel.config.providers.CommandProvider;
@@ -37,24 +37,12 @@ public class TpaCommand {
                         return;
                     }
 
-                    boolean requestExists = TpaRequests.getInstance().getTpaRequest(sender, target) != null;
-                    if (requestExists) {
+                    if (TpaManager.getInstance().getRequest(target).isPresent()) {
                         MessageUtil.sendMessage(sender, MessageProvider.Errors.requestAlreadySent(), true);
                         return;
                     }
 
-                    /*boolean onCooldown = TpaRequests.getInstance().getCooldowns().containsKey(sender);
-                    if(onCooldown) {
-                        MessageUtils.sendMessage(sender, MessageProvider.Errors.cooldownHasNotExpired(), true,
-                                List.of("%time%"), List.of(
-                                        String.valueOf((ConfigProvider.Values.getTpCooldown() -
-                                        (System.currentTimeMillis() -
-                                        TpaRequests.getInstance().getCooldowns().get(sender))) / 1000)));
-                        return;
-                    }*/
-
-                    TpaRequests.getInstance().addRequest(sender, target, TpaType.TPA);
-                    MKernel.LOGGER.info(TpaRequests.getInstance().toString());
+                    TpaManager.getInstance().sendRequest(sender, target, TpaType.TPA);
 
                     MessageUtil.sendMessage(sender, tpaCmd.getMessages()[1], true,
                             List.of("%target%"), List.of(target.getName()));

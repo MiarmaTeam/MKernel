@@ -10,6 +10,12 @@ public class MessageProvider {
         return MKernel.CONFIG.getString("language.adminPrefix");
     }
 
+    public static class Misc {
+        public static String getTpaExpireMessage() {
+            return MKernel.CONFIG.getString("language.misc.tpaExpireMessage");
+        }
+    }
+
     public static class Inventories {
         public static String getGlobalChestTitle() {
             return MKernel.CONFIG.getString("language.inventories.globalChest.title");

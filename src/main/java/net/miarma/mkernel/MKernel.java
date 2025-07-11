@@ -1,6 +1,7 @@
 package net.miarma.mkernel;
 
 import net.miarma.mkernel.commands.CommandManager;
+import net.miarma.mkernel.common.minecraft.teleport.TpaManager;
 import net.miarma.mkernel.config.ConfigWrapper;
 import net.miarma.mkernel.config.CustomConfigManager;
 import net.miarma.mkernel.common.minecraft.inventories.GlobalChest;
@@ -59,6 +60,7 @@ public class MKernel extends JavaPlugin {
 
         // Inicializaciones finales
         LocationTrackerTask.start();
+        TpaManager.startAutoClearTask();
         GlobalChest.loadConfig();
         GlobalChest.loadChest();
         this.getLogger().info("I've been enabled! :)");

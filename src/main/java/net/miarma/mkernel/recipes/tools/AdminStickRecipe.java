@@ -15,7 +15,7 @@ import java.util.Collections;
 import static net.miarma.mkernel.common.Constants.*;
 
 public class AdminStickRecipe {
-	public static ItemStack crear() {
+	public static ItemStack create() {
         ItemStack stick = new ItemStack(Material.STICK);
        
         ItemMeta meta = stick.getItemMeta();
@@ -34,7 +34,7 @@ public class AdminStickRecipe {
     }
     
     public static ShapedRecipe get() {
-    	ItemStack palo = crear();
+    	ItemStack palo = create();
         NamespacedKey paloRecipeKey = new NamespacedKey(MKernel.PLUGIN, ADMIN_STICK_KEY);
         ShapedRecipe paloRecipe = new ShapedRecipe(paloRecipeKey, palo);
         paloRecipe.shape(

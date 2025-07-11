@@ -16,7 +16,7 @@ import static net.miarma.mkernel.common.Constants.*;
 import java.util.Collections;
 
 public class ZombificationPotionRecipe {
-	private static ItemStack crear() {
+	private static ItemStack create() {
 		ItemStack potion = new ItemStack(Material.SPLASH_POTION);
         
         ItemMeta meta = potion.getItemMeta();
@@ -38,7 +38,7 @@ public class ZombificationPotionRecipe {
     }
     
     public static ShapedRecipe get() {
-    	ItemStack potion = crear();
+    	ItemStack potion = create();
     	
         NamespacedKey zombificationKey = new NamespacedKey(MKernel.PLUGIN, ZOMBIFICATION_POTION_KEY);
         ShapedRecipe recipe = new ShapedRecipe(zombificationKey, potion);

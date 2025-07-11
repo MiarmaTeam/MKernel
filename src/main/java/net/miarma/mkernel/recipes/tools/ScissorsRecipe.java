@@ -17,7 +17,7 @@ import java.util.Collections;
 import static net.miarma.mkernel.common.Constants.*;
 
 public class ScissorsRecipe {
-	private static ItemStack crear() {
+	private static ItemStack create() {
         ItemStack scissors = new ItemStack(Material.SHEARS);
 
         ItemMeta meta = scissors.getItemMeta();
@@ -38,7 +38,7 @@ public class ScissorsRecipe {
     }
     
     public static ShapedRecipe get() {
-    	ItemStack scissors = crear();
+    	ItemStack scissors = create();
         NamespacedKey scissorsRecipeKey = new NamespacedKey(MKernel.PLUGIN, SCISSORS_KEY);
         ShapedRecipe scissorsRecipe = new ShapedRecipe(scissorsRecipeKey, scissors);
         scissorsRecipe.shape(

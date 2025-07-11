@@ -15,7 +15,7 @@ import java.util.Collections;
 import static net.miarma.mkernel.common.Constants.*;
 
 public class SpawnerBreakerRecipe {
-	private static ItemStack crear() {
+	private static ItemStack create() {
         ItemStack spawnerBreaker = new ItemStack(Material.GOLDEN_PICKAXE);
         
         ItemMeta meta = spawnerBreaker.getItemMeta();  
@@ -35,7 +35,7 @@ public class SpawnerBreakerRecipe {
     }
     
     public static ShapedRecipe get() {
-    	ItemStack spawnerBreaker = crear();
+    	ItemStack spawnerBreaker = create();
         NamespacedKey spawnerBreakerRecipeKey = new NamespacedKey(MKernel.PLUGIN, SPAWNER_BREAKER_KEY);
         ShapedRecipe spawnerBreakerRecipe = new ShapedRecipe(spawnerBreakerRecipeKey, spawnerBreaker);
         spawnerBreakerRecipe.shape(

@@ -1,7 +1,7 @@
 package net.miarma.mkernel.commands.tp;
 
 import net.miarma.mkernel.MKernel;
-import net.miarma.mkernel.common.minecraft.teleport.TpaRequests;
+import net.miarma.mkernel.common.minecraft.teleport.TpaManager;
 import net.miarma.mkernel.common.minecraft.teleport.TpaType;
 import net.miarma.mkernel.config.CommandWrapper;
 import net.miarma.mkernel.config.providers.CommandProvider;
@@ -31,21 +31,16 @@ public class TpaHereCommand {
                         MessageUtil.sendMessage(sender, MessageProvider.Errors.playerNotFound(), true);
                         return;
                     }
-
-                    if (target.equals(sender)) {
+                    if (sender.equals(target)) {
                         MessageUtil.sendMessage(sender, MessageProvider.Errors.cantTeleportToYourself(), true);
                         return;
                     }
-
-                    boolean requestExists = TpaRequests.getInstance().getTpaHereRequest(target, sender) != null;
-
-                    if (requestExists) {
+                    if (TpaManager.getInstance().getRequest(target).isPresent()) {
                         MessageUtil.sendMessage(sender, MessageProvider.Errors.requestAlreadySent(), true);
                         return;
                     }
 
-                    TpaRequests.getInstance().addRequest(target, sender, TpaType.TPA_HERE);
-                    MKernel.LOGGER.info(TpaRequests.getInstance().toString());
+                    TpaManager.getInstance().sendRequest(sender, target, TpaType.TPA_HERE);
 
                     MessageUtil.sendMessage(sender, tpaHereCmd.getMessages()[1], true,
                             List.of("%target%"), List.of(target.getName()));

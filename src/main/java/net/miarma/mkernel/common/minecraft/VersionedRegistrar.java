@@ -84,7 +84,7 @@ public class VersionedRegistrar {
         }
 
         try {
-            Method method = clazz.getMethod("getRecipe");
+            Method method = clazz.getMethod("get");
             Recipe recipe = (Recipe) method.invoke(null);
 
             if (recipe != null) {
@@ -95,6 +95,7 @@ public class VersionedRegistrar {
 
         } catch (Exception e) {
             MKernel.LOGGER.warning("No se pudo registrar receta: " + clazz.getSimpleName());
+            e.printStackTrace();
         }
     }
 
