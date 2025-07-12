@@ -1,5 +1,6 @@
 package net.miarma.mkernel.commands.misc;
 
+import net.miarma.mkernel.common.minecraft.BackManager;
 import net.miarma.mkernel.config.CommandWrapper;
 import net.miarma.mkernel.config.providers.CommandProvider;
 import net.miarma.mkernel.config.providers.ConfigProvider;
@@ -44,10 +45,12 @@ public class LobbyCommand {
                     Location lobbyCoords = new Location(Bukkit.getWorld(name), x, y, z, yaw, pitch);
 
                     if (args.count() == 0) {
+                        BackManager.setLastLocation(sender, sender.getLocation());
                         sender.teleport(lobbyCoords);
                         MessageUtil.sendMessage(sender, lobbyCmd.getMessages()[0], true);
                     } else if (args.count() >= 1) {
                         Player victim = Bukkit.getServer().getPlayer(args.getRaw(0));
+                        BackManager.setLastLocation(victim, victim.getLocation());
                         victim.teleport(lobbyCoords);
                         MessageUtil.sendMessage(sender, lobbyCmd.getMessages()[1], true,
                                                     List.of("%victim%"), List.of(victim.getName()));

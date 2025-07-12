@@ -414,6 +414,14 @@ commands:
     messages:
       opened: "[P] &7Has abierto el inventario de &a%player%"
 
+  back:
+    name: "back"
+    description: "Vuelve a tu posición anterior"
+    permission: "mkernel.command.back"
+    usage: "/back"
+    messages:
+      goneBack: "[P] &7Has vuelto a tu &aposición anterior"
+
 # -----------------------------------------------------------
 #  Message Configuration
 # -----------------------------------------------------------

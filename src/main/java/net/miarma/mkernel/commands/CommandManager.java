@@ -54,6 +54,7 @@ public class CommandManager {
         register(SunCommand.class);
         register(RainCommand.class);
         register(InvseeCommand.class);
+        register(BackCommand.class);
     }
 
     private static void register(Class<?> commandClass) {

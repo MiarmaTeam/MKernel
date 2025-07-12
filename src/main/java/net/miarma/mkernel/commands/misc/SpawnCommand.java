@@ -1,5 +1,6 @@
 package net.miarma.mkernel.commands.misc;
 
+import net.miarma.mkernel.common.minecraft.BackManager;
 import net.miarma.mkernel.config.CommandWrapper;
 import net.miarma.mkernel.config.providers.CommandProvider;
 import net.miarma.mkernel.util.MessageUtil;
@@ -29,11 +30,14 @@ public class SpawnCommand {
                 double zSpawn = sender.getWorld().getSpawnLocation().getBlockZ() + 0.500;
 
                 if (args.count() == 0) {
+                    BackManager.setLastLocation(sender, sender.getLocation());
                     Location spawnCoords = new Location(sender.getWorld(), xSpawn, ySpawn, zSpawn);
                     sender.teleport(spawnCoords);
+
                     MessageUtil.sendMessage(sender, spawnCmd.getMessages()[0], true);
                 } else if (args.count() >= 1) {
                     Player victim = Bukkit.getServer().getPlayer(args.getRaw(0));
+                    BackManager.setLastLocation(victim, victim.getLocation());
                     Location spawnCoords = new Location(victim.getWorld(), xSpawn, ySpawn, zSpawn, victim.getLocation().getYaw(), victim.getLocation().getPitch());
                     victim.teleport(spawnCoords);
 

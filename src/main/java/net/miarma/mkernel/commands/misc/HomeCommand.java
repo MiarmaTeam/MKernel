@@ -1,5 +1,6 @@
 package net.miarma.mkernel.commands.misc;
 
+import net.miarma.mkernel.common.minecraft.BackManager;
 import net.miarma.mkernel.config.CommandWrapper;
 import net.miarma.mkernel.config.providers.CommandProvider;
 import net.miarma.mkernel.util.MessageUtil;
@@ -20,6 +21,7 @@ public class HomeCommand {
             .executesPlayer((sender, args) -> {
                 String path = "homes." + sender.getName();
                 if(HOME_CONFIG.getConfig().contains(path)) {
+                    BackManager.setLastLocation(sender, sender.getLocation());
                     World world = Bukkit.getWorld(HOME_CONFIG.getConfig().getString(path + ".world"));
                     double x = HOME_CONFIG.getConfig().getDouble(path + ".x");
                     double y = HOME_CONFIG.getConfig().getDouble(path + ".y");

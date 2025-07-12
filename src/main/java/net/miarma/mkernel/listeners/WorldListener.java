@@ -42,5 +42,4 @@ public class WorldListener implements Listener {
                 List.of(newWorld)
         );
     }
-
 }

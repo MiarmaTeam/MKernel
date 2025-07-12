@@ -546,4 +546,16 @@ public class CommandProvider {
             )
             .build();
     }
+
+    public static CommandWrapper getBackCommand() {
+        return CommandWrapper.command(MKernel.CONFIG.getString("commands.back.name"))
+            .withDescription(MKernel.CONFIG.getString("commads.back.description"))
+            .withPermission(PermissionWrapper.of(
+                MKernel.CONFIG.getString("commands.back.permission")
+            ))
+            .withMessages(
+                MKernel.CONFIG.getString("commands.back.goneBack")
+            )
+            .build();
+    }
 }

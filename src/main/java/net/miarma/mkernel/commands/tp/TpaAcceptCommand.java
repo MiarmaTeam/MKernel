@@ -1,5 +1,6 @@
 package net.miarma.mkernel.commands.tp;
 
+import net.miarma.mkernel.common.minecraft.BackManager;
 import net.miarma.mkernel.common.minecraft.teleport.TpaManager;
 import net.miarma.mkernel.common.minecraft.teleport.TpaRequest;
 import net.miarma.mkernel.common.minecraft.teleport.TpaType;
@@ -41,8 +42,10 @@ public class TpaAcceptCommand {
                 req.markUsed();
 
                 if (req.getType() == TpaType.TPA) {
+                    BackManager.setLastLocation(from, from.getLocation());
                     from.teleport(to.getLocation());
                 } else {
+                    BackManager.setLastLocation(to, to.getLocation());
                     to.teleport(from.getLocation());
                 }
 

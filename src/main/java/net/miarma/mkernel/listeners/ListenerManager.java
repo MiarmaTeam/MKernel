@@ -18,5 +18,6 @@ public class ListenerManager {
         VersionedRegistrar.registerListener(MKernel.PLUGIN, new PotionListener());
         VersionedRegistrar.registerListener(MKernel.PLUGIN, new SpyListener());
         VersionedRegistrar.registerListener(MKernel.PLUGIN, new WorldListener());
+        VersionedRegistrar.registerListener(MKernel.PLUGIN, new HappyGhastListener());
     }
 }
