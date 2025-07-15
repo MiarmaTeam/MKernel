@@ -49,6 +49,16 @@ public class InventoryUtil {
         }
     }
 
+    public static boolean isArmor(ItemStack item) {
+    	if(item == null)
+    		return false;
+    	final String name = item.getType().name();
+    	return name.endsWith("_HELMET") ||
+    			name.endsWith("_CHESTPLATE") ||
+    			name.endsWith("_LEGGINS") ||
+    			name.endsWith("_BOOTS");
+    }
+    
     public static boolean isValidSlot(int i, Player player) {
         return i != player.getInventory().getHeldItemSlot() && i != 40;
     }
